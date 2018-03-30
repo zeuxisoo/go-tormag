@@ -36,3 +36,7 @@
 [[constraint]]
   name = "github.com/urfave/cli"
   revision = "8e01ec4cd3e2d84ab2fe90d8210528ffbb06d8ff"
+
+[[constraint]]
+  revision = "d950677f67c26793d1c551266dfc56f81081b48a"
+  name = "github.com/anacrolix/torrent"

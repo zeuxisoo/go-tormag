@@ -2,6 +2,29 @@
 
 
 [[projects]]
+  branch = "master"
+  name = "github.com/anacrolix/missinggo"
+  packages = [
+    ".",
+    "slices"
+  ]
+  revision = "f32f2dc367fb4fc0167b83145459f567abd59c49"
+
+[[projects]]
+  name = "github.com/anacrolix/torrent"
+  packages = [
+    "bencode",
+    "metainfo"
+  ]
+  revision = "d950677f67c26793d1c551266dfc56f81081b48a"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/bradfitz/iter"
+  packages = ["."]
+  revision = "454541ec3da2a73fc34fd049b19ee5777bf19345"
+
+[[projects]]
   name = "github.com/sirupsen/logrus"
   packages = ["."]
   revision = "778f2e774c725116edbc3d039dc0dfc1cc62aae8"
@@ -29,6 +52,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "d8e0d3cb25422f7dd3219fff005bcf4ff1bb96bfb33b0c77b242125405affc15"
+  inputs-digest = "8494d4158fb1ad3114545584d145a820399421d41a7c4d016b4773d4db3477a1"
   solver-name = "gps-cdcl"
   solver-version = 1
