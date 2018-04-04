@@ -35,63 +35,67 @@ func runConvert(c *cli.Context) error {
     output_file := c.String("output")
 
     if c.IsSet("directory") {
-
-        logger.Infof("[Directory] >> %s", directory)
-
-        //
-        files, err := ioutil.ReadDir(directory)
-        if err != nil {
-            logger.Fatalf("Error, Cannot read the files in torrent folder path (%s)", err)
-        }
-
-        //
-        var torrent_path string
-        var magnets []string
-
-        for _, f := range files {
-            if (f.IsDir() == false && filepath.Ext(f.Name()) == ".torrent") {
-                torrent_path = filepath.Join(directory, f.Name())
-
-                mi, err := metainfo.LoadFromFile(torrent_path)
-                if err != nil {
-                    fmt.Fprintf(os.Stderr, "Error, Cannot read the metainfo from file (%s)\n", err)
-                    continue
-                }
-
-                info, err := mi.UnmarshalInfo()
-                if err != nil {
-                    fmt.Fprintf(os.Stderr, "Error, Cannot unmarshalling the metainfo from file (%s)\n", err)
-                    continue
-                }
-
-                magnets = append(magnets, mi.Magnet(info.Name, mi.HashInfoBytes()).String())
-            }
-        }
-
-        ioutil.WriteFile(output_file, []byte(strings.Join(magnets, "\n")), 0644)
-
+        ioutil.WriteFile(output_file, convertDirectoryToMagentBytes(directory), 0644)
     }else if c.IsSet("file") {
-
-        logger.Infof("[File] >> %s", file)
-
-        mi, err := metainfo.LoadFromFile(file)
-        if err != nil {
-            logger.Fatalf("Error, Cannot read the metainfo from file (%s)\n", err)
-        }
-
-        info, err := mi.UnmarshalInfo()
-        if err != nil {
-            logger.Fatalf("Error, Cannot unmarshalling the metainfo from file (%s)\n", err)
-        }
-
-        magnet := mi.Magnet(info.Name, mi.HashInfoBytes()).String()
-
-        ioutil.WriteFile(output_file, []byte(magnet), 0644)
-
+        ioutil.WriteFile(output_file, convertFileToMagnetBytes(file), 0644)
     }
 
     //
     logger.Infof("[Output] >> %s", output_file)
 
     return nil
+}
+
+func convertDirectoryToMagentBytes(directory string) []byte {
+    logger.Infof("[Directory] >> %s", directory)
+
+    //
+    files, err := ioutil.ReadDir(directory)
+    if err != nil {
+        logger.Fatalf("Error, Cannot read the files in torrent folder path (%s)", err)
+    }
+
+    //
+    var torrent_path string
+    var magnets []string
+
+    for _, f := range files {
+        if (f.IsDir() == false && filepath.Ext(f.Name()) == ".torrent") {
+            torrent_path = filepath.Join(directory, f.Name())
+
+            mi, err := metainfo.LoadFromFile(torrent_path)
+            if err != nil {
+                fmt.Fprintf(os.Stderr, "Error, Cannot read the metainfo from file (%s)\n", err)
+                continue
+            }
+
+            info, err := mi.UnmarshalInfo()
+            if err != nil {
+                fmt.Fprintf(os.Stderr, "Error, Cannot unmarshalling the metainfo from file (%s)\n", err)
+                continue
+            }
+
+            magnets = append(magnets, mi.Magnet(info.Name, mi.HashInfoBytes()).String())
+        }
+    }
+
+    return []byte(strings.Join(magnets, "\n"))
+}
+
+func convertFileToMagnetBytes(file string) []byte {
+    logger.Infof("[File] >> %s", file)
+
+    mi, err := metainfo.LoadFromFile(file)
+    if err != nil {
+        logger.Fatalf("Error, Cannot read the metainfo from file (%s)\n", err)
+    }
+
+    info, err := mi.UnmarshalInfo()
+    if err != nil {
+        logger.Fatalf("Error, Cannot unmarshalling the metainfo from file (%s)\n", err)
+    }
+
+    magnet := mi.Magnet(info.Name, mi.HashInfoBytes()).String()
+
+    return []byte(magnet)
 }
