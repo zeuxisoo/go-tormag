@@ -34,15 +34,17 @@ func runConvert(c *cli.Context) error {
     file        := c.String("file")
     output_file := c.String("output")
 
-    var err error
+    var result []byte
 
     if c.IsSet("directory") {
-        err = ioutil.WriteFile(output_file, convertDirectoryToMagentBytes(directory), 0644)
+        result = convertDirectoryToMagentBytes(directory)
     }else if c.IsSet("file") {
-        err = ioutil.WriteFile(output_file, convertFileToMagnetBytes(file), 0644)
+        result = convertFileToMagnetBytes(file)
+    }else{
+        result = []byte("")
     }
 
-    if err != nil {
+    if err := ioutil.WriteFile(output_file, result, 0644); err != nil {
         logger.Fatalf("[Error] >> Cannot write the result to the output file")
     }
 
