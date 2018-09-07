@@ -30,8 +30,8 @@ func runConvert(c *cli.Context) error {
 		printCommandHelpAndExit(c, "convert")
 	}
 
-	directory := c.String("directory")
-	file := c.String("file")
+	directory  := c.String("directory")
+	file       := c.String("file")
 	outputFile := c.String("output")
 
 	var result []byte
@@ -79,7 +79,7 @@ func convertDirectoryToMagnetsBytes(directory string) []byte {
 
 			info, err := mi.UnmarshalInfo()
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "[Error] >> Cannot unmarshalling the metainfo from file (%s)\n", err)
+				fmt.Fprintf(os.Stderr, "[Error] >> Cannot un-marshalling the metainfo from file (%s)\n", err)
 				continue
 			}
 
@@ -100,7 +100,7 @@ func convertFileToMagnetBytes(file string) []byte {
 
 	info, err := mi.UnmarshalInfo()
 	if err != nil {
-		logger.Fatalf("[Error] >> Cannot unmarshalling the metainfo from file (%s)\n", err)
+		logger.Fatalf("[Error] >> Cannot un-marshalling the metainfo from file (%s)\n", err)
 	}
 
 	magnet := mi.Magnet(info.Name, mi.HashInfoBytes()).String()

@@ -10,7 +10,7 @@ var (
 
 func init() {
 	log.Formatter = new(logrus.TextFormatter)
-	log.Level = logrus.DebugLevel
+	log.Level     = logrus.DebugLevel
 }
 
 func Infof(format string, args ...interface{}) {
