@@ -32,29 +32,29 @@ func runConvert(c *cli.Context) error {
 
 	directory := c.String("directory")
 	file := c.String("file")
-	output_file := c.String("output")
+	outputFile := c.String("output")
 
 	var result []byte
 
 	if c.IsSet("directory") {
-		result = convertDirectoryToMagentBytes(directory)
+		result = convertDirectoryToMagnetsBytes(directory)
 	} else if c.IsSet("file") {
 		result = convertFileToMagnetBytes(file)
 	} else {
 		result = []byte("")
 	}
 
-	if err := ioutil.WriteFile(output_file, result, 0644); err != nil {
+	if err := ioutil.WriteFile(outputFile, result, 0644); err != nil {
 		logger.Fatalf("[Error] >> Cannot write the result to the output file")
 	}
 
 	//
-	logger.Infof("[Output] >> %s", output_file)
+	logger.Infof("[Output] >> %s", outputFile)
 
 	return nil
 }
 
-func convertDirectoryToMagentBytes(directory string) []byte {
+func convertDirectoryToMagnetsBytes(directory string) []byte {
 	logger.Infof("[Directory] >> %s", directory)
 
 	//
@@ -64,14 +64,14 @@ func convertDirectoryToMagentBytes(directory string) []byte {
 	}
 
 	//
-	var torrent_path string
+	var torrentPath string
 	var magnets []string
 
 	for _, f := range files {
 		if f.IsDir() == false && filepath.Ext(f.Name()) == ".torrent" {
-			torrent_path = filepath.Join(directory, f.Name())
+			torrentPath = filepath.Join(directory, f.Name())
 
-			mi, err := metainfo.LoadFromFile(torrent_path)
+			mi, err := metainfo.LoadFromFile(torrentPath)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "[Error] >> Cannot read the metainfo from file (%s)\n", err)
 				continue
