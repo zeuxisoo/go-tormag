@@ -1,9 +1,7 @@
 package cmd
 
 import (
-	"fmt"
 	"io/ioutil"
-	"os"
 	"path/filepath"
 	"strings"
 
@@ -73,13 +71,13 @@ func convertDirectoryToMagnetsBytes(directory string) []byte {
 
 			mi, err := metainfo.LoadFromFile(torrentPath)
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "[Error] >> Cannot read the metainfo from file (%s)\n", err)
+				printConvertTorrentError("Cannot read the metainfo from file", torrentPath, err)
 				continue
 			}
 
 			info, err := mi.UnmarshalInfo()
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "[Error] >> Cannot unmarshal the metainfo from file (%s)\n", err)
+				printConvertTorrentError("Cannot unmarshal the metainfo from file", torrentPath, err)
 				continue
 			}
 
@@ -95,12 +93,12 @@ func convertFileToMagnetBytes(file string) []byte {
 
 	mi, err := metainfo.LoadFromFile(file)
 	if err != nil {
-		logger.Fatalf("[Error] >> Cannot read the metainfo from file (%s)\n", err)
+		printConvertTorrentError("Cannot read the metainfo from file", file, err)
 	}
 
 	info, err := mi.UnmarshalInfo()
 	if err != nil {
-		logger.Fatalf("[Error] >> Cannot unmarshal the metainfo from file (%s)\n", err)
+		printConvertTorrentError("Cannot unmarshal the metainfo from file", file, err)
 	}
 
 	magnet := mi.Magnet(info.Name, mi.HashInfoBytes()).String()
