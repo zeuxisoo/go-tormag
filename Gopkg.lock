@@ -3,24 +3,25 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:dbbeb109bdc38d9684032573533d4963673ed8cc67c7ccfeae8fd019b4e9cdac"
+  digest = "1:4a52cf010b10abe9e6da448a8f91a79aa222c313bdb8b0f282792b491d0eae4e"
   name = "github.com/anacrolix/missinggo"
   packages = [
     ".",
+    "expect",
     "slices",
   ]
   pruneopts = "UT"
-  revision = "f32f2dc367fb4fc0167b83145459f567abd59c49"
+  revision = "60ef2fbf63df5d871ada2680d4d8a6013dcd1745"
 
 [[projects]]
-  digest = "1:6ae191c56c9d80f4391ab967dffe2cd92eb35da61d3e81a11e2a372525b83978"
+  digest = "1:b0ecd349c6912cbb6b12ae55b512a1e4513036f21bcf49b6513b089407314d7b"
   name = "github.com/anacrolix/torrent"
   packages = [
     "bencode",
     "metainfo",
   ]
   pruneopts = "UT"
-  revision = "d950677f67c26793d1c551266dfc56f81081b48a"
+  revision = "3ed340c0e005cbbd4e3f42e0ff93bce9cf3d4123"
 
 [[projects]]
   branch = "master"
@@ -31,18 +32,28 @@
   revision = "454541ec3da2a73fc34fd049b19ee5777bf19345"
 
 [[projects]]
-  digest = "1:7ab696eb65eef48aa01c255ce3979e716259987e1af2a69891d47b17c6127819"
+  digest = "1:f9a5e090336881be43cfc1cf468330c1bdd60abdc9dd194e0b1ab69f4b94dd7c"
+  name = "github.com/huandu/xstrings"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "f02667b379e2fb5916c3cda2cf31e0eb885d79f8"
+  version = "v1.2.0"
+
+[[projects]]
+  digest = "1:d867dfa6751c8d7a435821ad3b736310c2ed68945d05b50fb9d23aee0540c8cc"
   name = "github.com/sirupsen/logrus"
   packages = ["."]
   pruneopts = "UT"
-  revision = "778f2e774c725116edbc3d039dc0dfc1cc62aae8"
+  revision = "3e01752db0189b9157070a0e1668a620f9a85da2"
+  version = "v1.0.6"
 
 [[projects]]
-  digest = "1:189a0e6e9c657bb662bafc41a796360d11c88eed7614b1b6f003b8fbc8847e5e"
+  digest = "1:b24d38b282bacf9791408a080f606370efa3d364e4b5fd9ba0f7b87786d3b679"
   name = "github.com/urfave/cli"
   packages = ["."]
   pruneopts = "UT"
-  revision = "8e01ec4cd3e2d84ab2fe90d8210528ffbb06d8ff"
+  revision = "cfb38830724cc34fedffe9a2a29fb54fa9169cd1"
+  version = "v1.20.0"
 
 [[projects]]
   branch = "master"
@@ -50,18 +61,18 @@
   name = "golang.org/x/crypto"
   packages = ["ssh/terminal"]
   pruneopts = "UT"
-  revision = "88942b9c40a4c9d203b82b3731787b672d6e809b"
+  revision = "0e37d006457bf46f9e6692014ba72ef82c33022c"
 
 [[projects]]
   branch = "master"
-  digest = "1:0cc09bfe0321a651b68c587f94585b76b0b6cf58db1f2701d6062bb91ac442f8"
+  digest = "1:374fc90fcb026e9a367e3fad29e988e5dd944b68ca3f24a184d77abc5307dda4"
   name = "golang.org/x/sys"
   packages = [
     "unix",
     "windows",
   ]
   pruneopts = "UT"
-  revision = "378d26f46672a356c46195c28f61bdb4c0a781dd"
+  revision = "d0be0721c37eeb5299f245a996a483160fc36940"
 
 [solve-meta]
   analyzer-name = "dep"

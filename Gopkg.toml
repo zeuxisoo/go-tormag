@@ -1,6 +1,6 @@
 # Gopkg.toml example
 #
-# Refer to https://github.com/golang/dep/blob/master/docs/Gopkg.toml.md
+# Refer to https://golang.github.io/dep/docs/Gopkg.toml.html
 # for detailed Gopkg.toml documentation.
 #
 # required = ["github.com/user/thing/cmd/thing"]
@@ -24,19 +24,18 @@
 #   go-tests = true
 #   unused-packages = true
 
+[[constraint]]
+  revision = "3ed340c0e005cbbd4e3f42e0ff93bce9cf3d4123"
+  name = "github.com/anacrolix/torrent"
+
+[[constraint]]
+  name = "github.com/sirupsen/logrus"
+  version = "1.0.6"
+
+[[constraint]]
+  name = "github.com/urfave/cli"
+  version = "1.20.0"
 
 [prune]
   go-tests = true
   unused-packages = true
-
-[[constraint]]
-  name = "github.com/sirupsen/logrus"
-  revision = "778f2e774c725116edbc3d039dc0dfc1cc62aae8"
-
-[[constraint]]
-  name = "github.com/urfave/cli"
-  revision = "8e01ec4cd3e2d84ab2fe90d8210528ffbb06d8ff"
-
-[[constraint]]
-  revision = "d950677f67c26793d1c551266dfc56f81081b48a"
-  name = "github.com/anacrolix/torrent"
