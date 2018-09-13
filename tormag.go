@@ -18,6 +18,7 @@ func main() {
 	app.Version = AppVersion
 	app.Commands = []cli.Command{
 		cmd.Convert,
+		cmd.Web,
 	}
 	app.Flags = append(app.Flags, []cli.Flag{}...)
 	app.Run(os.Args)
