@@ -11,6 +11,7 @@ import (
 	"github.com/zeuxisoo/go-tormag/util/logger"
 )
 
+// Convert command
 var Convert = cli.Command{
 	Name:        "convert",
 	Usage:       "Convert the torrent to magnet",
