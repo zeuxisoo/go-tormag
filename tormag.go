@@ -8,13 +8,14 @@ import (
 	"github.com/zeuxisoo/go-tormag/cmd"
 )
 
-const APP_VER = "0.1.0"
+// AppVersion number
+const AppVersion = "0.1.0"
 
 func main() {
 	app := cli.NewApp()
 	app.Name = "Tormag"
 	app.Usage = "A torrent to magnet and rename tools"
-	app.Version = APP_VER
+	app.Version = AppVersion
 	app.Commands = []cli.Command{
 		cmd.Convert,
 	}
