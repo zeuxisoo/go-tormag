@@ -21,20 +21,24 @@ import (
 
 // BaseRender object
 type BaseRender struct {
-	name string
-	data map[string]interface{}
+	engine 	*gin.Engine
+	name 	string
+	data 	map[string]interface{}
 }
 
 // NewRender return the instance
-func NewRender() *BaseRender {
-	return &BaseRender{}
+func NewRender(engine *gin.Engine) *BaseRender {
+	return &BaseRender{
+		engine: engine,
+	}
 }
 
 // Instance return a new BaseRender struct per request
 func (b BaseRender) Instance(name string, data interface{}) render.Render {
 	return BaseRender{
-		name: name,
-		data: data.(gin.H),
+		engine: b.engine,
+		name  : name,
+		data  : data.(gin.H),
 	}
 }
 
@@ -49,7 +53,7 @@ func (b BaseRender) Render(w http.ResponseWriter) error {
 		return err
 	}
 
-	tpl, err := template.New(b.name).Parse(string(assetBytes))
+	tpl, err := template.New("").Funcs(b.engine.FuncMap).Parse(string(assetBytes))
 	if err != nil {
 		return err
 	}

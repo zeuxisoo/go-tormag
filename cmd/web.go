@@ -37,8 +37,14 @@ func runWeb(c *cli.Context) {
 
 	//
 	engine := gin.Default()
+
 	engine.Use(gin.Recovery())
-	engine.SetFuncMap(template.FuncMap{})
+
+	engine.SetFuncMap(template.FuncMap{
+		"says": func(value string) string {
+			return value + " :D"
+		},
+	})
 
 	registerRender(engine)
 	registerRoutes(engine)
@@ -47,7 +53,7 @@ func runWeb(c *cli.Context) {
 }
 
 func registerRender(engine *gin.Engine) {
-	engine.HTMLRender = views.NewRender()
+	engine.HTMLRender = views.NewRender(engine)
 }
 
 func registerRoutes(engine *gin.Engine) {
