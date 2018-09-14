@@ -71,9 +71,6 @@ func (b BaseRender) WriteContentType(w http.ResponseWriter) {
 	header := w.Header()
 
 	if contentType := header["Content-Type"]; len(contentType) == 0 {
-		header["Content-Type"] = []string{
-			"text/html",
-			"charset=utf-8",
-		}
+		header["Content-Type"] = []string{ "text/html; charset=utf-8" }
 	}
 }
