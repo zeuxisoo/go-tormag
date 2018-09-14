@@ -24,7 +24,12 @@ run:
 	@go run *.go
 
 tools:
-	@go get -u github.com/jessevdk/go-assets-builder
+	@go get -u github.com/jteeuwen/go-bindata/...
+	@go get github.com/elazarl/go-bindata-assetfs
+
+assets:
+	# package: views, output: web/views/views.go, ignore: *.go, template: web/views/**
+	@go-bindata -pkg views -o web/views/views.go -ignore=.go web/views/...
 
 build: build-macos build-windows build-windows build-freebsd build-linux
 
