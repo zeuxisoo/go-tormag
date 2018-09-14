@@ -3,17 +3,28 @@ RELEASE_DIR=release
 
 all:
 	@echo
-	@echo "Commands  : Description"
-	@echo "--------- : -----------"
-	@echo "make deps : Install the dependencies"
-	@echo "make run  : Run the program"
+	@echo "Commands          : Description"
+	@echo "----------------- : -----------"
+	@echo "make deps         : Install the dependencies and tools"
+	@echo "make run          : Run the program"
+	@echo "make tools        : Install the tools"
+	@echo "make build        : Build the biniary file"
+	@echo "make build-macos  : Build the macos biniary file only"
+	@echo "make build-windows: Build the windows biniary file only"
+	@echo "make build-freebsd: Build the freebsd biniary file only"
+	@echo "make build-linux  : Build the linux biniary file only"
+	@echo "make pack         : Pack the build files into release directory"
+	@echo "make release      : Run the build and pack command"
 	@echo
 
-deps:
+deps: tools
 	@dep ensure
 
 run:
 	@go run *.go
+
+tools:
+	@go get -u github.com/jessevdk/go-assets-builder
 
 build: build-macos build-windows build-windows build-freebsd build-linux
 
