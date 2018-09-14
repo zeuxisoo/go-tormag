@@ -2,12 +2,10 @@ package cmd
 
 import (
 	"fmt"
-	"strings"
 	"html/template"
 
 	"github.com/urfave/cli"
 	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/contrib/renders/multitemplate"
 
 	"github.com/zeuxisoo/go-tormag/web/views"
 	"github.com/zeuxisoo/go-tormag/web/controllers"
@@ -49,24 +47,10 @@ func runWeb(c *cli.Context) {
 }
 
 func registerRender(engine *gin.Engine) {
-	engine.HTMLRender = loadTemplateRender()
+	engine.HTMLRender = views.NewRender()
 }
 
 func registerRoutes(engine *gin.Engine) {
 	engine.GET("/", controllers.HomeGet)
 	engine.GET("/about", controllers.AboutGet)
-}
-
-func loadTemplateRender() multitemplate.Render {
-	render := multitemplate.New()
-
-	for _, file := range views.AssetNames() {
-		if strings.HasSuffix(file, ".html") == false {
-			continue
-		}
-
-		render.AddFromString(file, string(views.MustAsset(file)))
-	}
-
-	return render
 }

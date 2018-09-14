@@ -40,14 +40,6 @@
   revision = "22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae"
 
 [[projects]]
-  branch = "master"
-  digest = "1:1b45decf351430d074b2afaadf7dcb598755d58b185db5a52bbaa93b7cbbb85a"
-  name = "github.com/gin-gonic/contrib"
-  packages = ["renders/multitemplate"]
-  pruneopts = "UT"
-  revision = "39cfb9727134fef3120d2458fce5fab14265a46c"
-
-[[projects]]
   digest = "1:d5083934eb25e45d17f72ffa86cae3814f4a9d6c073c4f16b64147169b245606"
   name = "github.com/gin-gonic/gin"
   packages = [
@@ -152,8 +144,8 @@
   analyzer-version = 1
   input-imports = [
     "github.com/anacrolix/torrent/metainfo",
-    "github.com/gin-gonic/contrib/renders/multitemplate",
     "github.com/gin-gonic/gin",
+    "github.com/gin-gonic/gin/render",
     "github.com/sirupsen/logrus",
     "github.com/urfave/cli",
   ]
