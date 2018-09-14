@@ -49,22 +49,24 @@ func runWeb(c *cli.Context) {
 }
 
 func registerRender(engine *gin.Engine) {
-	engine.HTMLRender = (func() multitemplate.Render {
-		render := multitemplate.New()
-
-		for _, file := range views.AssetNames() {
-			if strings.HasSuffix(file, ".html") == false {
-				continue
-			}
-
-			render.AddFromString(file, string(views.MustAsset(file)))
-		}
-
-		return render
-	})()
+	engine.HTMLRender = loadTemplateRender()
 }
 
 func registerRoutes(engine *gin.Engine) {
 	engine.GET("/", controllers.HomeGet)
 	engine.GET("/about", controllers.AboutGet)
+}
+
+func loadTemplateRender() multitemplate.Render {
+	render := multitemplate.New()
+
+	for _, file := range views.AssetNames() {
+		if strings.HasSuffix(file, ".html") == false {
+			continue
+		}
+
+		render.AddFromString(file, string(views.MustAsset(file)))
+	}
+
+	return render
 }
