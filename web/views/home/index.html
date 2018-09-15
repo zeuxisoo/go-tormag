@@ -7,6 +7,11 @@
     <title>Home</title>
 </head>
 <body>
-Home page {{ says "hello world" }}
+<%
+let says = fn(message) {
+    return message + " :D"
+}
+%>
+Home page <%= says("Hello world") %>
 </body>
 </html>

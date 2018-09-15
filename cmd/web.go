@@ -53,7 +53,8 @@ func runWeb(c *cli.Context) {
 }
 
 func registerRender(engine *gin.Engine) {
-	engine.HTMLRender = views.NewBaseRender(engine)
+	// engine.HTMLRender = views.NewBaseRender(engine)
+	engine.HTMLRender = views.NewPlushRender()
 }
 
 func registerRoutes(engine *gin.Engine) {
