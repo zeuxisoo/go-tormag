@@ -42,7 +42,10 @@ func runWeb(c *cli.Context) {
 
 	engine.SetFuncMap(template.FuncMap{
 		"says": func(value string) string {
-			return value + " :D"
+			return value + " built-in :D"
+		},
+		"add": func(a float64, b float64) float64 {
+			return a + b
 		},
 	})
 
@@ -54,7 +57,7 @@ func runWeb(c *cli.Context) {
 
 func registerRender(engine *gin.Engine) {
 	// engine.HTMLRender = views.NewBaseRender(engine)
-	engine.HTMLRender = views.NewPlushRender()
+	engine.HTMLRender = views.NewPlushRender(engine)
 }
 
 func registerRoutes(engine *gin.Engine) {

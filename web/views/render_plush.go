@@ -1,27 +1,31 @@
 package views
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
 
+	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/render"
 	"github.com/gobuffalo/plush"
 )
 
 // PlushRender object
 type PlushRender struct {
+	engine  *gin.Engine
 	name 	string
 	context *plush.Context
 }
 
 // NewPlushRender return the instance
-func NewPlushRender() *PlushRender {
-	return &PlushRender{}
+func NewPlushRender(engine *gin.Engine) *PlushRender {
+	return &PlushRender{
+		engine: engine,
+	}
 }
 
 // Instance return a new PlushRender struct per request
 func (p PlushRender) Instance(name string, data interface{}) render.Render {
 	return PlushRender{
+		engine : p.engine,
 		name   : name,
 		context: plush.NewContextWith(data.(gin.H)),
 	}
@@ -36,6 +40,10 @@ func (p PlushRender) Render(w http.ResponseWriter) error {
 	assetBytes, err := Asset(string(p.name))
 	if err != nil {
 		return err
+	}
+
+	for name, callback := range p.engine.FuncMap {
+		p.context.Set(name, callback)
 	}
 
 	result, err := plush.Render(string(assetBytes), p.context)
