@@ -26,8 +26,8 @@ type BaseRender struct {
 	data 	map[string]interface{}
 }
 
-// NewRender return the instance
-func NewRender(engine *gin.Engine) *BaseRender {
+// NewBaseRender return the instance
+func NewBaseRender(engine *gin.Engine) *BaseRender {
 	return &BaseRender{
 		engine: engine,
 	}
