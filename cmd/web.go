@@ -57,7 +57,8 @@ func runWeb(c *cli.Context) {
 
 func registerRender(engine *gin.Engine) {
 	// engine.HTMLRender = render.NewBaseRender(engine)
-	engine.HTMLRender = render.NewPlushRender(engine)
+	// engine.HTMLRender = render.NewPlushRender(engine)
+	engine.HTMLRender = render.NewPongo2Render()
 }
 
 func registerRoutes(engine *gin.Engine) {

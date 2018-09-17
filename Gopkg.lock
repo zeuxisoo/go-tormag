@@ -48,6 +48,14 @@
   version = "v1.0"
 
 [[projects]]
+  digest = "1:434aab943cc1c082c9df36bd4b1f107d9ef4af930d2ce13d3f2eb008df9196f0"
+  name = "github.com/flosch/pongo2"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "5e81b817a0c48c1c57cdf1a9056cf76bdee02ca9"
+  version = "v3.0"
+
+[[projects]]
   branch = "master"
   digest = "1:36fe9527deed01d2a317617e59304eb2c4ce9f8a24115bcc5c2e37b3aee5bae4"
   name = "github.com/gin-contrib/sse"
@@ -338,6 +346,14 @@
   revision = "d0be0721c37eeb5299f245a996a483160fc36940"
 
 [[projects]]
+  digest = "1:434aab943cc1c082c9df36bd4b1f107d9ef4af930d2ce13d3f2eb008df9196f0"
+  name = "gopkg.in/flosch/pongo2.v3"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "5e81b817a0c48c1c57cdf1a9056cf76bdee02ca9"
+  version = "v3.0"
+
+[[projects]]
   digest = "1:1b4724d3c8125f6044925f02b485b74bfec9905cbf579d95aafd1a6c8f8447d3"
   name = "gopkg.in/go-playground/validator.v8"
   packages = ["."]
@@ -365,11 +381,13 @@
   analyzer-version = 1
   input-imports = [
     "github.com/anacrolix/torrent/metainfo",
+    "github.com/flosch/pongo2",
     "github.com/gin-gonic/gin",
     "github.com/gin-gonic/gin/render",
     "github.com/gobuffalo/plush",
     "github.com/sirupsen/logrus",
     "github.com/urfave/cli",
+    "gopkg.in/flosch/pongo2.v3",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
