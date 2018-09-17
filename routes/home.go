@@ -1,4 +1,4 @@
-package controllers
+package routes
 
 import (
 	"net/http"
@@ -8,12 +8,12 @@ import (
 
 // HomeGet return the index page
 func HomeGet(c *gin.Context) {
-	c.HTML(http.StatusOK, "web/views/home/index.html", gin.H{
+	c.HTML(http.StatusOK, "views/home/index.html", gin.H{
 		"sumLabel": "Sum value",
 	})
 }
 
 // AboutGet return the about page
 func AboutGet(c *gin.Context) {
-	c.HTML(http.StatusOK, "web/views/home/about.html", gin.H{})
+	c.HTML(http.StatusOK, "views/home/about.html", gin.H{})
 }

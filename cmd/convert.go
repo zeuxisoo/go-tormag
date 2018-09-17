@@ -8,7 +8,7 @@ import (
 	"github.com/anacrolix/torrent/metainfo"
 	"github.com/urfave/cli"
 
-	"github.com/zeuxisoo/go-tormag/util/logger"
+	"github.com/zeuxisoo/go-tormag/pkg/logger"
 )
 
 // Convert command

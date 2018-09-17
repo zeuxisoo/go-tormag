@@ -1,4 +1,4 @@
-package views
+package render
 
 //                                      +------------------------------------------------+
 //                                      |                                                |
@@ -17,6 +17,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/render"
+
+	"github.com/zeuxisoo/go-tormag/pkg/view"
 )
 
 // BaseRender object
@@ -48,7 +50,7 @@ func (b BaseRender) Instance(name string, data interface{}) render.Render {
 
 // Render the template to the response
 func (b BaseRender) Render(w http.ResponseWriter) error {
-	assetBytes, err := Asset(string(b.name))
+	assetBytes, err := view.Asset(string(b.name))
 	if err != nil {
 		return err
 	}

@@ -28,8 +28,8 @@ tools:
 	@go get github.com/elazarl/go-bindata-assetfs
 
 assets:
-	# package: views, output: web/views/views.go, ignore: *.go, template: web/views/**
-	@go-bindata -pkg views -o web/views/views.go -ignore=.go web/views/...
+	# package: views, output: pkg/view/view.go, ignore: *.go, template: views/**
+	@go-bindata -pkg view -o pkg/view/view.go -ignore=.go views/...
 
 build: build-macos build-windows build-windows build-freebsd build-linux
 

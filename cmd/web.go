@@ -7,8 +7,8 @@ import (
 	"github.com/urfave/cli"
 	"github.com/gin-gonic/gin"
 
-	"github.com/zeuxisoo/go-tormag/web/views"
-	"github.com/zeuxisoo/go-tormag/web/controllers"
+	"github.com/zeuxisoo/go-tormag/pkg/render"
+	"github.com/zeuxisoo/go-tormag/routes"
 )
 
 // Web command
@@ -56,11 +56,11 @@ func runWeb(c *cli.Context) {
 }
 
 func registerRender(engine *gin.Engine) {
-	// engine.HTMLRender = views.NewBaseRender(engine)
-	engine.HTMLRender = views.NewPlushRender(engine)
+	// engine.HTMLRender = render.NewBaseRender(engine)
+	engine.HTMLRender = render.NewPlushRender(engine)
 }
 
 func registerRoutes(engine *gin.Engine) {
-	engine.GET("/", controllers.HomeGet)
-	engine.GET("/about", controllers.AboutGet)
+	engine.GET("/", routes.HomeGet)
+	engine.GET("/about", routes.AboutGet)
 }

@@ -1,5 +1,5 @@
 /release
 /vendor
 
-/web/views/views.go
+/pkg/view/view.go
 /magnets.txt

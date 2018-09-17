@@ -1,4 +1,4 @@
-package views
+package render
 
 import (
 	"net/http"
@@ -6,6 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/render"
 	"github.com/gobuffalo/plush"
+
+	"github.com/zeuxisoo/go-tormag/pkg/view"
 )
 
 // PlushRender object
@@ -37,7 +39,7 @@ func (p PlushRender) Instance(name string, data interface{}) render.Render {
 
 // Render the template to the response
 func (p PlushRender) Render(w http.ResponseWriter) error {
-	assetBytes, err := Asset(string(p.name))
+	assetBytes, err := view.Asset(string(p.name))
 	if err != nil {
 		return err
 	}
