@@ -14,7 +14,7 @@ import (
 type PlushRender struct {
 	engine  *gin.Engine
 	name 	string
-	context *plush.Context
+	context gin.H
 }
 
 // NewPlushRender return the instance
@@ -29,7 +29,7 @@ func (p PlushRender) Instance(name string, data interface{}) render.Render {
 	return PlushRender{
 		engine : p.engine,
 		name   : name,
-		context: plush.NewContextWith(data.(gin.H)),
+		context: data.(gin.H),
 	}
 }
 
@@ -44,11 +44,7 @@ func (p PlushRender) Render(w http.ResponseWriter) error {
 		return err
 	}
 
-	for name, callback := range p.engine.FuncMap {
-		p.context.Set(name, callback)
-	}
-
-	result, err := plush.Render(string(assetBytes), p.context)
+	result, err := plush.BuffaloRenderer(string(assetBytes), p.context, p.engine.FuncMap)
 	if err != nil {
 		return err
 	}
