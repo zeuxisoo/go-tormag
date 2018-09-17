@@ -45,16 +45,9 @@ func (p Pongo2Render) Render(w http.ResponseWriter) error {
 		return err
 	}
 
-	result, err := tpl.Execute(pongo2.Context(p.data))
-	if err != nil {
-		return err
-	}
-
 	p.WriteContentType(w)
 
-	w.Write([]byte(result))
-
-	return nil
+	return tpl.ExecuteWriter(pongo2.Context(p.data), w)
 }
 
 // WriteContentType add the content type header to the response
