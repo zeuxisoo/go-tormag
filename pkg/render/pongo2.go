@@ -1,31 +1,40 @@
 package render
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
 
+	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/render"
 	"gopkg.in/flosch/pongo2.v3"
 
 	"github.com/zeuxisoo/go-tormag/pkg/view"
 )
 
+// Pongo2Option object
+type Pongo2Option struct {
+	Filters	map[string]pongo2.FilterFunction
+}
+
 // Pongo2Render object
 type Pongo2Render struct {
+	option	*Pongo2Option
 	name	string
 	data	gin.H
 }
 
 // NewPongo2Render return the instance
-func NewPongo2Render() *Pongo2Render {
-	return &Pongo2Render{}
+func NewPongo2Render(option *Pongo2Option) *Pongo2Render {
+	return &Pongo2Render{
+		option: option,
+	}
 }
 
 // Instance return a new Pongo2Render struct per request
 func (p Pongo2Render) Instance(name string, data interface{}) render.Render {
 	return Pongo2Render{
-		name: name,
-		data: data.(gin.H),
+		option: p.option,
+		name  : name,
+		data  : data.(gin.H),
 	}
 }
 
@@ -38,6 +47,10 @@ func (p Pongo2Render) Render(w http.ResponseWriter) error {
 	assetBytes, err := view.Asset(p.name)
 	if err != nil {
 		return err
+	}
+
+	for name, filter := range p.option.Filters {
+		pongo2.RegisterFilter(name, filter)
 	}
 
 	tpl, err := pongo2.FromString(string(assetBytes))

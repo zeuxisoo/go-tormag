@@ -6,6 +6,7 @@ import (
 
 	"github.com/urfave/cli"
 	"github.com/gin-gonic/gin"
+	"gopkg.in/flosch/pongo2.v3"
 
 	"github.com/zeuxisoo/go-tormag/pkg/render"
 	"github.com/zeuxisoo/go-tormag/routes"
@@ -40,14 +41,14 @@ func runWeb(c *cli.Context) {
 
 	engine.Use(gin.Recovery())
 
-	engine.SetFuncMap(template.FuncMap{
-		"says": func(value string) string {
-			return value + " built-in :D"
-		},
-		"add": func(a float64, b float64) float64 {
-			return a + b
-		},
-	})
+	// engine.SetFuncMap(template.FuncMap{
+	// 	"says": func(value string) string {
+	// 		return value + " built-in :D"
+	// 	},
+	// 	"add": func(a float64, b float64) float64 {
+	// 		return a + b
+	// 	},
+	// })
 
 	registerRender(engine)
 	registerRoutes(engine)
@@ -58,7 +59,17 @@ func runWeb(c *cli.Context) {
 func registerRender(engine *gin.Engine) {
 	// engine.HTMLRender = render.NewBaseRender(engine)
 	// engine.HTMLRender = render.NewPlushRender(engine)
-	engine.HTMLRender = render.NewPongo2Render()
+
+	engine.HTMLRender = render.NewPongo2Render(&render.Pongo2Option{
+		Filters: map[string]pongo2.FilterFunction{
+			"says": func(in *pongo2.Value, param *pongo2.Value) (out *pongo2.Value, err *pongo2.Error) {
+				value    := in.String()
+				argument := param.String()
+
+				return pongo2.AsValue(value + " - Check - " + argument), nil
+			},
+		},
+	})
 }
 
 func registerRoutes(engine *gin.Engine) {
