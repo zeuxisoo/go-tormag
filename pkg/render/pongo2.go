@@ -27,6 +27,10 @@ type Pongo2Render struct {
 
 // NewPongo2Render return the instance
 func NewPongo2Render(option *Pongo2Option) *Pongo2Render {
+	for name, filter := range option.Filters {
+		pongo2.RegisterFilter(name, filter)
+	}
+
 	return &Pongo2Render{
 		option: option,
 	}
@@ -50,10 +54,6 @@ func (p Pongo2Render) Render(w http.ResponseWriter) error {
 	assetBytes, err := view.Asset(p.name)
 	if err != nil {
 		return err
-	}
-
-	for name, filter := range p.option.Filters {
-		pongo2.RegisterFilter(name, filter)
 	}
 
 	tpl, err := pongo2.FromString(string(assetBytes))
