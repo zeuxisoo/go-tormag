@@ -40,15 +40,6 @@ func runWeb(c *cli.Context) {
 
 	engine.Use(gin.Recovery())
 
-	// engine.SetFuncMap(template.FuncMap{
-	// 	"says": func(value string) string {
-	// 		return value + " built-in :D"
-	// 	},
-	// 	"add": func(a float64, b float64) float64 {
-	// 		return a + b
-	// 	},
-	// })
-
 	registerRender(engine)
 	registerRoutes(engine)
 
