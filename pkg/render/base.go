@@ -21,24 +21,32 @@ import (
 	"github.com/zeuxisoo/go-tormag/pkg/view"
 )
 
+// BaseFunctions conversion from template.FuncMap
+type BaseFunctions template.FuncMap
+
+// BaseOption object
+type BaseOption struct {
+	Functions	BaseFunctions
+}
+
 // BaseRender object
 type BaseRender struct {
-	engine 	*gin.Engine
+	option 	*BaseOption
 	name 	string
 	data 	map[string]interface{}
 }
 
 // NewBaseRender return the instance
-func NewBaseRender(engine *gin.Engine) *BaseRender {
+func NewBaseRender(option *BaseOption) *BaseRender {
 	return &BaseRender{
-		engine: engine,
+		option: option,
 	}
 }
 
 // Instance return a new BaseRender struct per request
 func (b BaseRender) Instance(name string, data interface{}) render.Render {
 	return BaseRender{
-		engine: b.engine,
+		option: b.option,
 		name  : name,
 		data  : data.(gin.H),
 	}
@@ -55,7 +63,7 @@ func (b BaseRender) Render(w http.ResponseWriter) error {
 		return err
 	}
 
-	tpl, err := template.New("").Funcs(b.engine.FuncMap).Parse(string(assetBytes))
+	tpl, err := template.New("").Funcs((template.FuncMap)(b.option.Functions)).Parse(string(assetBytes))
 	if err != nil {
 		return err
 	}

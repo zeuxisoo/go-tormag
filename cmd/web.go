@@ -56,16 +56,26 @@ func runWeb(c *cli.Context) {
 }
 
 func registerRender(engine *gin.Engine) {
-	// engine.HTMLRender = render.NewBaseRender(engine)
+	engine.HTMLRender = render.NewBaseRender(&render.BaseOption{
+		Functions: render.BaseFunctions{
+			// e.g. {{ says "Hello world" ":D" }} ==> Hello world - Check - :D
+			"says": func(value ...interface{}) string {
+				helloWorld  := value[0].(string)
+				suffixWorld := value[1].(string)
 
-	engine.HTMLRender = render.NewPlushRender(&render.PlushOption{
-		Functions: render.PlushFunctions{
-			// eg. <%= says("Hello world", ":D") %> ==> Hello world - Check - :D
-			"says": func(value string, argument string) string {
-				return value + " - Check - " + argument
+				return helloWorld + " - Check - " + suffixWorld
 			},
 		},
 	})
+
+	// engine.HTMLRender = render.NewPlushRender(&render.PlushOption{
+	// 	Functions: render.PlushFunctions{
+			// e.g. <%= says("Hello world", ":D") %> ==> Hello world - Check - :D
+	// 		"says": func(value string, argument string) string {
+	// 			return value + " - Check - " + argument
+	// 		},
+	// 	},
+	// })
 
 	// engine.HTMLRender = render.NewPongo2Render(&render.Pongo2Option{
 	// 	Filters: map[string]pongo2.FilterFunction{
