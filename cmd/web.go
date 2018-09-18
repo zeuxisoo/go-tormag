@@ -2,11 +2,10 @@ package cmd
 
 import (
 	"fmt"
-	"html/template"
 
 	"github.com/urfave/cli"
 	"github.com/gin-gonic/gin"
-	"gopkg.in/flosch/pongo2.v3"
+	// "gopkg.in/flosch/pongo2.v3"
 
 	"github.com/zeuxisoo/go-tormag/pkg/render"
 	"github.com/zeuxisoo/go-tormag/routes"
@@ -58,18 +57,26 @@ func runWeb(c *cli.Context) {
 
 func registerRender(engine *gin.Engine) {
 	// engine.HTMLRender = render.NewBaseRender(engine)
-	// engine.HTMLRender = render.NewPlushRender(engine)
 
-	engine.HTMLRender = render.NewPongo2Render(&render.Pongo2Option{
-		Filters: map[string]pongo2.FilterFunction{
-			"says": func(in *pongo2.Value, param *pongo2.Value) (out *pongo2.Value, err *pongo2.Error) {
-				value    := in.String()
-				argument := param.String()
-
-				return pongo2.AsValue(value + " - Check - " + argument), nil
+	engine.HTMLRender = render.NewPlushRender(&render.PlushOption{
+		Functions: render.PlushFunctions{
+			// eg. <%= says("Hello world", ":D") %> ==> Hello world - Check - :D
+			"says": func(value string, argument string) string {
+				return value + " - Check - " + argument
 			},
 		},
 	})
+
+	// engine.HTMLRender = render.NewPongo2Render(&render.Pongo2Option{
+	// 	Filters: map[string]pongo2.FilterFunction{
+	// 		"says": func(in *pongo2.Value, param *pongo2.Value) (out *pongo2.Value, err *pongo2.Error) {
+	// 			value    := in.String()
+	// 			argument := param.String()
+
+	// 			return pongo2.AsValue(value + " - Check - " + argument), nil
+	// 		},
+	// 	},
+	// })
 }
 
 func registerRoutes(engine *gin.Engine) {

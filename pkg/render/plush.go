@@ -2,6 +2,7 @@ package render
 
 import (
 	"net/http"
+	"html/template"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/render"
@@ -10,24 +11,32 @@ import (
 	"github.com/zeuxisoo/go-tormag/pkg/view"
 )
 
+// PlushFunctions conversion from template.FuncMap
+type PlushFunctions template.FuncMap
+
+// PlushOption object
+type PlushOption struct {
+	Functions	PlushFunctions
+}
+
 // PlushRender object
 type PlushRender struct {
-	engine  *gin.Engine
+	option 	*PlushOption
 	name 	string
 	context gin.H
 }
 
 // NewPlushRender return the instance
-func NewPlushRender(engine *gin.Engine) *PlushRender {
+func NewPlushRender(option *PlushOption) *PlushRender {
 	return &PlushRender{
-		engine: engine,
+		option: option,
 	}
 }
 
 // Instance return a new PlushRender struct per request
 func (p PlushRender) Instance(name string, data interface{}) render.Render {
 	return PlushRender{
-		engine : p.engine,
+		option : p.option,
 		name   : name,
 		context: data.(gin.H),
 	}
@@ -44,7 +53,7 @@ func (p PlushRender) Render(w http.ResponseWriter) error {
 		return err
 	}
 
-	result, err := plush.BuffaloRenderer(string(assetBytes), p.context, p.engine.FuncMap)
+	result, err := plush.BuffaloRenderer(string(assetBytes), p.context, p.option.Functions)
 	if err != nil {
 		return err
 	}
