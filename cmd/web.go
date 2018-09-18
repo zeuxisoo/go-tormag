@@ -5,7 +5,7 @@ import (
 
 	"github.com/urfave/cli"
 	"github.com/gin-gonic/gin"
-	// "gopkg.in/flosch/pongo2.v3"
+	"gopkg.in/flosch/pongo2.v3"
 
 	"github.com/zeuxisoo/go-tormag/pkg/render"
 	"github.com/zeuxisoo/go-tormag/routes"
@@ -56,37 +56,37 @@ func runWeb(c *cli.Context) {
 }
 
 func registerRender(engine *gin.Engine) {
-	engine.HTMLRender = render.NewBaseRender(&render.BaseOption{
-		Functions: render.BaseFunctions{
-			// e.g. {{ says "Hello world" ":D" }} ==> Hello world - Check - :D
-			"says": func(value ...interface{}) string {
-				helloWorld  := value[0].(string)
-				suffixWorld := value[1].(string)
+	// engine.HTMLRender = render.NewBaseRender(&render.BaseOption{
+	// 	Functions: render.BaseFunctions{
+	// 		// e.g. {{ says "Hello world" ":D" }} ==> Hello world - Check - :D
+	// 		"says": func(value ...interface{}) string {
+	// 			helloWorld  := value[0].(string)
+	// 			suffixWorld := value[1].(string)
 
-				return helloWorld + " - Check - " + suffixWorld
-			},
-		},
-	})
+	// 			return helloWorld + " - Check - " + suffixWorld
+	// 		},
+	// 	},
+	// })
 
 	// engine.HTMLRender = render.NewPlushRender(&render.PlushOption{
 	// 	Functions: render.PlushFunctions{
-			// e.g. <%= says("Hello world", ":D") %> ==> Hello world - Check - :D
+	//		// e.g. <%= says("Hello world", ":D") %> ==> Hello world - Check - :D
 	// 		"says": func(value string, argument string) string {
 	// 			return value + " - Check - " + argument
 	// 		},
 	// 	},
 	// })
 
-	// engine.HTMLRender = render.NewPongo2Render(&render.Pongo2Option{
-	// 	Filters: map[string]pongo2.FilterFunction{
-	// 		"says": func(in *pongo2.Value, param *pongo2.Value) (out *pongo2.Value, err *pongo2.Error) {
-	// 			value    := in.String()
-	// 			argument := param.String()
+	engine.HTMLRender = render.NewPongo2Render(&render.Pongo2Option{
+		Filters: render.Pongo2FilterFunctions{
+			"says": func(in *pongo2.Value, param *pongo2.Value) (out *pongo2.Value, err *pongo2.Error) {
+				value    := in.String()
+				argument := param.String()
 
-	// 			return pongo2.AsValue(value + " - Check - " + argument), nil
-	// 		},
-	// 	},
-	// })
+				return pongo2.AsValue(value + " - Check - " + argument), nil
+			},
+		},
+	})
 }
 
 func registerRoutes(engine *gin.Engine) {

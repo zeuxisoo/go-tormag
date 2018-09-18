@@ -10,9 +10,12 @@ import (
 	"github.com/zeuxisoo/go-tormag/pkg/view"
 )
 
+// Pongo2FilterFunctions conversion from pongo2.FilterFunction
+type Pongo2FilterFunctions map[string]pongo2.FilterFunction
+
 // Pongo2Option object
 type Pongo2Option struct {
-	Filters	map[string]pongo2.FilterFunction
+	Filters	Pongo2FilterFunctions
 }
 
 // Pongo2Render object
