@@ -4,10 +4,12 @@ import (
 	"fmt"
 
 	"github.com/urfave/cli"
-	"github.com/gin-gonic/gin"
+    "github.com/gin-gonic/gin"
+    ginStatic "github.com/gin-contrib/static"
 	"gopkg.in/flosch/pongo2.v3"
 
-	"github.com/zeuxisoo/go-tormag/pkg/render"
+    "github.com/zeuxisoo/go-tormag/pkg/render"
+    "github.com/zeuxisoo/go-tormag/pkg/static"
 	"github.com/zeuxisoo/go-tormag/routes"
 )
 
@@ -38,6 +40,7 @@ func runWeb(c *cli.Context) {
 	//
 	engine := gin.Default()
 
+    engine.Use(ginStatic.Serve("/static", static.NewFileSystem("static")))
 	engine.Use(gin.Recovery())
 
 	registerRender(engine)
@@ -81,5 +84,5 @@ func registerRender(engine *gin.Engine) {
 }
 
 func registerRoutes(engine *gin.Engine) {
-	engine.GET("/", routes.HomeGet)
+    engine.GET("/", routes.HomeGet)
 }

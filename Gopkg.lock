@@ -40,6 +40,14 @@
   revision = "454541ec3da2a73fc34fd049b19ee5777bf19345"
 
 [[projects]]
+  digest = "1:f4f6279cb37479954644babd8f8ef00584ff9fa63555d2c6718c1c3517170202"
+  name = "github.com/elazarl/go-bindata-assetfs"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "30f82fa23fd844bd5bb1e5f216db87fd77b5eb43"
+  version = "v1.0.0"
+
+[[projects]]
   digest = "1:ca82a3b99694824c627573c2a76d0e49719b4a9c02d1d85a2ac91f1c1f52ab9b"
   name = "github.com/fatih/structs"
   packages = ["."]
@@ -48,20 +56,20 @@
   version = "v1.0"
 
 [[projects]]
-  digest = "1:434aab943cc1c082c9df36bd4b1f107d9ef4af930d2ce13d3f2eb008df9196f0"
-  name = "github.com/flosch/pongo2"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "5e81b817a0c48c1c57cdf1a9056cf76bdee02ca9"
-  version = "v3.0"
-
-[[projects]]
   branch = "master"
   digest = "1:36fe9527deed01d2a317617e59304eb2c4ce9f8a24115bcc5c2e37b3aee5bae4"
   name = "github.com/gin-contrib/sse"
   packages = ["."]
   pruneopts = "UT"
   revision = "22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae"
+
+[[projects]]
+  branch = "master"
+  digest = "1:2b0df69b0d482719446858d567d12f4565d1908ff563db27250cb2cde7f461ec"
+  name = "github.com/gin-contrib/static"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "8cbcdde04781ade853025b0ff7001aaf0ed06150"
 
 [[projects]]
   digest = "1:d5083934eb25e45d17f72ffa86cae3814f4a9d6c073c4f16b64147169b245606"
@@ -381,7 +389,8 @@
   analyzer-version = 1
   input-imports = [
     "github.com/anacrolix/torrent/metainfo",
-    "github.com/flosch/pongo2",
+    "github.com/elazarl/go-bindata-assetfs",
+    "github.com/gin-contrib/static",
     "github.com/gin-gonic/gin",
     "github.com/gin-gonic/gin/render",
     "github.com/gobuffalo/plush",
