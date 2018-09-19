@@ -25,11 +25,13 @@ run:
 
 tools:
 	@go get -u github.com/jteeuwen/go-bindata/...
-	@go get github.com/elazarl/go-bindata-assetfs
 
-assets:
+bindata:
 	# package: views, output: pkg/view/view.go, ignore: *.go, template: views/**
 	@go-bindata -pkg view -o pkg/view/view.go -ignore=.go views/...
+
+	# package: static, output: pkg/static/static.go, ignore: *.go, template: static/**
+	@go-bindata -pkg static -o pkg/static/static.go -ignore=.go static/...
 
 build: build-macos build-windows build-windows build-freebsd build-linux
 

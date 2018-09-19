@@ -55,3 +55,7 @@
 [[constraint]]
   branch = "master"
   name = "github.com/gin-contrib/static"
+
+[[constraint]]
+  name = "github.com/elazarl/go-bindata-assetfs"
+  version = "1.0.0"
