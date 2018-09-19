@@ -53,7 +53,7 @@
   version = "3.0.0"
 
 [[constraint]]
-  branch = "master"
+  revision = "8cbcdde04781ade853025b0ff7001aaf0ed06150"
   name = "github.com/gin-contrib/static"
 
 [[constraint]]
