@@ -82,5 +82,4 @@ func registerRender(engine *gin.Engine) {
 
 func registerRoutes(engine *gin.Engine) {
 	engine.GET("/", routes.HomeGet)
-	engine.GET("/about", routes.AboutGet)
 }
