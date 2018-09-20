@@ -48,12 +48,12 @@ export default {
 
     mounted() {
         // Auto collapse then menu when navbar item clicked
-        $(document).on("click", ".navbar-nav > li > a", e => {
+        $(document).on("click", ".navbar-nav > li > a", () => {
             $('.navbar-collapse').collapse('hide');
         });
 
         // Auto active nav item when it clicked
-        $(document).on('click', '.nav-item .nav-link', function (e) {
+        $(document).on('click', '.nav-item .nav-link', () => {
             // Remove active state on other nav item
             $(".nav-item").removeClass('active');
 
