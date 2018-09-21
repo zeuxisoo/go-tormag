@@ -8,9 +8,9 @@
                     ref="uploadZone"
                     class-name="upload-zone"
                     label-idle="Drop files here..."
-                    server="http://127.0.0.1:3000/upload"
                     allow-multiple="true"
                     accepted-file-types="application/x-bittorrent, application/octet-stream"
+                    v-bind:server="serverOptions"
                     v-bind:files="uploadFiles"
                     v-on:processfile="handleProcessFile" />
             </div>
@@ -55,7 +55,19 @@ export default {
 
     data() {
         return {
-            uploadFiles: []
+            uploadFiles: [],
+            serverOptions: {
+                url: 'http://127.0.0.1:3000',
+                process: {
+                    url: '/convert',
+                    method: 'POST',
+                    withCredentials: false,
+                    headers: {},
+                    timeout: 7000,
+                    onload: null,
+                    onerror: null
+                }
+            }
         }
     },
 
