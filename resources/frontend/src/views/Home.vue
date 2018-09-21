@@ -1,97 +1,74 @@
 <template>
     <div class="home">
-        <form method="post" action="" enctype="multipart/form-data"
-            v-bind:class="['upload-box', draggingClass]"
-            v-on:dragover.prevent="setIsDragging($event, true)"
-            v-on:dragenter.prevent="setIsDragging($event, true)"
-            v-on:dragleave.prevent="setIsDragging($event, false)"
-            v-on:dragend.prevent="setIsDragging($event, false)"
-            v-on:drop.prevent="handleDrop($event)">
-            <div class="text-center">
-                <input type="file" name="filess" id="file" class="input-file" v-on:change="handleChoose($event)" multiple allowdirs />
-                <label for="file">
-                    <p><strong>Choose a file</strong></p>
-                    <p>- OR -</p>
-                    <p><strong>Drag it here</strong></p>
-                </label>
-                <button type="submit" class="upload-button">Upload</button>
+        <div class="card card-default">
+            <div class="card-header">Torrent file or Directory</div>
+            <div class="card-body">
+                <file-pond
+                    name="file"
+                    ref="uploadZone"
+                    class-name="upload-zone"
+                    label-idle="Drop files here..."
+                    server="http://127.0.0.1:3000/upload"
+                    allow-multiple="true"
+                    accepted-file-types="application/x-bittorrent, application/octet-stream"
+                    v-bind:files="uploadFiles"
+                    v-on:processfile="handleProcessFile" />
             </div>
-        </form>
+        </div>
+
+        <hr>
+
+        <div class="card card-default">
+            <div class="card-header">Converted Result</div>
+            <div class="card-body">
+                <div class="alert alert-info text-center" role="alert">
+                    Please drop the files to the drop zone first
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
-<style lang="scss" scoped>
-.upload-box {
-    outline: 2px dashed #c7cbf8;
-    outline-offset: -10px;
-    transition: outline-offset .15s ease-in-out, background-color .15s linear;
+<style lang="scss">
+@import "~filepond/dist/filepond.min.css";
 
-    font-size: 1.25rem;
-    background-color: #e5ecee;
-    position: relative;
-    padding: 100px 20px;
+.filepond--panel-root {
+    background-color: rgb(227, 237, 243);
+}
 
-    &.is-dragging {
-        outline: 2px dashed #0088FF;
-        outline-offset: -20px;
-        background: #e2efff;
-    }
-
-    .input-file {
-        width: 0.1px;
-        height: 0.1px;
-        opacity: 0;
-        overflow: hidden;
-        position: absolute;
-        z-index: -1;
-    }
-
-    .upload-button {
-        display: none;
-    }
+.filepond--drop-label {
+    color: rgb(169, 166, 206);
 }
 </style>
 
 <script>
+import VueFilePond from 'vue-filepond';
+
+const FilePond = VueFilePond();
+
 export default {
     name: "home",
 
-    data() {
-        return {
-            isDragging: false
-        }
+    components: {
+        "file-pond": FilePond
     },
 
-    computed: {
-        draggingClass() {
-            return this.isDragging === true ? 'is-dragging' : '';
+    data() {
+        return {
+            uploadFiles: []
         }
     },
 
     methods: {
-        setIsDragging(e, state) {
-            this.isDragging = state;
-        },
+        handleProcessFile(error, file) {
+            if (error) {
+                console.log("Oops", error);
+            }else{
+                console.log(file);
 
-        handleDrop(e) {
-            this.setIsDragging(e, false);
-
-            // TODO: upload drag and drop file or directory
-            var dt = event.dataTransfer;
-            if (dt.items && dt.items.length && "webkitGetAsEntry" in dt.items[0]) {
-                console.log(1, dt.items);
-            } else if ("getFilesAndDirectories" in dt) {
-                console.log(2, dt);
-            } else if (dt.files) {
-                console.log(3, dt.files);
-            } else {
-                console.log(4);
+                // Remove the completed file from drop zone
+                // this.$refs.uploadZone.removeFile(file.id);
             }
-        },
-
-        handleChoose(e) {
-            // TODO: upload single file
-            console.log(e.target.files);
         }
     }
 }
