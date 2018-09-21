@@ -56,6 +56,13 @@
   version = "v1.0"
 
 [[projects]]
+  digest = "1:99eb6794eb62024f271fe313239ea3dd02bd84a121d63ca6ae0cf3c80c30e301"
+  name = "github.com/gin-contrib/cors"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "a3af05a9b13e6ef9a472660fbb920ac7765544ea"
+
+[[projects]]
   branch = "master"
   digest = "1:36fe9527deed01d2a317617e59304eb2c4ce9f8a24115bcc5c2e37b3aee5bae4"
   name = "github.com/gin-contrib/sse"
@@ -409,6 +416,7 @@
   input-imports = [
     "github.com/anacrolix/torrent/metainfo",
     "github.com/elazarl/go-bindata-assetfs",
+    "github.com/gin-contrib/cors",
     "github.com/gin-contrib/static",
     "github.com/gin-gonic/gin",
     "github.com/gin-gonic/gin/render",

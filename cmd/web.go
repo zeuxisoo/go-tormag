@@ -1,11 +1,13 @@
 package cmd
 
 import (
-	"fmt"
+    "fmt"
+    "time"
 
 	"github.com/urfave/cli"
     "github.com/gin-gonic/gin"
     ginStatic "github.com/gin-contrib/static"
+    "github.com/gin-contrib/cors"
 	"gopkg.in/flosch/pongo2.v3"
 
     "github.com/zeuxisoo/go-tormag/pkg/render"
@@ -38,10 +40,22 @@ func runWeb(c *cli.Context) {
 	}
 
 	//
-	engine := gin.Default()
+    engine := gin.Default()
+    engine.MaxMultipartMemory = 8 << 20 // Set a lower memory limit for multipart forms to 8MB (default is 32MB)
 
     engine.Use(ginStatic.Serve("/static", static.NewFileSystem("static")))
-	engine.Use(gin.Recovery())
+    engine.Use(cors.New(cors.Config{
+		AllowOrigins    : []string{"http://127.0.0.1:8080"},    // TODO: move to config
+		AllowMethods    : []string{"POST"},
+		AllowHeaders    : []string{"Origin"},
+		ExposeHeaders   : []string{"Content-Length"},
+        AllowCredentials: true,
+        AllowOriginFunc : func(origin string) bool {
+			return true
+		},
+		MaxAge          : 12 * time.Hour,
+	}))
+    engine.Use(gin.Recovery())
 
 	registerRender(engine)
 	registerRoutes(engine)
@@ -85,4 +99,5 @@ func registerRender(engine *gin.Engine) {
 
 func registerRoutes(engine *gin.Engine) {
     engine.GET("/", routes.HomeGet)
+    engine.POST("/convert", routes.ConvertPost)
 }
