@@ -22,6 +22,7 @@ var (
     //
     Address string
     Port    string
+    Mode    string
 
     //
     AttachmentPath string
@@ -88,6 +89,7 @@ func NewSetting() {
     AppStoragePath = section.Key("APP_STORAGE_PATH").MustString("storage")
     Address        = section.Key("ADDRESS").MustString("0.0.0.0")
     Port           = section.Key("PORT").MustString("3000")
+    Mode           = section.Key("MODE").MustString("dev")
 
     section        = Config.Section("attachment")
     AttachmentPath = section.Key("PATH").MustString(path.Join(AppStoragePath, "attachments2"))

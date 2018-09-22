@@ -3,6 +3,7 @@ package cmd
 import (
     "fmt"
     "time"
+    "strings"
 
 	"github.com/urfave/cli"
     "github.com/gin-gonic/gin"
@@ -48,11 +49,15 @@ func runWeb(c *cli.Context) {
         setting.Port = c.String("port")
     }
 
+    if c.IsSet("mode") {
+        setting.Mode = c.String("mode")
+    }
+
 	//
 	appURL := fmt.Sprintf("%s:%s", setting.Address, setting.Port)
 
 	//
-	if c.String("mode") == "dev" {
+	if strings.ToLower(setting.Mode) == "dev" {
 		gin.SetMode(gin.DebugMode)
 	}else{
 		gin.SetMode(gin.ReleaseMode)
