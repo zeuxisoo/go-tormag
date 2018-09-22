@@ -8,6 +8,10 @@ import (
 	"github.com/zeuxisoo/go-tormag/cmd"
 )
 
+//go:generate go-bindata -pkg view -o pkg/view/view.go -ignore=.go views/...
+//go:generate go-bindata -pkg static -o pkg/static/static.go -ignore=.go static/...
+//go:generate go-bindata -pkg config -o config/config.go -ignore=.go  config/...
+
 // AppVersion number
 const AppVersion = "0.1.0"
 
