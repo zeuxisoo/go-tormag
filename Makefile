@@ -8,6 +8,8 @@ all:
 	@echo "make deps         : Install the dependencies and tools"
 	@echo "make run          : Run the program"
 	@echo "make tools        : Install the tools"
+	@echo "make bindata		 : Generate all bindata base on go-bindata command"
+	@echo "make generate     : Run the go generate command"
 	@echo "make build        : Build the biniary file"
 	@echo "make build-macos  : Build the macos biniary file only"
 	@echo "make build-windows: Build the windows biniary file only"
@@ -36,7 +38,10 @@ bindata:
 	# package: config, output: config/config.go, ignore: *.go, template: config/**
 	@go-bindata -pkg config -o config/config.go -ignore=.go  config/...
 
-build: build-macos build-windows build-windows build-freebsd build-linux
+generate:
+	@go generate -x
+
+build: bindata build-macos build-windows build-windows build-freebsd build-linux
 
 build-macos:
 	@echo "Building for macos ..."
