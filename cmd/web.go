@@ -10,6 +10,7 @@ import (
     "github.com/gin-contrib/cors"
 	"gopkg.in/flosch/pongo2.v3"
 
+    "github.com/zeuxisoo/go-tormag/pkg/setting"
     "github.com/zeuxisoo/go-tormag/pkg/render"
     "github.com/zeuxisoo/go-tormag/pkg/static"
 	"github.com/zeuxisoo/go-tormag/routes"
@@ -24,13 +25,31 @@ var Web = cli.Command{
 	Flags: []cli.Flag{
 		stringFlag("address, a", "0.0.0.0", "Server address"),
 		stringFlag("port, p", "3000", "Server port"),
-		stringFlag("mode, m", "dev", "Server mode"),
+        stringFlag("mode, m", "dev", "Server mode"),
+        stringFlag("config, c", "", "Custom server config file"),
 	},
 }
 
 func runWeb(c *cli.Context) {
+    // Set custom config file
+    if c.IsSet("config") {
+        setting.CustomConfig = c.String("config")
+    }
+
+    // Init settings from config file
+    setting.NewSetting()
+
+    // Overwrite the custom argument to settings
+    if c.IsSet("address") {
+        setting.Address = c.String("address")
+    }
+
+    if c.IsSet("port") {
+        setting.Port = c.String("port")
+    }
+
 	//
-	appURL := fmt.Sprintf("%s:%s", c.String("address"), c.String("port"))
+	appURL := fmt.Sprintf("%s:%s", setting.Address, setting.Port)
 
 	//
 	if c.String("mode") == "dev" {

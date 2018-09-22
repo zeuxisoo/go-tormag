@@ -63,3 +63,7 @@
 [[constraint]]
   revision = "a3af05a9b13e6ef9a472660fbb920ac7765544ea"
   name = "github.com/gin-contrib/cors"
+
+[[constraint]]
+  name = "gopkg.in/ini.v1"
+  version = "1.38.2"
