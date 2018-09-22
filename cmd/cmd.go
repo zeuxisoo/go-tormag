@@ -18,7 +18,6 @@ func printCommandHelpAndExit(c *cli.Context, command string) {
 	cli.ShowCommandHelpAndExit(c, command, 0)
 }
 
-
 func printConvertTorrentError(message string, torrentPath string, err error) {
 	logger.Errorf("[Error]")
 	logger.Errorf("=> %s", message)
