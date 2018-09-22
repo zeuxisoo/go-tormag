@@ -33,6 +33,9 @@ bindata:
 	# package: static, output: pkg/static/static.go, ignore: *.go, template: static/**
 	@go-bindata -pkg static -o pkg/static/static.go -ignore=.go static/...
 
+	# package: config, output: config/config.go, ignore: *.go, template: config/**
+	@go-bindata -pkg config -o config/config.go -ignore=.go  config/...
+
 build: build-macos build-windows build-windows build-freebsd build-linux
 
 build-macos:
