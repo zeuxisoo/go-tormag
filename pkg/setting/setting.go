@@ -92,7 +92,7 @@ func NewSetting() {
     Mode           = section.Key("MODE").MustString("dev")
 
     section        = Config.Section("attachment")
-    AttachmentPath = section.Key("PATH").MustString(path.Join(AppStoragePath, "attachments2"))
+    AttachmentPath = section.Key("PATH").MustString(path.Join(AppStoragePath, "attachments"))
 
     if filepath.IsAbs(AttachmentPath) == false {
         AttachmentPath = path.Join(appDirectory, AttachmentPath)
