@@ -65,7 +65,7 @@ func runWeb(c *cli.Context) {
 
 	//
     engine := gin.Default()
-    engine.MaxMultipartMemory = 8 << 20 // Set a lower memory limit for multipart forms to 8MB (default is 32MB)
+    engine.MaxMultipartMemory = setting.AttachmentMaxSize << 20 // Set a lower memory limit for multipart (default: 4MB, app.ini: 8MB)
 
     engine.Use(ginStatic.Serve("/static", static.NewFileSystem("static")))
     engine.Use(cors.New(cors.Config{

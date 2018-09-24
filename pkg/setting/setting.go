@@ -25,7 +25,8 @@ var (
     Mode    string
 
     //
-    AttachmentPath string
+    AttachmentPath      string
+    AttachmentMaxSize   int64
 
     //
     Config          *ini.File
@@ -93,6 +94,7 @@ func NewSetting() {
 
     section        = Config.Section("attachment")
     AttachmentPath = section.Key("PATH").MustString(path.Join(AppStoragePath, "attachments"))
+    AttachmentMaxSize = section.Key("MAX_SIZE").MustInt64(4)
 
     if filepath.IsAbs(AttachmentPath) == false {
         AttachmentPath = path.Join(appDirectory, AttachmentPath)
