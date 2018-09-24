@@ -68,22 +68,28 @@ func runWeb(c *cli.Context) {
     engine.MaxMultipartMemory = setting.AttachmentMaxSize << 20 // Set a lower memory limit for multipart (default: 4MB, app.ini: 8MB)
 
     engine.Use(ginStatic.Serve("/static", static.NewFileSystem("static")))
-    engine.Use(cors.New(cors.Config{
-		AllowOrigins    : []string{"http://127.0.0.1:8080"},    // TODO: move to config
-		AllowMethods    : []string{"POST"},
-		AllowHeaders    : []string{"Origin"},
-		ExposeHeaders   : []string{"Content-Length"},
-        AllowCredentials: true,
-        AllowOriginFunc : func(origin string) bool {
-			return true
-		},
-		MaxAge          : 12 * time.Hour,
-	}))
+
+    if setting.CrossOriginEnable == true {
+        engine.Use(cors.New(cors.Config{
+            AllowOrigins    : setting.CrossOriginAllowOrigins,
+            AllowMethods    : []string{"POST"},
+            AllowHeaders    : []string{"Origin"},
+            ExposeHeaders   : []string{"Content-Length"},
+            AllowCredentials: true,
+            AllowOriginFunc : func(origin string) bool {
+                return true
+            },
+            MaxAge          : 12 * time.Hour,
+        }))
+    }
+
     engine.Use(gin.Recovery())
 
+    //
 	registerRender(engine)
 	registerRoutes(engine)
 
+    //
 	engine.Run(appURL)
 }
 

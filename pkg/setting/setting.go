@@ -29,6 +29,10 @@ var (
     AttachmentMaxSize   int64
 
     //
+    CrossOriginEnable       bool
+    CrossOriginAllowOrigins []string
+
+    //
     Config          *ini.File
     CustomConfig    string
 )
@@ -97,6 +101,10 @@ func NewSetting() {
     section           = Config.Section("attachment")
     AttachmentPath    = section.Key("PATH").MustString(path.Join(AppStoragePath, "attachments"))
     AttachmentMaxSize = section.Key("MAX_SIZE").MustInt64(4)
+
+    section                 = Config.Section("cors")
+    CrossOriginEnable       = section.Key("ENABLE").MustBool(false)
+    CrossOriginAllowOrigins = section.Key("ALLOW_ORIGINS").Strings(",")
 
     if filepath.IsAbs(AttachmentPath) == false {
         AttachmentPath = path.Join(appDirectory, AttachmentPath)
