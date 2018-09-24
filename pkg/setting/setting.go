@@ -52,6 +52,7 @@ func executablePath() (string, error) {
 	return filepath.Abs(file)
 }
 
+// AppDirectory return the application directory path
 func AppDirectory() (string, error) {
     i := strings.LastIndex(AppPath, "/")
 
@@ -62,6 +63,7 @@ func AppDirectory() (string, error) {
     return AppPath[:i], nil
 }
 
+// NewSetting will setup the application config constant
 func NewSetting() {
     //
     appDirectory, err := AppDirectory()
