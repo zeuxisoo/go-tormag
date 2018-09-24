@@ -94,8 +94,8 @@ func NewSetting() {
     Port           = section.Key("PORT").MustString("3000")
     Mode           = section.Key("MODE").MustString("dev")
 
-    section        = Config.Section("attachment")
-    AttachmentPath = section.Key("PATH").MustString(path.Join(AppStoragePath, "attachments"))
+    section           = Config.Section("attachment")
+    AttachmentPath    = section.Key("PATH").MustString(path.Join(AppStoragePath, "attachments"))
     AttachmentMaxSize = section.Key("MAX_SIZE").MustInt64(4)
 
     if filepath.IsAbs(AttachmentPath) == false {
