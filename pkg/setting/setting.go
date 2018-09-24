@@ -29,8 +29,13 @@ var (
     AttachmentMaxSize   int64
 
     //
-    CrossOriginEnable       bool
-    CrossOriginAllowOrigins []string
+    CrossOriginEnable           bool
+    CrossOriginAllowOrigins     []string
+    CrossOriginAllowMethods     []string
+    CrossOriginAllowHeaders     []string
+    CrossOriginExposeHeaders    []string
+    CrossOriginAllowCredentials bool
+    CrossOriginMaxAge           int
 
     //
     Config          *ini.File
@@ -102,9 +107,14 @@ func NewSetting() {
     AttachmentPath    = section.Key("PATH").MustString(path.Join(AppStoragePath, "attachments"))
     AttachmentMaxSize = section.Key("MAX_SIZE").MustInt64(4)
 
-    section                 = Config.Section("cors")
-    CrossOriginEnable       = section.Key("ENABLE").MustBool(false)
-    CrossOriginAllowOrigins = section.Key("ALLOW_ORIGINS").Strings(",")
+    section                     = Config.Section("cors")
+    CrossOriginEnable           = section.Key("ENABLE").MustBool(false)
+    CrossOriginAllowOrigins     = section.Key("ALLOW_ORIGINS").Strings(",")
+    CrossOriginAllowMethods     = section.Key("ALLOW_METHODS").Strings(",")
+    CrossOriginAllowHeaders     = section.Key("ALLOW_HEADERS").Strings(",")
+    CrossOriginExposeHeaders    = section.Key("EXPOSE_HEADERS").Strings(",")
+    CrossOriginAllowCredentials = section.Key("ALLOW_CREDENTIALS").MustBool(true)
+    CrossOriginMaxAge           = section.Key("MAX_AGE").MustInt(12)
 
     if filepath.IsAbs(AttachmentPath) == false {
         AttachmentPath = path.Join(appDirectory, AttachmentPath)

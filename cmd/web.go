@@ -72,14 +72,14 @@ func runWeb(c *cli.Context) {
     if setting.CrossOriginEnable == true {
         engine.Use(cors.New(cors.Config{
             AllowOrigins    : setting.CrossOriginAllowOrigins,
-            AllowMethods    : []string{"POST"},
-            AllowHeaders    : []string{"Origin"},
-            ExposeHeaders   : []string{"Content-Length"},
-            AllowCredentials: true,
+            AllowMethods    : setting.CrossOriginAllowMethods,
+            AllowHeaders    : setting.CrossOriginAllowHeaders,
+            ExposeHeaders   : setting.CrossOriginExposeHeaders,
+            AllowCredentials: setting.CrossOriginAllowCredentials,
             AllowOriginFunc : func(origin string) bool {
                 return true
             },
-            MaxAge          : 12 * time.Hour,
+            MaxAge          : time.Duration(setting.CrossOriginMaxAge) * time.Hour,
         }))
     }
 
