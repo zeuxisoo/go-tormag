@@ -4,7 +4,9 @@ import (
     "fmt"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
+    "github.com/gin-gonic/gin"
+
+    "github.com/zeuxisoo/go-tormag/pkg/utils"
 )
 
 // ConvertPost return the convert state
@@ -18,10 +20,12 @@ func ConvertPost(c *gin.Context) {
     }else{
         fmt.Println(file.Filename)
 
-        // TODO: store the file
-
-        ok      = true
-        message = "Successfully, File converted"
+        if utils.IsTorrentFile(file.Filename) == false {
+            message = "The upload file is not torrent file"
+        }else{
+            ok      = true
+            message = "Successfully, File converted"
+        }
     }
 
     c.JSON(http.StatusOK, gin.H{
