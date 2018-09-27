@@ -1,8 +1,19 @@
 package utils
 
 import (
+    "fmt"
     "os"
 )
+
+// IsDirectoryExists to check the path is or not exists
+func IsDirectoryExists(path string) bool {
+    _, err := os.Stat(path)
+
+    // Must IsNotExist
+    // - https://github.com/golang/go/blob/master/src/os/error.go#L76
+    // - https://github.com/golang/go/blob/master/src/os/error_unix.go#L11-L19
+    return os.IsNotExist(err) == false
+}
 
 // IsDirectory to check the path is or not directory
 func IsDirectory(path string) bool {
