@@ -17,12 +17,12 @@ import (
 var (
     //
     AppPath         string
-    AppStoragePath  string
 
     //
-    Address string
-    Port    string
-    Mode    string
+    Address         string
+    Port            string
+    Mode            string
+    StoragePath     string
 
     //
     AttachmentPath      string
@@ -97,14 +97,14 @@ func NewSetting() {
     //
     var section *ini.Section
 
-    section        = Config.Section("server")
-    AppStoragePath = section.Key("APP_STORAGE_PATH").MustString("storage")
-    Address        = section.Key("ADDRESS").MustString("0.0.0.0")
-    Port           = section.Key("PORT").MustString("3000")
-    Mode           = section.Key("MODE").MustString("dev")
+    section     = Config.Section("server")
+    Address     = section.Key("ADDRESS").MustString("0.0.0.0")
+    Port        = section.Key("PORT").MustString("3000")
+    Mode        = section.Key("MODE").MustString("dev")
+    StoragePath = section.Key("STORAGE_PATH").MustString("storage")
 
     section           = Config.Section("attachment")
-    AttachmentPath    = section.Key("PATH").MustString(path.Join(AppStoragePath, "attachments"))
+    AttachmentPath    = section.Key("PATH").MustString(path.Join(StoragePath, "attachments"))
     AttachmentMaxSize = section.Key("MAX_SIZE").MustInt64(4)
 
     section                     = Config.Section("cors")
