@@ -1,11 +1,11 @@
 package routes
 
 import (
-    "fmt"
 	"net/http"
 
     "github.com/gin-gonic/gin"
 
+    "github.com/zeuxisoo/go-tormag/pkg/setting"
     "github.com/zeuxisoo/go-tormag/pkg/utils"
 )
 
@@ -22,6 +22,8 @@ func ConvertPost(c *gin.Context) {
 
         if utils.IsTorrentFile(file.Filename) == false {
             message = "The upload file is not torrent file"
+        }else if utils.IsBiggerFile(file.Size, setting.AttachmentMaxSize) == true {
+            message = fmt.Sprintf("The upload file is bigger than %dMB", setting.AttachmentMaxSize)
         }else{
             ok      = true
             message = "Successfully, File converted"

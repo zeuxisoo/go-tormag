@@ -1,9 +1,10 @@
 package utils
 
 import (
-	"strings"
+    "fmt"
     "os"
     "path"
+    "strings"
 )
 
 // GetFileExtension return the file extension
@@ -31,4 +32,15 @@ func IsTorrentFile(filePath string) bool {
     extension := GetFileExtension(filePath)
 
     return IsMatchFileExtension(".torrent", extension)
+}
+
+// IsBiggerFile return the file size (Bytes) is or not bigger than setting.MAX_SIZE (MegaBytes) size
+func IsBiggerFile(fileSize int64, defaultFileSize int64) bool {
+    // Convert Bytes to KB
+    fileSizeInKB := fileSize / 1024
+
+    // Convert MB to KB
+    defaultSizeInKB := defaultFileSize * 1024
+
+    return fileSizeInKB > defaultSizeInKB
 }
