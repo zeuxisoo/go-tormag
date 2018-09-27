@@ -1,6 +1,7 @@
 package routes
 
 import (
+    "fmt"
 	"net/http"
 
     "github.com/gin-gonic/gin"
@@ -24,6 +25,8 @@ func ConvertPost(c *gin.Context) {
             message = "The upload file is not torrent file"
         }else if utils.IsBiggerFile(file.Size, setting.AttachmentMaxSize) == true {
             message = fmt.Sprintf("The upload file is bigger than %dMB", setting.AttachmentMaxSize)
+        }else if utils.CreateOrIsDirectoryExists(setting.AttachmentPath) == false {
+            message = "Cannot create storage directory"
         }else{
             ok      = true
             message = "Successfully, File converted"
