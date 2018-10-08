@@ -27,18 +27,13 @@ func ConvertPost(c *gin.Context) {
             message = "The upload file is not torrent file"
         }else if utils.IsBiggerFile(file.Size, setting.AttachmentMaxSize) == true {
             message = fmt.Sprintf("The upload file is bigger than %dMB", setting.AttachmentMaxSize)
+        }else if md5, err := utils.GetFileMd5(file); err != nil {
+            message = fmt.Sprintf("Cannot get the md5 hash from upload file: %v", err)
         }else{
-            md5, err := utils.GetFileMd5(file)
-            if err != nil {
-                message = fmt.Sprintf("Cannot get the md5 hash from upload file: %v", err)
-            }else{
-                // TODO: move and convert file
+            fmt.Println(md5)
 
-                fmt.Println(md5)
-
-                ok      = true
-                message = "Successfully, File converted"
-            }
+            ok      = true
+            message = "Successfully, File converted"
         }
     }
 
