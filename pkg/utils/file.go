@@ -15,8 +15,8 @@ func GetFileExtension(filePath string) string {
     return path.Ext(filePath)
 }
 
-// GetFileMd5 return a md5 hashed string
-func GetFileMd5(fileHeader *multipart.FileHeader) (string, error) {
+// GetFileMD5 return a MD5 hashed string
+func GetFileMD5(fileHeader *multipart.FileHeader) (string, error) {
     file, err := fileHeader.Open()
     defer file.Close()
     if err != nil {
