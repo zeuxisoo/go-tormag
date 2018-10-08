@@ -4,11 +4,34 @@ import (
     "os"
     "path"
     "strings"
+    "mime/multipart"
+    "io/ioutil"
+    "crypto/md5"
+    "encoding/hex"
 )
 
 // GetFileExtension return the file extension
 func GetFileExtension(filePath string) string {
     return path.Ext(filePath)
+}
+
+// GetFileMd5 return a md5 hashed string
+func GetFileMd5(fileHeader *multipart.FileHeader) (string, error) {
+    file, err := fileHeader.Open()
+    defer file.Close()
+    if err != nil {
+        return "", err
+    }
+
+    contentBytes, err := ioutil.ReadAll(file)
+    if err != nil {
+        return "", err
+    }
+
+    hash := md5.New()
+    hash.Write(contentBytes)
+
+    return hex.EncodeToString(hash.Sum(nil)), nil
 }
 
 // IsFile return the file path is or not file

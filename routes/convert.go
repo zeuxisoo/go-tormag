@@ -2,7 +2,8 @@ package routes
 
 import (
     "fmt"
-	"net/http"
+    "net/http"
+
 
     "github.com/gin-gonic/gin"
 
@@ -27,10 +28,17 @@ func ConvertPost(c *gin.Context) {
         }else if utils.IsBiggerFile(file.Size, setting.AttachmentMaxSize) == true {
             message = fmt.Sprintf("The upload file is bigger than %dMB", setting.AttachmentMaxSize)
         }else{
-            // TODO: move and convert file
+            md5, err := utils.GetFileMd5(file)
+            if err != nil {
+                message = fmt.Sprintf("Cannot get the md5 hash from upload file: %v", err)
+            }else{
+                // TODO: move and convert file
 
-            ok      = true
-            message = "Successfully, File converted"
+                fmt.Println(md5)
+
+                ok      = true
+                message = "Successfully, File converted"
+            }
         }
     }
 
