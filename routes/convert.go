@@ -2,8 +2,8 @@ package routes
 
 import (
     "fmt"
+    "path"
     "net/http"
-
 
     "github.com/gin-gonic/gin"
 
@@ -30,10 +30,18 @@ func ConvertPost(c *gin.Context) {
         }else if fileMD5, err := utils.GetFileMD5(file); err != nil {
             message = fmt.Sprintf("Cannot get the md5 hash from upload file: %v", err)
         }else{
-            fmt.Println(fileMD5)
+            fileExtension := utils.GetFileExtension(file.Filename)
+            fileName      := fileMD5 + fileExtension
+            fileFullPath  := path.Join(setting.AttachmentPath, fileName)
 
-            ok      = true
-            message = "Successfully, File converted"
+            if err := c.SaveUploadedFile(file, fileFullPath); err != nil {
+                message = "Cannot save uploaded file"
+            }else{
+                // TODO: Convert file
+
+                ok      = true
+                message = "Successfully, File converted"
+            }
         }
     }
 
