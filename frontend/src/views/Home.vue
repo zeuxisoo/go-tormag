@@ -18,12 +18,19 @@
 
         <hr>
 
-        <div class="card card-default">
+        <div class="card card-default" v-if="convertedFiles.length <= 0">
             <div class="card-header">Converted Result</div>
             <div class="card-body">
                 <div class="alert alert-info text-center" role="alert">
                     Please drop the files to the drop zone first
                 </div>
+            </div>
+        </div>
+
+        <div class="card card-default mb-3" v-for="convertedFile in convertedFiles" v-bind:key="convertedFile.data.file">
+            <div class="card-header">{{ convertedFile.data.file }}</div>
+            <div class="card-body">
+                {{ convertedFile.data.magnet }}
             </div>
         </div>
     </div>
@@ -55,17 +62,18 @@ export default {
 
     data() {
         return {
-            uploadFiles: [],
-            serverOptions: {
-                url: 'http://127.0.0.1:3000',
+            uploadFiles   : [],
+            convertedFiles: [],
+            serverOptions : {
+                url    : 'http://127.0.0.1:3000',
                 process: {
-                    url: '/convert',
-                    method: 'POST',
+                    url            : '/convert',
+                    method         : 'POST',
                     withCredentials: false,
-                    headers: {},
-                    timeout: 7000,
-                    onload: null,
-                    onerror: null
+                    headers        : {},
+                    timeout        : 7000,
+                    onload         : (response) => { return JSON.parse(response) },
+                    onerror        : null
                 }
             }
         }
@@ -76,10 +84,11 @@ export default {
             if (error) {
                 console.log("Oops", error);
             }else{
-                console.log(file);
+                // Add the converted file to converted file list
+                this.convertedFiles.push(file.serverId);
 
                 // Remove the completed file from drop zone
-                // this.$refs.uploadZone.removeFile(file.id);
+                this.$refs.uploadZone.removeFile(file.id);
             }
         }
     }
