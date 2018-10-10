@@ -55,6 +55,8 @@ func ConvertPost(c *gin.Context) {
                 message = "Successfully, File converted"
 
                 data["magnet"] = mi.Magnet(info.Name, mi.HashInfoBytes()).String()
+
+                utils.RemoveFile(fileFullPath)
             }
         }
     }

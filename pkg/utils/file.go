@@ -2,6 +2,7 @@ package utils
 
 import (
     "os"
+    "fmt"
     "path"
     "strings"
     "mime/multipart"
@@ -65,4 +66,13 @@ func IsBiggerFile(fileSize int64, defaultFileSize int64) bool {
     defaultSizeInKB := defaultFileSize * 1024
 
     return fileSizeInKB > defaultSizeInKB
+}
+
+// RemoveFile to make sure the given path is file before remove it
+func RemoveFile(path string) error {
+    if IsFile(path) == true {
+        return os.Remove(path)
+    }
+
+    return fmt.Errorf("Path is not file: %s", path)
 }
