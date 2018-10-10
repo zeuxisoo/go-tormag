@@ -6,6 +6,7 @@ import (
     "net/http"
 
     "github.com/gin-gonic/gin"
+    "github.com/anacrolix/torrent/metainfo"
 
     "github.com/zeuxisoo/go-tormag/pkg/setting"
     "github.com/zeuxisoo/go-tormag/pkg/utils"
@@ -15,6 +16,9 @@ import (
 func ConvertPost(c *gin.Context) {
     ok      := false
     message := ""
+    data    := map[string]string{
+        "magnet": "",
+    }
 
     if utils.CreateOrIsDirectoryExists(setting.AttachmentPath) == false {
         message = "Cannot create storage directory"
@@ -36,11 +40,15 @@ func ConvertPost(c *gin.Context) {
 
             if err := c.SaveUploadedFile(file, fileFullPath); err != nil {
                 message = "Cannot save uploaded file"
+            }else if mi, err := metainfo.LoadFromFile(fileFullPath); err != nil {
+                message = "Cannot read the metainfo from uploaded file"
+            }else if  info, err := mi.UnmarshalInfo(); err != nil {
+                message = "Cannot unmarshal the metainfo from uploaded file"
             }else{
-                // TODO: Convert file
-
                 ok      = true
                 message = "Successfully, File converted"
+
+                data["magnet"] = mi.Magnet(info.Name, mi.HashInfoBytes()).String()
             }
         }
     }
@@ -48,5 +56,6 @@ func ConvertPost(c *gin.Context) {
     c.JSON(http.StatusOK, gin.H{
         "ok"     : ok,
         "message": message,
+        "data"   : data,
     })
 }
