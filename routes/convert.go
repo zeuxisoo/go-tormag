@@ -17,6 +17,7 @@ func ConvertPost(c *gin.Context) {
     ok      := false
     message := ""
     data    := map[string]string{
+        "file"  : "",
         "magnet": "",
     }
 
@@ -24,6 +25,11 @@ func ConvertPost(c *gin.Context) {
         message = "Cannot create storage directory"
     }else{
         file, err := c.FormFile("file")
+        if err == nil {
+            // Set filename to file field on each response message when upload without parse error
+            // - like multipart/form-data field name incorrect (e.g. "file[]" not "file")
+            data["file"] = file.Filename
+        }
 
         if err != nil {
             message = "Cannot read the file from form data"
