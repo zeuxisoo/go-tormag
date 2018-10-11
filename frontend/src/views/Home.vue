@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <div class="card card-default mb-3" v-for="convertedFile in convertedFiles" v-bind:key="convertedFile.data.file">
+        <div class="card card-default mb-3" v-for="convertedFile in convertedFiles" v-bind:key="convertedFile.data.id">
             <div class="card-header">{{ convertedFile.data.file }}</div>
             <div class="card-body">
                 {{ convertedFile.data.magnet }}

@@ -18,7 +18,7 @@ func ConvertPost(c *gin.Context) {
     ok      := false
     message := ""
     data    := map[string]string{
-        "id"    : fmt.Sprintf("%s-%d", utils.DateFormat(time.Now(), "YYYYMMDDHHmmss"), utils.Timestamp()),
+        "id"    : fmt.Sprintf("%s-%d-%s", utils.DateFormat(time.Now(), "YYYYMMDDHHmmss"), utils.Timestamp(), utils.RandomString(8)),
         "file"  : "",
         "md5"   : "",
         "magnet": "",
