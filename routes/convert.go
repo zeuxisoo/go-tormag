@@ -3,6 +3,7 @@ package routes
 import (
     "fmt"
     "path"
+    "time"
     "net/http"
 
     "github.com/gin-gonic/gin"
@@ -17,6 +18,7 @@ func ConvertPost(c *gin.Context) {
     ok      := false
     message := ""
     data    := map[string]string{
+        "id"    : utils.DateFormat(time.Now(), "YYYYMMDDHHmmss"),
         "file"  : "",
         "md5"   : "",
         "magnet": "",
