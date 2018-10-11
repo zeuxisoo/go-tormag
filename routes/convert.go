@@ -18,6 +18,7 @@ func ConvertPost(c *gin.Context) {
     message := ""
     data    := map[string]string{
         "file"  : "",
+        "md5"   : "",
         "magnet": "",
     }
 
@@ -54,6 +55,7 @@ func ConvertPost(c *gin.Context) {
                 ok      = true
                 message = "Successfully, File converted"
 
+                data["md5"]    = fileMD5
                 data["magnet"] = mi.Magnet(info.Name, mi.HashInfoBytes()).String()
 
                 utils.RemoveFile(fileFullPath)
