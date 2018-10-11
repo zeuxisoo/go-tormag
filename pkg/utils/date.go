@@ -33,3 +33,8 @@ func DateFormat(t time.Time, format string) string {
 
 	return result
 }
+
+// Timestamp to return base unix timestamp
+func Timestamp() int64 {
+    return time.Now().Unix()
+}
