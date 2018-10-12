@@ -38,11 +38,11 @@ func GetFileMD5(fileHeader *multipart.FileHeader) (string, error) {
 // IsFile return the file path is or not file
 func IsFile(filePath string) bool {
     fileInfo, err := os.Stat(filePath)
-	if err != nil {
-		return false
+    if err != nil {
+        return false
     }
 
-	return fileInfo.IsDir() == false
+    return fileInfo.IsDir() == false
 }
 
 // IsMatchFileExtension return the source extension is or not match target extension

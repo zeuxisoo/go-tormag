@@ -45,7 +45,7 @@ var (
 func init() {
     var err error
 
-	if AppPath, err = executablePath(); err != nil {
+    if AppPath, err = executablePath(); err != nil {
         logger.Fatalf("Cannot found the app path => %v\n", err)
     }
 
@@ -53,12 +53,12 @@ func init() {
 }
 
 func executablePath() (string, error) {
-	file, err := exec.LookPath(os.Args[0])
-	if err != nil {
-		return "", err
+    file, err := exec.LookPath(os.Args[0])
+    if err != nil {
+        return "", err
     }
 
-	return filepath.Abs(file)
+    return filepath.Abs(file)
 }
 
 // AppDirectory return the application directory path
@@ -76,9 +76,9 @@ func AppDirectory() (string, error) {
 func NewSetting() {
     //
     appDirectory, err := AppDirectory()
-	if err != nil {
-		logger.Fatalf("Cannot found the app directory => %v", err)
-	}
+    if err != nil {
+        logger.Fatalf("Cannot found the app directory => %v", err)
+    }
 
     //
     Config, err = ini.LoadSources(ini.LoadOptions{

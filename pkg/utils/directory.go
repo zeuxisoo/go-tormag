@@ -17,11 +17,11 @@ func IsDirectoryExists(path string) bool {
 // IsDirectory to check the path is or not directory
 func IsDirectory(path string) bool {
     fileInfo, err := os.Stat(path)
-	if err != nil {
-		return false
+    if err != nil {
+        return false
     }
 
-	return fileInfo.IsDir() == true
+    return fileInfo.IsDir() == true
 }
 
 // CreateOrIsDirectoryExists to create directory if the path is not directory
