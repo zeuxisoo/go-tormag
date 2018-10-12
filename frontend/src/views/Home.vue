@@ -1,31 +1,23 @@
 <template>
     <div class="home">
-        <div class="card card-default">
-            <div class="card-header">Torrent file or Directory</div>
-            <div class="card-body">
-                <file-pond
-                    name="file"
-                    ref="uploadZone"
-                    class-name="upload-zone"
-                    label-idle="Drop files here..."
-                    allow-multiple="true"
-                    accepted-file-types="application/x-bittorrent, application/octet-stream"
-                    v-bind:server="serverOptions"
-                    v-bind:files="uploadFiles"
-                    v-on:processfile="handleProcessFile" />
-            </div>
-        </div>
+        <h4>Torrent file or Directory</h4>
+        <hr />
+        <file-pond
+            name="file"
+            ref="uploadZone"
+            class-name="upload-zone"
+            label-idle="Drop files here..."
+            allow-multiple="true"
+            accepted-file-types="application/x-bittorrent, application/octet-stream"
+            v-bind:server="serverOptions"
+            v-bind:files="uploadFiles"
+            v-on:processfile="handleProcessFile" />
 
-        <hr>
-
-        <transition enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp" mode="out-in">
-            <div class="card card-default" v-if="convertedFiles.length <= 0" key="converted-files-empty">
-                <div class="card-header">Converted Result</div>
-                <div class="card-body">
-                    <div class="alert alert-info text-center" role="alert">
-                        Please drop the files to the drop zone first
-                    </div>
-                </div>
+        <h4>Converted Result</h4>
+        <hr />
+        <transition enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutUp" mode="out-in">
+            <div class="alert alert-info text-center" role="alert" v-if="convertedFiles.length <= 0" key="converted-files-empty">
+                Please drop the files to the drop zone first
             </div>
             <div v-else key="converted-files-results">
                 <transition-group enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown" tag="div">
