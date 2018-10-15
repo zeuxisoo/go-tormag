@@ -15,6 +15,19 @@
 
         <h4>Converted Result</h4>
         <hr />
+        <div class="row">
+            <div class="col-lg-12">
+                <button type="button" class="btn btn-info" v-on:click="changeResultMode('list')">
+                    <i class="fas fa-list-ul"></i> List
+                </button>
+                &nbsp;
+                <button type="button" class="btn btn-info" v-on:click="changeResultMode('text')">
+                    <i class="fas fa-align-justify"></i> Text Only
+                </button>
+            </div>
+        </div>
+        <hr />
+
         <transition enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutUp" mode="out-in">
             <div class="alert alert-info text-center" role="alert" v-if="convertedFiles.length <= 0" key="converted-files-empty">
                 Please drop the files to the drop zone first
@@ -57,6 +70,7 @@
 <style lang="scss">
 @import "~filepond/dist/filepond.min.css";
 @import "~animate.css/animate.min.css";
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
 
 .filepond--panel-root {
     background-color: rgb(227, 237, 243);
@@ -108,6 +122,21 @@ export default {
 
                 // Remove the completed file from drop zone
                 this.$refs.uploadZone.removeFile(file.id);
+            }
+        },
+
+        changeResultMode(name) {
+            // TODO: change the result mode with mode name
+            switch(name.toLowerCase()) {
+                case 'list':
+                    console.log('list mode');
+                    break;
+                case 'text':
+                    console.log('text mode');
+                    break;
+                default:
+                    console.log('no match mode');
+                    break;
             }
         }
     }
