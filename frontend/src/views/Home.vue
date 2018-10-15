@@ -27,15 +27,15 @@
                         <div class="card-body p-0" v-if="convertedFile.ok === true">
                             <div class="row m-0">
                                 <div class="col-lg-2 p-1 mt-1 mb-1 font-weight-bold text-center bg-info text-white">ID</div>
-                                <div class="col-lg-10 p-1">{{ convertedFile.data.id }}</div>
+                                <div class="col-lg-10 p-1 mt-1 mb-1">{{ convertedFile.data.id }}</div>
                             </div>
                             <div class="row m-0">
                                 <div class="col-lg-2 p-1 mb-1 font-weight-bold text-center bg-info text-white">MD5</div>
-                                <div class="col-lg-10 p-1">{{ convertedFile.data.md5 }}</div>
+                                <div class="col-lg-10 p-1 mb-1">{{ convertedFile.data.md5 }}</div>
                             </div>
                             <div class="row m-0">
                                 <div class="col-lg-2 p-1 mb-1 font-weight-bold text-center bg-info text-white">Magnet</div>
-                                <div class="col-lg-10 p-1">
+                                <div class="col-lg-10 p-1 mb-1">
                                     <textarea class="form-control" v-bind:value="convertedFile.data.magnet"></textarea>
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
                         <div class="card-body p-0" v-else>
                             <div class="row m-0">
                                 <div class="col-lg-2 p-1 mt-1 mb-1 font-weight-bold text-center bg-danger text-white">Error</div>
-                                <div class="col-lg-10 p-1">{{ convertedFile.message }}</div>
+                                <div class="col-lg-10 p-1 mt-1 mb-1">{{ convertedFile.message }}</div>
                             </div>
                         </div>
                     </div>
