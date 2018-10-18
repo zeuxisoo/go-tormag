@@ -33,7 +33,7 @@
                 Please drop the files to the drop zone first
             </div>
             <div v-else key="converted-files-results">
-                <transition-group enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown" tag="div">
+                <transition-group enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown" tag="div" v-if="isTargetResultMode('list') === true">
                     <div class="card card-default mb-3" v-for="convertedFile in convertedFiles" v-bind:key="convertedFile.data.id">
                         <div class="card-header font-weight-bold">{{ convertedFile.data.file }}</div>
 
@@ -62,6 +62,8 @@
                         </div>
                     </div>
                 </transition-group>
+
+                <textarea class="form-control" rows="20" v-if="isTargetResultMode('text') === true">{{ convertedText }}</textarea>
             </div>
         </transition>
     </div>
@@ -95,10 +97,11 @@ export default {
 
     data() {
         return {
-            resultMode: DefaultResultMode,
+            resultMode : DefaultResultMode,
 
             uploadFiles   : [],
             convertedFiles: [],
+            convertedText : '',
             serverOptions : {
                 url    : 'http://127.0.0.1:3000',
                 process: {
@@ -122,6 +125,12 @@ export default {
                 // Add the converted file to converted file list
                 this.convertedFiles.unshift(file.serverId);
 
+                // Transform the converted file to text
+                this.convertedText = this.convertedFiles
+                        .filter(file => file.ok === true)
+                        .map(file => file.data.magnet)
+                        .join("\n");
+
                 // Remove the completed file from drop zone
                 this.$refs.uploadZone.removeFile(file.id);
             }
@@ -129,8 +138,6 @@ export default {
 
         changeResultMode(name) {
             const mode = name.toLowerCase()
-
-            // TODO: add text view for text only mode
 
             switch(mode) {
                 case 'list':
