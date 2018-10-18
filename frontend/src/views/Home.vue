@@ -16,13 +16,22 @@
         <h4>Converted Result</h4>
         <hr />
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-9">
                 <button type="button" v-bind:class="['btn', { 'btn-info': isTargetResultMode('list') }]" v-on:click="changeResultMode('list')">
                     <i class="fas fa-list-ul"></i> List
                 </button>
                 &nbsp;
                 <button type="button" v-bind:class="['btn', { 'btn-info': isTargetResultMode('text') }]" v-on:click="changeResultMode('text')">
                     <i class="fas fa-align-justify"></i> Text Only
+                </button>
+            </div>
+            <div class="col-lg-3 text-right">
+                <button type="button" class="btn btn-success">
+                    OK <span class="badge badge-light">{{ convertedCount.ok }}</span>
+                </button>
+                &nbsp;
+                <button type="button" class="btn btn-danger">
+                    Error <span class="badge badge-light">{{ convertedCount.error }}</span>
                 </button>
             </div>
         </div>
@@ -113,6 +122,17 @@ export default {
                     onload         : (response) => { return JSON.parse(response) },
                     onerror        : null
                 }
+            }
+        }
+    },
+
+    computed: {
+        convertedCount() {
+            const okCount = this.convertedFiles.filter(file => file.ok === true).length;
+
+            return {
+                ok   : okCount,
+                error: this.convertedFiles.length - okCount
             }
         }
     },
