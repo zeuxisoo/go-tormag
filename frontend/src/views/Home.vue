@@ -69,8 +69,6 @@
 
 <style lang="scss">
 @import "~filepond/dist/filepond.min.css";
-@import "~animate.css/animate.min.css";
-@import "~@fortawesome/fontawesome-free/css/all.min.css";
 
 .filepond--panel-root {
     background-color: rgb(227, 237, 243);

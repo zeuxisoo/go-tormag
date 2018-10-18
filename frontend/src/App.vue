@@ -29,6 +29,9 @@
 </template>
 
 <style lang="scss" scoped>
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+@import "~animate.css/animate.min.css";
+
 .main {
     padding-top: 70px;
     padding-bottom: 30px;
@@ -40,8 +43,6 @@
 import $ from 'jquery';
 import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap/dist/css/bootstrap.css";
-
-
 
 export default {
     name: "app",
