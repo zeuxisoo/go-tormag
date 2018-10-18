@@ -25,7 +25,7 @@
                     <i class="fas fa-align-justify"></i> Text Only
                 </button>
             </div>
-            <div class="col-lg-3 text-right">
+            <div class="col-lg-3 text-right d-none d-lg-block"> <!-- display on >= lg size only -->
                 <button type="button" class="btn btn-success">
                     OK <span class="badge badge-light">{{ convertedCount.ok }}</span>
                 </button>
