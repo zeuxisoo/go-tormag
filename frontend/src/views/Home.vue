@@ -17,11 +17,11 @@
         <hr />
         <div class="row">
             <div class="col-lg-12">
-                <button type="button" class="btn btn-info" v-on:click="changeResultMode('list')">
+                <button type="button" v-bind:class="['btn', { 'btn-info': isTargetResultMode('list') }]" v-on:click="changeResultMode('list')">
                     <i class="fas fa-list-ul"></i> List
                 </button>
                 &nbsp;
-                <button type="button" class="btn btn-info" v-on:click="changeResultMode('text')">
+                <button type="button" v-bind:class="['btn', { 'btn-info': isTargetResultMode('text') }]" v-on:click="changeResultMode('text')">
                     <i class="fas fa-align-justify"></i> Text Only
                 </button>
             </div>
@@ -84,6 +84,8 @@ import VueFilePond from 'vue-filepond';
 
 const FilePond = VueFilePond();
 
+const DefaultResultMode = 'list';
+
 export default {
     name: "home",
 
@@ -93,6 +95,8 @@ export default {
 
     data() {
         return {
+            resultMode: DefaultResultMode,
+
             uploadFiles   : [],
             convertedFiles: [],
             serverOptions : {
@@ -124,18 +128,25 @@ export default {
         },
 
         changeResultMode(name) {
-            // TODO: change the result mode with mode name
-            switch(name.toLowerCase()) {
+            const mode = name.toLowerCase()
+
+            // TODO: add text view for text only mode
+
+            switch(mode) {
                 case 'list':
-                    console.log('list mode');
+                    this.resultMode = mode;
                     break;
                 case 'text':
-                    console.log('text mode');
+                    this.resultMode = mode;
                     break;
                 default:
-                    console.log('no match mode');
+                    this.resultMode = DefaultResultMode;
                     break;
             }
+        },
+
+        isTargetResultMode(name) {
+            return this.resultMode === name;
         }
     }
 }
