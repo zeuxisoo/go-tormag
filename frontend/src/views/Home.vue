@@ -91,11 +91,10 @@
 </style>
 
 <script>
+import config from '../config/app.js';
 import VueFilePond from 'vue-filepond';
 
 const FilePond = VueFilePond();
-
-const DefaultResultMode = 'list';
 
 export default {
     name: "home",
@@ -106,15 +105,15 @@ export default {
 
     data() {
         return {
-            resultMode : DefaultResultMode,
+            resultMode : config.result_mode,
 
             uploadFiles   : [],
             convertedFiles: [],
             convertedText : '',
             serverOptions : {
-                url    : 'http://127.0.0.1:3000',
+                url    : config.api.base_url,
                 process: {
-                    url            : '/convert',
+                    url            : config.api.entry_urls.convert,
                     method         : 'POST',
                     withCredentials: false,
                     headers        : {},
@@ -167,7 +166,7 @@ export default {
                     this.resultMode = mode;
                     break;
                 default:
-                    this.resultMode = DefaultResultMode;
+                    this.resultMode = config.result_mode;
                     break;
             }
         },
