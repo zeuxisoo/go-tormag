@@ -72,7 +72,7 @@
                     </div>
                 </transition-group>
 
-                <textarea class="form-control" rows="20" v-if="isTargetResultMode('text') === true">{{ convertedText }}</textarea>
+                <textarea class="form-control" rows="20" v-if="isTargetResultMode('text') === true" v-bind:value="convertedText"></textarea>
             </div>
         </transition>
     </div>
