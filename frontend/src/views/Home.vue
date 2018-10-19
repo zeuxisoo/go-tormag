@@ -91,7 +91,7 @@
 </style>
 
 <script>
-import config from '../config/app.js';
+import config from '../config';
 import VueFilePond from 'vue-filepond';
 
 const FilePond = VueFilePond();
