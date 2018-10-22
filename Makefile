@@ -5,20 +5,21 @@ RELEASE_DIR=release
 
 all:
 	@echo
-	@echo "Commands          : Description"
-	@echo "----------------- : -----------"
-	@echo "make deps         : Install the dependencies and tools"
-	@echo "make run          : Run the program"
-	@echo "make tools        : Install the tools"
-	@echo "make bindata		 : Generate all bindata base on go-bindata command"
-	@echo "make generate     : Run the go generate command"
-	@echo "make build        : Build the biniary file"
-	@echo "make build-macos  : Build the macos biniary file only"
-	@echo "make build-windows: Build the windows biniary file only"
-	@echo "make build-freebsd: Build the freebsd biniary file only"
-	@echo "make build-linux  : Build the linux biniary file only"
-	@echo "make pack         : Pack the build files into release directory"
-	@echo "make release      : Run the build and pack command"
+	@echo "Commands             : Description"
+	@echo "-------------------- : -----------"
+	@echo "make deps            : Install the dependencies and tools"
+	@echo "make run             : Run the program"
+	@echo "make run-web-release : Run the web application with release build environment"
+	@echo "make tools           : Install the tools"
+	@echo "make bindata         : Generate all bindata base on go-bindata command"
+	@echo "make generate        : Run the go generate command"
+	@echo "make build           : Build the biniary file"
+	@echo "make build-macos     : Build the macos biniary file only"
+	@echo "make build-windows   : Build the windows biniary file only"
+	@echo "make build-freebsd   : Build the freebsd biniary file only"
+	@echo "make build-linux     : Build the linux biniary file only"
+	@echo "make pack            : Pack the build files into release directory"
+	@echo "make release         : Run the build and pack command"
 	@echo
 
 deps: tools
@@ -26,6 +27,9 @@ deps: tools
 
 run:
 	@go run *.go
+
+run-web-release:
+	@go generate && go run -ldflags '$(LDFLAGS)' *.go web
 
 tools:
 	@go get -u github.com/jteeuwen/go-bindata/...
