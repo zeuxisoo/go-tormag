@@ -16,6 +16,9 @@ import (
 
 var (
     //
+    BuildEnv string
+
+    //
     AppPath         string
 
     //
@@ -88,6 +91,12 @@ func NewSetting() {
         logger.Fatalf("Cannot load the config/app.ini => %v\n", err)
     }
 
+    if len(BuildEnv) > 0 && BuildEnv != "development" {
+        if err := Config.Append(config.MustAsset("config/app.release.ini")); err != nil {
+            logger.Fatalf("Cannot load the config/app.release.ini => %v\n", err)
+        }
+    }
+
     if len(CustomConfig) != 0 && utils.IsFile(CustomConfig) == true {
         if err := Config.Append(CustomConfig); err != nil {
             logger.Fatalf("Cannot load the custom config file (%s) => %v\n", CustomConfig, err)
@@ -115,6 +124,12 @@ func NewSetting() {
     CrossOriginExposeHeaders    = section.Key("EXPOSE_HEADERS").Strings(",")
     CrossOriginAllowCredentials = section.Key("ALLOW_CREDENTIALS").MustBool(true)
     CrossOriginMaxAge           = section.Key("MAX_AGE").MustInt(12)
+
+    if CrossOriginEnable {
+        logger.Infof("=====> %s (%s)\n", BuildEnv, "YES")
+    }else{
+        logger.Infof("=====> %s (%s)\n", BuildEnv, "NO")
+    }
 
     if filepath.IsAbs(AttachmentPath) == false {
         AttachmentPath = path.Join(appDirectory, AttachmentPath)
