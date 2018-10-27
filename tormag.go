@@ -21,7 +21,8 @@ func main() {
 	app.Usage = "A torrent to magnet and rename tools"
 	app.Version = AppVersion
 	app.Commands = []cli.Command{
-		cmd.Convert,
+        cmd.Bigger,
+        cmd.Convert,
 		cmd.Web,
 	}
 	app.Flags = append(app.Flags, []cli.Flag{}...)
