@@ -36,9 +36,9 @@ func runConvert(c *cli.Context) error {
     var result []byte
 
     if c.IsSet("directory") {
-        result = convertDirectoryToMagnetsBytes(directory)
+        result = convertDirectoryToMagnets(directory)
     } else if c.IsSet("file") {
-        result = convertFileToMagnetBytes(file)
+        result = convertFileToMagnet(file)
     } else {
         result = []byte("")
     }
@@ -53,7 +53,7 @@ func runConvert(c *cli.Context) error {
     return nil
 }
 
-func convertDirectoryToMagnetsBytes(directory string) []byte {
+func convertDirectoryToMagnets(directory string) []byte {
     logger.Infof("[Directory] >> %s", directory)
 
     //
@@ -89,7 +89,7 @@ func convertDirectoryToMagnetsBytes(directory string) []byte {
     return []byte(strings.Join(magnets, "\n"))
 }
 
-func convertFileToMagnetBytes(file string) []byte {
+func convertFileToMagnet(file string) []byte {
     logger.Infof("[File] >> %s", file)
 
     mi, err := metainfo.LoadFromFile(file)
