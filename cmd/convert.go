@@ -44,22 +44,22 @@ func runConvert(c *cli.Context) error {
     }
 
     if err := ioutil.WriteFile(outputFile, result, 0644); err != nil {
-        logger.Fatalf("[Error] >> Cannot write the result to the output file")
+        logger.Fatalf("Error: Cannot write the result to the output file")
     }
 
     //
-    logger.Infof("[Output] >> %s", outputFile)
+    logger.Infof("Output: %s", outputFile)
 
     return nil
 }
 
 func convertDirectoryToMagnets(directory string) []byte {
-    logger.Infof("[Directory] >> %s", directory)
+    logger.Infof("Directory: %s", directory)
 
     //
     files, err := ioutil.ReadDir(directory)
     if err != nil {
-        logger.Fatalf("[Error] >> Cannot read the files in torrent folder path (%s)", err)
+        logger.Fatalf("Error: Cannot read the files in torrent folder path (%s)", err)
     }
 
     //
@@ -90,7 +90,7 @@ func convertDirectoryToMagnets(directory string) []byte {
 }
 
 func convertFileToMagnet(file string) []byte {
-    logger.Infof("[File] >> %s", file)
+    logger.Infof("File: %s", file)
 
     mi, err := metainfo.LoadFromFile(file)
     if err != nil {
