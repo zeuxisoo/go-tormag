@@ -24,3 +24,7 @@ func printConvertTorrentError(message string, torrentPath string, err error) {
     logger.Errorf("=> file : %s", torrentPath)
     logger.Errorf("=> error: %s", err)
 }
+
+func printBiggerTorrentError(message string, torrentPath string, err error) {
+    printConvertTorrentError(message, torrentPath, err)
+}
