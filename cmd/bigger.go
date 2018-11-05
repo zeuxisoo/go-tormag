@@ -105,8 +105,21 @@ func findBiggerFilesFromDirectory(directory string) []byte {
 }
 
 func findBiggerFileFromFile(file string) []byte {
-    // TODO: complete this method
-    return []byte("")
+    logger.Infof("File: %s", file)
+
+    mi, err := metainfo.LoadFromFile(file)
+    if err != nil {
+        printBiggerTorrentError("Cannot read the metainfo from file", file, err)
+    }
+
+    info, err := mi.UnmarshalInfo()
+    if err != nil {
+        printBiggerTorrentError("Cannot unmarshal the metainfo from file", file, err)
+    }
+
+    biggerFile := fmt.Sprintf("%s => %s", file, findBiggerFileName(info))
+
+    return []byte(biggerFile)
 }
 
 //
