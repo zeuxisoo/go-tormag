@@ -1,6 +1,7 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Vue from 'vue';
+import Router from 'vue-router';
+import Home from './views/Home.vue';
+import Bigger from './views/Bigger.vue';
 
 Vue.use(Router)
 
@@ -14,6 +15,11 @@ export default new Router({
             component: Home
         },
         {
+            path: '/bigger',
+            name: 'bigger',
+            component: Bigger
+        },
+        {
             path: '/about',
             name: 'about',
             // route level code-splitting
@@ -22,4 +28,4 @@ export default new Router({
             component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
         }
     ]
-})
+});
