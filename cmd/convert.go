@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
     "io/ioutil"
     "path/filepath"
     "strings"
@@ -33,17 +34,20 @@ func runConvert(c *cli.Context) error {
     file       := c.String("file")
     outputFile := c.String("output")
 
-    var result []byte
+    var result string
+    var err error
 
     if c.IsSet("directory") {
         result = convertDirectoryToMagnets(directory)
-    } else if c.IsSet("file") {
-        result = convertFileToMagnet(file)
-    } else {
-        result = []byte("")
+    }else if c.IsSet("file") {
+        if result, err = convertFileToMagnet(file); err != nil {
+            logger.Fatalf("Error: %s", err)
+        }
+    }else{
+        result = ""
     }
 
-    if err := ioutil.WriteFile(outputFile, result, 0644); err != nil {
+    if err := ioutil.WriteFile(outputFile, []byte(result), 0644); err != nil {
         logger.Fatalf("Error: Cannot write the result to the output file")
     }
 
@@ -53,7 +57,7 @@ func runConvert(c *cli.Context) error {
     return nil
 }
 
-func convertDirectoryToMagnets(directory string) []byte {
+func convertDirectoryToMagnets(directory string) string {
     logger.Infof("Directory: %s", directory)
 
     //
@@ -70,39 +74,33 @@ func convertDirectoryToMagnets(directory string) []byte {
         if f.IsDir() == false && filepath.Ext(f.Name()) == ".torrent" {
             torrentPath = filepath.Join(directory, f.Name())
 
-            mi, err := metainfo.LoadFromFile(torrentPath)
+            magnet, err := convertFileToMagnet(torrentPath)
             if err != nil {
-                printConvertTorrentError("Cannot read the metainfo from file", torrentPath, err)
+                logger.Errorf("Error: %s", err)
                 continue
             }
 
-            info, err := mi.UnmarshalInfo()
-            if err != nil {
-                printConvertTorrentError("Cannot unmarshal the metainfo from file", torrentPath, err)
-                continue
-            }
-
-            magnets = append(magnets, mi.Magnet(info.Name, mi.HashInfoBytes()).String())
+            magnets = append(magnets, magnet)
         }
     }
 
-    return []byte(strings.Join(magnets, "\n"))
+    return strings.Join(magnets, "\n")
 }
 
-func convertFileToMagnet(file string) []byte {
+func convertFileToMagnet(file string) (string, error) {
     logger.Infof("File: %s", file)
 
     mi, err := metainfo.LoadFromFile(file)
     if err != nil {
-        printConvertTorrentError("Cannot read the metainfo from file", file, err)
+        return "", fmt.Errorf("Cannot read the metainfo from file: %s. %v", file, err)
     }
 
     info, err := mi.UnmarshalInfo()
     if err != nil {
-        printConvertTorrentError("Cannot unmarshal the metainfo from file", file, err)
+        return "", fmt.Errorf("Cannot unmarshal the metainfo from file: %s. %v", file, err)
     }
 
     magnet := mi.Magnet(info.Name, mi.HashInfoBytes()).String()
 
-    return []byte(magnet)
+    return magnet, nil
 }
