@@ -34,17 +34,22 @@ func runBigger(c *cli.Context) error {
     file       := c.String("file")
     outputFile := c.String("output")
 
-    var result []byte
+    var result string
 
     if c.IsSet("directory") {
         result = findBiggerFilesFromDirectory(directory)
-    } else if c.IsSet("file") {
-        result = findBiggerFileFromFile(file)
-    } else {
-        result = []byte("")
+    }else if c.IsSet("file") {
+        info, err := findBiggerFileFromFile(file)
+        if err != nil {
+            logger.Fatalf("Error: %s", err)
+        }
+
+        result = fmt.Sprintf("%s => %s", file, findBiggerFileName(info))
+    }else{
+        result = ""
     }
 
-    if err := ioutil.WriteFile(outputFile, result, 0644); err != nil {
+    if err := ioutil.WriteFile(outputFile, []byte(result), 0644); err != nil {
         logger.Fatalf("Error: Cannot write the result to the output file")
     }
 
@@ -54,7 +59,7 @@ func runBigger(c *cli.Context) error {
     return nil
 }
 
-func findBiggerFilesFromDirectory(directory string) []byte {
+func findBiggerFilesFromDirectory(directory string) string {
     //
     logger.Infof("Directory: %s", directory)
 
@@ -73,15 +78,9 @@ func findBiggerFilesFromDirectory(directory string) []byte {
         if (file.IsDir() == false && filepath.Ext(file.Name()) == ".torrent") {
             fullPath = filepath.Join(directory, file.Name())
 
-            mi, err := metainfo.LoadFromFile(fullPath)
+            info, err := findBiggerFileFromFile(fullPath)
             if err != nil {
-                printBiggerTorrentError("Cannot read the metainfo from file", fullPath, err)
-                continue
-            }
-
-            info, err := mi.UnmarshalInfo()
-            if err != nil {
-                printBiggerTorrentError("Cannot unmarshalling the metainfo from file", fullPath, err)
+                logger.Errorf("Error: %s", err)
                 continue
             }
 
@@ -101,25 +100,25 @@ func findBiggerFilesFromDirectory(directory string) []byte {
         )
     }
 
-    return []byte(strings.Join(biggerFiles, "\n"))
+    return strings.Join(biggerFiles, "\n")
 }
 
-func findBiggerFileFromFile(file string) []byte {
+func findBiggerFileFromFile(file string) (metainfo.Info, error) {
     logger.Infof("File: %s", file)
+
+    defaultMetaInfo := metainfo.Info{}
 
     mi, err := metainfo.LoadFromFile(file)
     if err != nil {
-        printBiggerTorrentError("Cannot read the metainfo from file", file, err)
+        return defaultMetaInfo, fmt.Errorf("Cannot read the metainfo from file: %s. %v", file, err)
     }
 
     info, err := mi.UnmarshalInfo()
     if err != nil {
-        printBiggerTorrentError("Cannot unmarshal the metainfo from file", file, err)
+        return defaultMetaInfo, fmt.Errorf("Cannot unmarshal the metainfo from file: %s. %v", file, err)
     }
 
-    biggerFile := fmt.Sprintf("%s => %s", file, findBiggerFileName(info))
-
-    return []byte(biggerFile)
+    return info, nil
 }
 
 //
