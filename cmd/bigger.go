@@ -10,6 +10,7 @@ import (
     "github.com/anacrolix/torrent/metainfo"
 
     "github.com/zeuxisoo/go-tormag/pkg/logger"
+    "github.com/zeuxisoo/go-tormag/pkg/utils"
 )
 
 // Bigger command
@@ -44,7 +45,7 @@ func runBigger(c *cli.Context) error {
             logger.Fatalf("Error: %s", err)
         }
 
-        result = fmt.Sprintf("%s => %s", file, findBiggerFileName(info))
+        result = fmt.Sprintf("%s => %s", file, utils.FindBigFilenameFromTorrentMetaInfo(info))
     }else{
         result = ""
     }
@@ -96,7 +97,7 @@ func findBiggerFilesFromDirectory(directory string) string {
     for fullPath, info := range torrentInfos {
         biggerFiles = append(
             biggerFiles,
-            fmt.Sprintf("%s => %s", fullPath, findBiggerFileName(info)),
+            fmt.Sprintf("%s => %s", fullPath, utils.FindBigFilenameFromTorrentMetaInfo(info)),
         )
     }
 
@@ -119,24 +120,4 @@ func findBiggerFileFromFile(file string) (metainfo.Info, error) {
     }
 
     return info, nil
-}
-
-//
-func findBiggerFileName(info metainfo.Info) string {
-    var currentLength int64
-    var currentFile metainfo.FileInfo
-
-    for _, file := range info.Files {
-        if file.Length > currentLength || currentLength == 0 {
-            currentLength = file.Length
-            currentFile   = file
-        }
-    }
-
-    name := info.Name
-    if len(currentFile.Path) >= 1 {
-        name = currentFile.Path[0]
-    }
-
-    return name
 }
