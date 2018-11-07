@@ -130,4 +130,5 @@ func registerRender(engine *gin.Engine) {
 func registerRoutes(engine *gin.Engine) {
     engine.GET("/", routes.HomeGet)
     engine.POST("/convert", routes.ConvertPost)
+    engine.POST("/bigger", routes.BiggerPost)
 }
