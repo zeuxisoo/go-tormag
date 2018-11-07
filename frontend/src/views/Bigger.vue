@@ -52,8 +52,12 @@
                                 <div class="col-lg-10 p-1 mt-1 mb-1">{{ biggerFile.data.id }}</div>
                             </div>
                             <div class="row m-0">
+                                <div class="col-lg-2 p-1 mb-1 font-weight-bold text-center bg-info text-white">MD5</div>
+                                <div class="col-lg-10 p-1 mb-1">{{ biggerFile.data.md5 }}</div>
+                            </div>
+                            <div class="row m-0">
                                 <div class="col-lg-2 p-1 mb-1 font-weight-bold text-center bg-info text-white">Big File</div>
-                                <div class="col-lg-10 p-1 mb-1">{{ biggerFile.data.bigFile }}</div>
+                                <div class="col-lg-10 p-1 mb-1">{{ biggerFile.data.big }}</div>
                             </div>
                         </div>
 
@@ -71,6 +75,18 @@
         </transition>
     </div>
 </template>
+
+<style lang="scss">
+@import "~filepond/dist/filepond.min.css";
+
+.filepond--panel-root {
+    background-color: rgb(238, 243, 227);
+}
+
+.filepond--drop-label {
+    color: rgb(187, 206, 166);
+}
+</style>
 
 <script>
 import config from '../config';
@@ -127,9 +143,11 @@ export default {
                 this.biggerFiles.unshift(file.serverId);
 
                 // Transform the bigger file to text
-                this.convertedText = this.convertedFiles
+                this.biggerText = this.biggerFiles
                         .filter(file => file.ok === true)
-                        .map(file => file.data.bigFile)
+                        .map(file => {
+                            return `${file.data.file} => ${file.data.big}`
+                        })
                         .join("\n");
 
                 // Remove the completed file from drop zone
