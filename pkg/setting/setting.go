@@ -125,12 +125,6 @@ func NewSetting() {
     CrossOriginAllowCredentials = section.Key("ALLOW_CREDENTIALS").MustBool(true)
     CrossOriginMaxAge           = section.Key("MAX_AGE").MustInt(12)
 
-    if CrossOriginEnable {
-        logger.Infof("=====> %s (%s)\n", BuildEnv, "YES")
-    }else{
-        logger.Infof("=====> %s (%s)\n", BuildEnv, "NO")
-    }
-
     if filepath.IsAbs(AttachmentPath) == false {
         AttachmentPath = path.Join(appDirectory, AttachmentPath)
     }
