@@ -90,6 +90,12 @@ func runWeb(c *cli.Context) {
     registerRoutes(engine)
 
     //
+    if strings.ToLower(setting.Mode) != "dev" {
+        fmt.Printf("Running on %s mode\n", setting.Mode)
+        fmt.Printf("Listening and serving HTTP on %s\n", appURL)
+    }
+
+    //
     engine.Run(appURL)
 }
 
