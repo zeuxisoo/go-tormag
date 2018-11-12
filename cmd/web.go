@@ -137,4 +137,7 @@ func registerRoutes(engine *gin.Engine) {
     engine.GET("/", routes.HomeGet)
     engine.POST("/convert", routes.ConvertPost)
     engine.POST("/bigger", routes.BiggerPost)
+
+    // Handle 404 not found problem in frontend when route change and then refresh page by pass all request to index view/template
+    engine.NoRoute(routes.HomeGet)
 }
