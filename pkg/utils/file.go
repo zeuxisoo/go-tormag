@@ -45,6 +45,16 @@ func IsFile(filePath string) bool {
     return fileInfo.IsDir() == false
 }
 
+// IsFileExists return the file is or not exists
+func IsFileExists(filePath string) bool {
+    _, err := os.Stat(filePath)
+
+    // Must IsNotExist
+    // - https://github.com/golang/go/blob/master/src/os/error.go#L76
+    // - https://github.com/golang/go/blob/master/src/os/error_unix.go#L11-L19
+    return os.IsNotExist(err) == false
+}
+
 // IsMatchFileExtension return the source extension is or not match target extension
 func IsMatchFileExtension(sourceExtension string, targetExtension string) bool {
     return strings.ToLower(sourceExtension) == strings.ToLower(targetExtension)
