@@ -1,3 +1,5 @@
+.PHONY: frontend
+
 LDFLAGS += -X "github.com/zeuxisoo/go-tormag/pkg/setting.BuildEnv=release"
 
 BIN_NAME=tormag
@@ -34,20 +36,44 @@ run-web-release:
 tools:
 	@go get -u github.com/jteeuwen/go-bindata/...
 
+frontend-build:
+	@cd frontend && npm install && npm run build
+
+frontend-copy:
+	@cp -Rf frontend/dist/* static/
+
+frontend-replace:
+	@perl -p -i -e 's#/(js|css|img)#/static/$$1#g' static/index.html
+	@perl -p -i -e 's#/(img)#/static/$$1#g' static/manifest.json
+	@perl -p -i -e 's#/(fonts|robots|js|img|css)#/static/$$1#g' static/precache-manifest.*.js
+	@perl -p -i -e 's#/(precache\-manifest)#/static/$$1#g' static/service-worker.js
+	@perl -p -i -e 's#"(js)/"#"static/$$1/"#g' static/js/app.*.js
+	@perl -p -i -e 's#\("".concat#\("static".concat#' static/js/app.*.js
+
+frontend-integrate:
+	@mv static/index.html views/home/index.html
+
+frontend-clean:
+# Comment: find ./static -mindepth 1 -maxdepth 1 ! -name '.gitignore' -exec rm -rf {} \\
+	@rm -rf static/*
+	@rm -rf views/home/index.html
+
+frontend: frontend-build frontend-copy frontend-replace frontend-integrate
+
 bindata:
-	# package: views, output: pkg/view/view.go, ignore: *.go, template: views/**
+# Comment: package: views, output: pkg/view/view.go, ignore: *.go, template: views/**
 	@go-bindata -pkg view -o pkg/view/view.go -ignore=.go views/...
 
-	# package: static, output: pkg/static/static.go, ignore: *.go, template: static/**
+# Comment: static, output: pkg/static/static.go, ignore: *.go, template: static/**
 	@go-bindata -pkg static -o pkg/static/static.go -ignore=.go static/...
 
-	# package: config, output: config/config.go, ignore: *.go, template: config/**
+# Comment: config, output: config/config.go, ignore: *.go, template: config/**
 	@go-bindata -pkg config -o config/config.go -ignore=.go config/...
 
 generate:
 	@go generate -x
 
-build: bindata build-macos build-windows build-windows build-freebsd build-linux
+build: frontend bindata build-macos build-windows build-windows build-freebsd build-linux
 
 build-macos:
 	@echo "Building for macos ..."
@@ -69,6 +95,9 @@ build-linux:
 
 	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags '$(LDFLAGS)' -o $(BIN_NAME)-linux
 
+build-clean: frontend-clean
+	@rm -rf $(BIN_NAME)-*
+
 pack:
 	@echo "Packing ..."
 
@@ -77,3 +106,6 @@ pack:
 	@mv $(BIN_NAME)-* $(RELEASE_DIR)
 
 release: build pack
+
+clean: build-clean
+	@rm -rf storage/attachments/*
