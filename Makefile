@@ -54,20 +54,22 @@ frontend-integrate:
 	@mv static/index.html views/home/index.html
 
 frontend-clean:
-# Comment: find ./static -mindepth 1 -maxdepth 1 ! -name '.gitignore' -exec rm -rf {} \\
+# Remove all without .gitignore:
+# like => find ./static -mindepth 1 -maxdepth 1 ! -name '.gitignore' -exec rm -rf {} \\
+# rm without remove hidden file by default
 	@rm -rf static/*
 	@rm -rf views/home/index.html
 
 frontend: frontend-build frontend-copy frontend-replace frontend-integrate
 
 bindata:
-# Comment: package: views, output: pkg/view/view.go, ignore: *.go, template: views/**
+# package: views, output: pkg/view/view.go, ignore: *.go, template: views/**
 	@go-bindata -pkg view -o pkg/view/view.go -ignore=.go views/...
 
-# Comment: static, output: pkg/static/static.go, ignore: *.go, template: static/**
+# package: static, output: pkg/static/static.go, ignore: *.go, template: static/**
 	@go-bindata -pkg static -o pkg/static/static.go -ignore=.go static/...
 
-# Comment: config, output: config/config.go, ignore: *.go, template: config/**
+# package: config, output: config/config.go, ignore: *.go, template: config/**
 	@go-bindata -pkg config -o config/config.go -ignore=.go config/...
 
 generate:
