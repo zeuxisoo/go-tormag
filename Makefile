@@ -53,6 +53,10 @@ frontend-replace:
 frontend-integrate:
 	@mv static/index.html views/home/index.html
 
+# Add workbox config to specific line
+# like => @perl -l -p -i -e 'print "workbox.setConfig({ debug: false });" if $. == 20' static/service-worker.js
+	@ex -s -c '20i|workbox.setConfig({ debug: false });' -c x static/service-worker.js
+
 frontend-clean:
 # Remove all without .gitignore:
 # like => find ./static -mindepth 1 -maxdepth 1 ! -name '.gitignore' -exec rm -rf {} \\
