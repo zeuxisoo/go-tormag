@@ -43,12 +43,12 @@ frontend-copy:
 	@cp -Rf frontend/dist/* static/
 
 frontend-replace:
-	@perl -p -i -e 's#/(js|css|img)#/static/$$1#g' static/index.html
-	@perl -p -i -e 's#/(img)#/static/$$1#g' static/manifest.json
-	@perl -p -i -e 's#/(fonts|robots|js|img|css)#/static/$$1#g' static/precache-manifest.*.js
-	@perl -p -i -e 's#/(precache\-manifest)#/static/$$1#g' static/service-worker.js
-	@perl -p -i -e 's#"(js)/"#"static/$$1/"#g' static/js/app.*.js
-	@perl -p -i -e 's#\("".concat#\("static".concat#' static/js/app.*.js
+	@perl -p -i -e 's@/(js|css|img)@/static/$$1@g' static/index.html
+	@perl -p -i -e 's@/(img)@/static/$$1@g' static/manifest.json
+	@perl -p -i -e 's@/(fonts|robots|js|img|css)@/static/$$1@g' static/precache-manifest.*.js
+	@perl -p -i -e 's@/(precache\-manifest)@/static/$$1@g' static/service-worker.js
+	@perl -p -i -e 's@"(js)/"@"static/$$1/"@g' static/js/app.*.js
+	@perl -p -i -e 's@\("".concat@\("static".concat@' static/js/app.*.js
 
 frontend-integrate:
 	@mv static/index.html views/home/index.html
