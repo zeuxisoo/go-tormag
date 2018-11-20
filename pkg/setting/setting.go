@@ -16,7 +16,9 @@ import (
 
 var (
     //
-    BuildEnv string
+    BuildEnv    string
+    BuildTime   string
+    BuildHash   string
 
     //
     AppPath         string
