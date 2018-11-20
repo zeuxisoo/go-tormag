@@ -1,6 +1,9 @@
 .PHONY: frontend
 
 LDFLAGS += -X "github.com/zeuxisoo/go-tormag/pkg/setting.BuildEnv=release"
+LDFLAGS += -X "github.com/zeuxisoo/go-tormag/pkg/setting.BuildTime=$(shell date -u '+%Y-%m-%d %I:%M:%S %Z')"
+LDFLAGS += -X "github.com/zeuxisoo/go-tormag/pkg/setting.BuildHash=$(shell git rev-parse --short=12 HEAD)"
+
 
 BIN_NAME=tormag
 RELEASE_DIR=release
@@ -68,13 +71,13 @@ frontend: frontend-build frontend-copy frontend-replace frontend-integrate
 
 bindata:
 # package: views, output: pkg/view/view.go, ignore: *.go, template: views/**
-	@go-bindata -pkg view -o pkg/view/view.go -ignore=.go views/...
+	go-bindata -pkg view -o pkg/view/view.go -ignore=.go views/...
 
 # package: static, output: pkg/static/static.go, ignore: *.go, template: static/**
-	@go-bindata -pkg static -o pkg/static/static.go -ignore=.go static/...
+	go-bindata -pkg static -o pkg/static/static.go -ignore=.go static/...
 
 # package: config, output: config/config.go, ignore: *.go, template: config/**
-	@go-bindata -pkg config -o config/config.go -ignore=.go config/...
+	go-bindata -pkg config -o config/config.go -ignore=.go config/...
 
 generate:
 	@go generate -x
