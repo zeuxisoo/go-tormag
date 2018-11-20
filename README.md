@@ -4,8 +4,6 @@ A command line application to convert magnet and find large file from the torren
 
 ## Usage
 
-***Currnetly, The following `build`, `pack` and `release` command don't support web function***
-
 Install the vendor (if not exists)
 
     dep ensure
