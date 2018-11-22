@@ -39,3 +39,9 @@ For file
 For directory
 
     tormag -d /path/to/your/torrent/directory -o /path/to/store/biggers.txt
+
+## Web UI
+
+Run the command to start the web application
+
+    tormag web
