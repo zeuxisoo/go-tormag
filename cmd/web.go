@@ -135,6 +135,13 @@ func registerRender(engine *gin.Engine) {
 
 func registerRoutes(engine *gin.Engine) {
     engine.GET("/", routes.HomeGet)
+
+    //
+    engine.GET("/robots.txt", func(c *gin.Context) {
+        c.String(200, string(static.MustAsset("static/robots.txt")))
+    })
+
+    //
     engine.POST("/convert", routes.ConvertPost)
     engine.POST("/bigger", routes.BiggerPost)
     engine.POST("/about", routes.AboutPost)
