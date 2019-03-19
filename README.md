@@ -6,7 +6,7 @@ A command line application to convert magnet and find large file from the torren
 
 Install the vendor (if not exists)
 
-    dep ensure
+    make deps
 
 Build the application
 
