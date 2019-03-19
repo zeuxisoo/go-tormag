@@ -7,3 +7,6 @@
 /magnets.txt
 /biggers.txt
 /tormag-*
+
+/go.mod
+/go.sum
