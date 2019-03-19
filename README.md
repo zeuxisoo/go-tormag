@@ -4,9 +4,17 @@ A command line application to convert magnet and find large file from the torren
 
 ## Usage
 
+Disable the GO module
+
+    export GO11MODULE=off
+
 Install the vendor (if not exists)
 
-    make deps
+    dep ensure
+
+Install the tools
+
+    go get github.com/jteeuwen/go-bindata/...
 
 Build the application
 
