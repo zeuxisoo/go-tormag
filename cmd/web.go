@@ -141,6 +141,11 @@ func registerRoutes(engine *gin.Engine) {
         c.String(200, string(static.MustAsset("static/robots.txt")))
     })
 
+    engine.GET("/manifest.json", func(c *gin.Context) {
+        c.Header("Content-Type", "application/json")
+        c.String(200, string(static.MustAsset("static/manifest.json")))
+    })
+
     //
     engine.POST("/convert", routes.ConvertPost)
     engine.POST("/bigger", routes.BiggerPost)
