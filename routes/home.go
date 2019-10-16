@@ -5,6 +5,7 @@ import (
 
     "github.com/gin-gonic/gin"
 
+    "github.com/zeuxisoo/go-tormag/pkg/setting"
     "github.com/zeuxisoo/go-tormag/pkg/utils"
 )
 
@@ -12,7 +13,7 @@ import (
 func HomeGet(c *gin.Context) {
     homeIndexViewFile := "views/home/index.html"
 
-    if utils.IsFileExists(homeIndexViewFile) == true {
+    if setting.BuildEnv != "development" || utils.IsFileExists(homeIndexViewFile) == true {
         c.HTML(http.StatusOK, homeIndexViewFile, gin.H{})
     }else{
         c.String(http.StatusOK, "Hello world in develop mode")

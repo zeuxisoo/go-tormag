@@ -114,8 +114,6 @@ pack:
 	@mkdir -p $(RELEASE_DIR)
 	@mv $(BIN_NAME)-* $(RELEASE_DIR)
 
-	@cp -Rf views $(RELEASE_DIR)/
-
 release: build pack
 
 clean: build-clean
