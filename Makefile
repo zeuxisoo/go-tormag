@@ -14,6 +14,7 @@ all:
 	@echo "-------------------- : -----------"
 	@echo "make deps            : Install the dependencies and tools"
 	@echo "make run             : Run the program"
+	@echo "make run-web         : Run the web application"
 	@echo "make run-web-release : Run the web application with release build environment"
 	@echo "make tools           : Install the tools"
 	@echo "make bindata         : Generate all bindata base on go-bindata command"
@@ -32,6 +33,9 @@ deps: tools
 
 run:
 	@go run *.go
+
+run-web:
+	@go run *.go web
 
 run-web-release:
 	@go generate && go run -ldflags '$(LDFLAGS)' *.go web
