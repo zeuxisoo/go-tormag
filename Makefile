@@ -44,7 +44,7 @@ tools:
 	@go get -u github.com/jteeuwen/go-bindata/...
 
 web-build:
-	@cd web && npm install && npm run build
+	@cd web && yarn install && yarn run build
 
 web-copy:
 	@cp -Rf web/dist/* static/
