@@ -1,6 +1,6 @@
 {
-  "name": "frontend",
-  "short_name": "frontend",
+  "name": "tormag",
+  "short_name": "tormag",
   "icons": [
     {
       "src": "/img/icons/android-chrome-512x512.png",

@@ -1,4 +1,4 @@
-.PHONY: frontend
+.PHONY: web
 
 LDFLAGS += -X "github.com/zeuxisoo/go-tormag/pkg/setting.BuildEnv=release"
 LDFLAGS += -X "github.com/zeuxisoo/go-tormag/pkg/setting.BuildTime=$(shell date -u '+%Y-%m-%d %I:%M:%S %Z')"
@@ -43,13 +43,13 @@ run-web-release:
 tools:
 	@go get -u github.com/jteeuwen/go-bindata/...
 
-frontend-build:
-	@cd frontend && npm install && npm run build
+web-build:
+	@cd web && npm install && npm run build
 
-frontend-copy:
-	@cp -Rf frontend/dist/* static/
+web-copy:
+	@cp -Rf web/dist/* static/
 
-frontend-replace:
+web-replace:
 	@perl -p -i -e 's@/(js|css|img)@/static/$$1@g' static/index.html
 	@perl -p -i -e 's@/(img)@/static/$$1@g' static/manifest.json
 	@perl -p -i -e 's@/(fonts|robots|js|img|css)@/static/$$1@g' static/precache-manifest.*.js
@@ -57,21 +57,21 @@ frontend-replace:
 	@perl -p -i -e 's@"(js)/"@"static/$$1/"@g' static/js/app.*.js
 	@perl -p -i -e 's@\("".concat@\("static".concat@' static/js/app.*.js
 
-frontend-integrate:
+web-integrate:
 	@mv static/index.html views/home/index.html
 
 # Add workbox config to specific line
 # like => @perl -l -p -i -e 'print "workbox.setConfig({ debug: false });" if $. == 20' static/service-worker.js
 	@ex -s -c '20i|workbox.setConfig({ debug: false });' -c x static/service-worker.js
 
-frontend-clean:
+web-clean:
 # Remove all without .gitignore:
 # like => find ./static -mindepth 1 -maxdepth 1 ! -name '.gitignore' -exec rm -rf {} \\
 # rm without remove hidden file by default
 	@rm -rf static/*
 	@rm -rf views/home/index.html
 
-frontend: frontend-build frontend-copy frontend-replace frontend-integrate
+web: web-build web-copy web-replace web-integrate
 
 bindata:
 # package: views, output: pkg/view/view.go, ignore: *.go, template: views/**
@@ -86,7 +86,7 @@ bindata:
 generate:
 	@go generate -x
 
-build: frontend bindata build-macos build-windows build-windows build-freebsd build-linux
+build: web bindata build-macos build-windows build-windows build-freebsd build-linux
 
 build-macos:
 	@echo "Building for macos ..."
@@ -108,7 +108,7 @@ build-linux:
 
 	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags '$(LDFLAGS)' -o $(BIN_NAME)-linux
 
-build-clean: frontend-clean
+build-clean: web-clean
 	@rm -rf $(BIN_NAME)-*
 
 pack:
