@@ -1,10 +1,10 @@
 package static
 
 import (
-    "strings"
-    "net/http"
+	"net/http"
+	"strings"
 
-    "github.com/elazarl/go-bindata-assetfs"
+	assetfs "github.com/elazarl/go-bindata-assetfs"
 )
 
 // FileSystem object
@@ -33,7 +33,10 @@ func (p *FileSystem) Exists(prefix string, filePath string) bool {
 // NewFileSystem return FileSystem instance object
 func NewFileSystem(root string) *FileSystem {
     fileSystem := &assetfs.AssetFS{
-        Asset, AssetDir, AssetInfo, root,
+        Asset: Asset,
+        AssetDir: AssetDir,
+        AssetInfo: AssetInfo,
+        Prefix: root,
     }
 
     return &FileSystem{

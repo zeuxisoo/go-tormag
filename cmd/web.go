@@ -1,20 +1,20 @@
 package cmd
 
 import (
-    "fmt"
-    "time"
-    "strings"
+	"fmt"
+	"strings"
+	"time"
 
-    "github.com/urfave/cli"
-    "github.com/gin-gonic/gin"
-    ginStatic "github.com/gin-contrib/static"
-    "github.com/gin-contrib/cors"
-    "gopkg.in/flosch/pongo2.v3"
+	"github.com/gin-contrib/cors"
+	ginStatic "github.com/gin-contrib/static"
+	"github.com/gin-gonic/gin"
+	"github.com/urfave/cli"
+	"gopkg.in/flosch/pongo2.v3"
 
-    "github.com/zeuxisoo/go-tormag/pkg/setting"
-    "github.com/zeuxisoo/go-tormag/pkg/render"
-    "github.com/zeuxisoo/go-tormag/pkg/static"
-    "github.com/zeuxisoo/go-tormag/routes"
+	"github.com/zeuxisoo/go-tormag/internal/render"
+	"github.com/zeuxisoo/go-tormag/internal/setting"
+	"github.com/zeuxisoo/go-tormag/internal/static"
+	"github.com/zeuxisoo/go-tormag/routes"
 )
 
 // Web command

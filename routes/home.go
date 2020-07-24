@@ -1,12 +1,12 @@
 package routes
 
 import (
-    "net/http"
+	"net/http"
 
-    "github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin"
 
-    "github.com/zeuxisoo/go-tormag/pkg/setting"
-    "github.com/zeuxisoo/go-tormag/pkg/utils"
+	"github.com/zeuxisoo/go-tormag/internal/setting"
+	"github.com/zeuxisoo/go-tormag/internal/utils"
 )
 
 // HomeGet return the index page

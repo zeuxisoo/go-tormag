@@ -1,17 +1,17 @@
 package setting
 
 import (
-    "os"
-    "os/exec"
-    "path/filepath"
-    "strings"
-    "path"
+	"os"
+	"os/exec"
+	"path"
+	"path/filepath"
+	"strings"
 
-    "gopkg.in/ini.v1"
+	"gopkg.in/ini.v1"
 
-    "github.com/zeuxisoo/go-tormag/config"
-    "github.com/zeuxisoo/go-tormag/pkg/logger"
-    "github.com/zeuxisoo/go-tormag/pkg/utils"
+	"github.com/zeuxisoo/go-tormag/config"
+	"github.com/zeuxisoo/go-tormag/internal/logger"
+	"github.com/zeuxisoo/go-tormag/internal/utils"
 )
 
 var (

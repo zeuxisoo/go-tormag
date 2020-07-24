@@ -1,13 +1,13 @@
 package render
 
 import (
-    "net/http"
+	"net/http"
 
-    "github.com/gin-gonic/gin"
-    "github.com/gin-gonic/gin/render"
-    "gopkg.in/flosch/pongo2.v3"
+	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/render"
+	"gopkg.in/flosch/pongo2.v3"
 
-    "github.com/zeuxisoo/go-tormag/pkg/view"
+	"github.com/zeuxisoo/go-tormag/internal/view"
 )
 
 // Pongo2FilterFunctions conversion from pongo2.FilterFunction

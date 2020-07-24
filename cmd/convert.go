@@ -2,14 +2,14 @@ package cmd
 
 import (
 	"fmt"
-    "io/ioutil"
-    "path/filepath"
-    "strings"
+	"io/ioutil"
+	"path/filepath"
+	"strings"
 
-    "github.com/anacrolix/torrent/metainfo"
-    "github.com/urfave/cli"
+	"github.com/anacrolix/torrent/metainfo"
+	"github.com/urfave/cli"
 
-    "github.com/zeuxisoo/go-tormag/pkg/logger"
+	"github.com/zeuxisoo/go-tormag/internal/logger"
 )
 
 // Convert command

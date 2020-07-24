@@ -1,11 +1,11 @@
 package routes
 
 import (
-    "net/http"
+	"net/http"
 
-    "github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin"
 
-    "github.com/zeuxisoo/go-tormag/pkg/setting"
+	"github.com/zeuxisoo/go-tormag/internal/setting"
 )
 
 // AboutPost return the application infomation

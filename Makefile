@@ -1,8 +1,8 @@
 .PHONY: web
 
-LDFLAGS += -X "github.com/zeuxisoo/go-tormag/pkg/setting.BuildEnv=release"
-LDFLAGS += -X "github.com/zeuxisoo/go-tormag/pkg/setting.BuildTime=$(shell date -u '+%Y-%m-%d %I:%M:%S %Z')"
-LDFLAGS += -X "github.com/zeuxisoo/go-tormag/pkg/setting.BuildHash=$(shell git rev-parse --short=12 HEAD)"
+LDFLAGS += -X "github.com/zeuxisoo/go-tormag/internal/setting.BuildEnv=release"
+LDFLAGS += -X "github.com/zeuxisoo/go-tormag/internal/setting.BuildTime=$(shell date -u '+%Y-%m-%d %I:%M:%S %Z')"
+LDFLAGS += -X "github.com/zeuxisoo/go-tormag/internal/setting.BuildHash=$(shell git rev-parse --short=12 HEAD)"
 
 
 BIN_NAME=tormag
@@ -74,11 +74,11 @@ web-clean:
 web: web-build web-copy web-replace web-integrate
 
 bindata:
-# package: views, output: pkg/view/view.go, ignore: *.go, template: views/**
-	go-bindata -pkg view -o pkg/view/view.go -ignore=.go views/...
+# package: views, output: internal/view/view.go, ignore: *.go, template: views/**
+	go-bindata -pkg view -o internal/view/view.go -ignore=.go views/...
 
-# package: static, output: pkg/static/static.go, ignore: *.go, template: static/**
-	go-bindata -pkg static -o pkg/static/static.go -ignore=.go static/...
+# package: static, output: internal/static/static.go, ignore: *.go, template: static/**
+	go-bindata -pkg static -o internal/static/static.go -ignore=.go static/...
 
 # package: config, output: config/config.go, ignore: *.go, template: config/**
 	go-bindata -pkg config -o config/config.go -ignore=.go config/...
@@ -91,7 +91,7 @@ build: web bindata build-macos build-windows build-windows build-freebsd build-l
 build-macos:
 	@echo "Building for macos ..."
 
-	@CGO_ENABLED=0 GOOS=darwin GOARCH=386 go build -ldflags '$(LDFLAGS)' -o $(BIN_NAME)-macos
+	@CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -ldflags '$(LDFLAGS)' -o $(BIN_NAME)-macos
 
 build-windows:
 	@echo "Building for windows ..."

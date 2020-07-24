@@ -2,11 +2,8 @@
 /vendor
 
 /config/config.go
-/pkg/static/static.go
-/pkg/view/view.go
+/internal/static/static.go
+/internal/view/view.go
 /magnets.txt
 /biggers.txt
 /tormag-*
-
-/go.mod
-/go.sum

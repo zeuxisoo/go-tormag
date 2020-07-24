@@ -1,9 +1,9 @@
 package cmd
 
 import (
-    "github.com/urfave/cli"
+	"github.com/urfave/cli"
 
-    "github.com/zeuxisoo/go-tormag/pkg/logger"
+	"github.com/zeuxisoo/go-tormag/internal/logger"
 )
 
 func stringFlag(name, value, usage string) cli.StringFlag {

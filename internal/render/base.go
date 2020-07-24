@@ -11,14 +11,14 @@ package render
 //                                      +------------------------------------------------+
 
 import (
-    "bytes"
-    "net/http"
-    "html/template"
+	"bytes"
+	"html/template"
+	"net/http"
 
-    "github.com/gin-gonic/gin"
-    "github.com/gin-gonic/gin/render"
+	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/render"
 
-    "github.com/zeuxisoo/go-tormag/pkg/view"
+	"github.com/zeuxisoo/go-tormag/internal/view"
 )
 
 // BaseFunctions conversion from template.FuncMap

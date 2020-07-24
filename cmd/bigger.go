@@ -1,16 +1,16 @@
 package cmd
 
 import (
-    "fmt"
-    "strings"
-    "io/ioutil"
-    "path/filepath"
+	"fmt"
+	"io/ioutil"
+	"path/filepath"
+	"strings"
 
-    "github.com/urfave/cli"
-    "github.com/anacrolix/torrent/metainfo"
+	"github.com/anacrolix/torrent/metainfo"
+	"github.com/urfave/cli"
 
-    "github.com/zeuxisoo/go-tormag/pkg/logger"
-    "github.com/zeuxisoo/go-tormag/pkg/utils"
+	"github.com/zeuxisoo/go-tormag/internal/logger"
+	"github.com/zeuxisoo/go-tormag/internal/utils"
 )
 
 // Bigger command

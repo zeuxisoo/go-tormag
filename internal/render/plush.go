@@ -1,14 +1,14 @@
 package render
 
 import (
-    "net/http"
-    "html/template"
+	"html/template"
+	"net/http"
 
-    "github.com/gin-gonic/gin"
-    "github.com/gin-gonic/gin/render"
-    "github.com/gobuffalo/plush"
+	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/render"
+	"github.com/gobuffalo/plush"
 
-    "github.com/zeuxisoo/go-tormag/pkg/view"
+	"github.com/zeuxisoo/go-tormag/internal/view"
 )
 
 // PlushFunctions conversion from template.FuncMap
