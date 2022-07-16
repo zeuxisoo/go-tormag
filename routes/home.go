@@ -11,9 +11,9 @@ import (
 
 // HomeGet return the index page
 func HomeGet(c *gin.Context) {
-    homeIndexViewFile := "views/home/index.html"
+    homeIndexViewFile := "home/index.html"
 
-    if setting.BuildEnv != "development" || utils.IsFileExists(homeIndexViewFile) == true {
+    if setting.BuildEnv != "development" || utils.IsFileExists(homeIndexViewFile) {
         c.HTML(http.StatusOK, homeIndexViewFile, gin.H{})
     }else{
         c.String(http.StatusOK, "Hello world in develop mode")

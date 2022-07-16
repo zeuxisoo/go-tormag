@@ -24,7 +24,7 @@ func BiggerPost(c *gin.Context) {
         "big" : "",
     }
 
-    if utils.CreateOrIsDirectoryExists(setting.AttachmentPath) == false {
+    if !utils.CreateOrIsDirectoryExists(setting.AttachmentPath) {
         message = "Cannot create storage directory"
     }else{
         file, err := c.FormFile("file")
@@ -36,9 +36,9 @@ func BiggerPost(c *gin.Context) {
 
         if err != nil {
             message = "Cannot read the file from form data"
-        }else if utils.IsTorrentFile(file.Filename) == false {
+        }else if !utils.IsTorrentFile(file.Filename) {
             message = "The upload file is not torrent file"
-        }else if utils.IsBiggerFile(file.Size, setting.AttachmentMaxSize) == true {
+        }else if utils.IsBiggerFile(file.Size, setting.AttachmentMaxSize) {
             message = fmt.Sprintf("The upload file is bigger than %dMB", setting.AttachmentMaxSize)
         }else if fileMD5, err := utils.GetFileMD5(file); err != nil {
             message = fmt.Sprintf("Cannot get the md5 hash from upload file: %v", err)

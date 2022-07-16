@@ -1,9 +1,6 @@
 /release
 /vendor
 
-/config/config.go
-/internal/static/static.go
-/internal/view/view.go
 /magnets.txt
 /biggers.txt
 /tormag-*

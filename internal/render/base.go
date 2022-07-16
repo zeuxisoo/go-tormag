@@ -18,7 +18,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/render"
 
-	"github.com/zeuxisoo/go-tormag/internal/view"
+	"github.com/zeuxisoo/go-tormag/views"
 )
 
 // BaseFunctions conversion from template.FuncMap
@@ -58,7 +58,7 @@ func (b BaseRender) Instance(name string, data interface{}) render.Render {
 
 // Render the template to the response
 func (b BaseRender) Render(w http.ResponseWriter) error {
-    assetBytes, err := view.Asset(string(b.name))
+    assetBytes, err := views.Files.ReadFile(string(b.name))
     if err != nil {
         return err
     }

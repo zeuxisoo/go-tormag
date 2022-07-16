@@ -8,10 +8,6 @@ Download the modules
 
     go mod download
 
-Install the tools
-
-    go get github.com/shuLhan/go-bindata/...
-
 Build the application
 
     make build

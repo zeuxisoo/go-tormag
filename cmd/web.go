@@ -13,7 +13,7 @@ import (
 
 	"github.com/zeuxisoo/go-tormag/internal/render"
 	"github.com/zeuxisoo/go-tormag/internal/setting"
-	"github.com/zeuxisoo/go-tormag/internal/static"
+	"github.com/zeuxisoo/go-tormag/public"
 	"github.com/zeuxisoo/go-tormag/routes"
 )
 
@@ -67,7 +67,7 @@ func runWeb(c *cli.Context) {
     engine := gin.Default()
     engine.MaxMultipartMemory = setting.AttachmentMaxSize << 20 // Set a lower memory limit for multipart (default: 4MB, app.ini: 8MB)
 
-    engine.Use(ginStatic.Serve("/static", static.NewFileSystem("static")))
+    engine.Use(ginStatic.Serve("/static", public.NewFileSystem("static")))
 
     if setting.CrossOriginEnable == true {
         engine.Use(cors.New(cors.Config{
@@ -138,12 +138,16 @@ func registerRoutes(engine *gin.Engine) {
 
     //
     engine.GET("/robots.txt", func(c *gin.Context) {
-        c.String(200, string(static.MustAsset("static/robots.txt")))
+        data, _ := public.Files.ReadFile("static/robots.txt")
+
+        c.String(200, string(data))
     })
 
     engine.GET("/manifest.json", func(c *gin.Context) {
+        data, _ := public.Files.ReadFile("static/manifest.json")
+
         c.Header("Content-Type", "application/json")
-        c.String(200, string(static.MustAsset("static/manifest.json")))
+        c.String(200, string(data))
     })
 
     //

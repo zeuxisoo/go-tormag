@@ -82,24 +82,35 @@ func NewSetting() {
     //
     appDirectory, err := AppDirectory()
     if err != nil {
-        logger.Fatalf("Cannot found the app directory => %v", err)
+        logger.Fatalf("Cannot found the app directory => %v\n", err)
+    }
+
+    //
+    defaultConfigData, err := config.Files.ReadFile("app.ini")
+    if err != nil {
+        logger.Fatalf("Cannot read the app.ini => %v\n", err)
     }
 
     //
     Config, err = ini.LoadSources(ini.LoadOptions{
         IgnoreInlineComment: true,
-    }, config.MustAsset("config/app.ini"))
+    }, defaultConfigData)
     if err != nil {
-        logger.Fatalf("Cannot load the config/app.ini => %v\n", err)
+        logger.Fatalf("Cannot load the app.ini => %v\n", err)
     }
 
     if len(BuildEnv) > 0 && BuildEnv != "development" {
-        if err := Config.Append(config.MustAsset("config/app.release.ini")); err != nil {
-            logger.Fatalf("Cannot load the config/app.release.ini => %v\n", err)
+        releaseConfigData, err := config.Files.ReadFile("app.release.ini")
+        if err != nil {
+            logger.Fatalf("Cannot read the app.release.ini => %v\n", err)
+        }
+
+        if err := Config.Append(releaseConfigData); err != nil {
+            logger.Fatalf("Cannot load the app.release.ini => %v\n", err)
         }
     }
 
-    if len(CustomConfig) != 0 && utils.IsFile(CustomConfig) == true {
+    if len(CustomConfig) != 0 && utils.IsFile(CustomConfig) {
         if err := Config.Append(CustomConfig); err != nil {
             logger.Fatalf("Cannot load the custom config file (%s) => %v\n", CustomConfig, err)
         }
@@ -127,7 +138,7 @@ func NewSetting() {
     CrossOriginAllowCredentials = section.Key("ALLOW_CREDENTIALS").MustBool(true)
     CrossOriginMaxAge           = section.Key("MAX_AGE").MustInt(12)
 
-    if filepath.IsAbs(AttachmentPath) == false {
+    if !filepath.IsAbs(AttachmentPath) {
         AttachmentPath = path.Join(appDirectory, AttachmentPath)
     }
 }

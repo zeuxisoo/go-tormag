@@ -5,9 +5,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/render"
-	"gopkg.in/flosch/pongo2.v3"
 
-	"github.com/zeuxisoo/go-tormag/internal/view"
+	"github.com/zeuxisoo/go-tormag/views"
+
+	"gopkg.in/flosch/pongo2.v3"
 )
 
 // Pongo2FilterFunctions conversion from pongo2.FilterFunction
@@ -51,7 +52,7 @@ func (p Pongo2Render) Instance(name string, data interface{}) render.Render {
 
 // Render the template to the response
 func (p Pongo2Render) Render(w http.ResponseWriter) error {
-    assetBytes, err := view.Asset(p.name)
+    assetBytes, err := views.Files.ReadFile(p.name)
     if err != nil {
         return err
     }

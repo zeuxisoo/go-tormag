@@ -1,11 +1,14 @@
-package static
+package public
 
 import (
+	"embed"
+	"io/fs"
 	"net/http"
 	"strings"
-
-	assetfs "github.com/elazarl/go-bindata-assetfs"
 )
+
+//go:embed **/*
+var Files embed.FS
 
 // FileSystem object
 type FileSystem struct {
@@ -32,14 +35,12 @@ func (p *FileSystem) Exists(prefix string, filePath string) bool {
 
 // NewFileSystem return FileSystem instance object
 func NewFileSystem(root string) *FileSystem {
-    fileSystem := &assetfs.AssetFS{
-        Asset: Asset,
-        AssetDir: AssetDir,
-        AssetInfo: AssetInfo,
-        Prefix: root,
+    fileSystem, err := fs.Sub(Files, root)
+    if err != nil {
+        panic(err)
     }
 
     return &FileSystem{
-        fileSystem: fileSystem,
+        fileSystem: http.FS(fileSystem),
     }
 }
