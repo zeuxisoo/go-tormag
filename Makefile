@@ -12,6 +12,7 @@ all:
 	@echo
 	@echo "Commands             : Description"
 	@echo "-------------------- : -----------"
+	@echo "make web             : Build the web frontend"
 	@echo "make run             : Run the program"
 	@echo "make run-web         : Run the web application"
 	@echo "make run-web-release : Run the web application with release build environment"
