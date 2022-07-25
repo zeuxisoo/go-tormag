@@ -13,9 +13,10 @@ all:
 	@echo "Commands             : Description"
 	@echo "-------------------- : -----------"
 	@echo "make web             : Build the web frontend"
+	@echo "make web-dev			: Run the web frontend development server"
 	@echo "make run             : Run the program"
-	@echo "make run-web         : Run the web application"
-	@echo "make run-web-release : Run the web application with release build environment"
+	@echo "make run-web         : Run the web command in program"
+	@echo "make run-web-release : Run the web command in program under release environment"
 	@echo "make build           : Build the biniary file"
 	@echo "make build-macos     : Build the macos biniary file only"
 	@echo "make build-windows   : Build the windows biniary file only"
@@ -27,6 +28,9 @@ all:
 
 web: web-build web-copy web-replace web-integrate
 
+web-dev:
+	@cd web && yarn run dev
+
 run:
 	@go run *.go
 
@@ -34,7 +38,43 @@ run-web:
 	@go run *.go web
 
 run-web-release:
-	@go generate && go run -ldflags '$(LDFLAGS)' *.go web
+	@go run -ldflags '$(LDFLAGS)' *.go web
+
+build: web build-macos build-windows build-windows build-freebsd build-linux
+
+build-macos:
+	@echo "Building for macos ..."
+
+	@CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -ldflags '$(LDFLAGS)' -o $(BIN_NAME)-macos
+
+build-windows:
+	@echo "Building for windows ..."
+
+	@CGO_ENABLED=0 GOOS=windows GOARCH=386 go build -ldflags '$(LDFLAGS)' -o $(BIN_NAME)-win.exe
+
+build-freebsd:
+	@echo "Building for freebsd ..."
+
+	@CGO_ENABLED=0 GOOS=freebsd GOARCH=amd64 go build -ldflags '$(LDFLAGS)' -o $(BIN_NAME)-freebsd
+
+build-linux:
+	@echo "Building for linux ..."
+
+	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags '$(LDFLAGS)' -o $(BIN_NAME)-linux
+
+pack:
+	@echo "Packing ..."
+
+	@rm -rf $(RELEASE_DIR)
+	@mkdir -p $(RELEASE_DIR)
+	@mv $(BIN_NAME)-* $(RELEASE_DIR)
+
+release: build pack
+
+#---- Untils command ----
+
+clean: build-clean
+	@rm -rf storage/attachments/*
 
 web-build:
 	@cd web && yarn install && yarn run build
@@ -64,39 +104,5 @@ web-clean:
 	@rm -rf public/static/*
 	@rm -rf views/home/index.html
 
-build: web build-macos build-windows build-windows build-freebsd build-linux
-
-build-macos:
-	@echo "Building for macos ..."
-
-	@CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -ldflags '$(LDFLAGS)' -o $(BIN_NAME)-macos
-
-build-windows:
-	@echo "Building for windows ..."
-
-	@CGO_ENABLED=0 GOOS=windows GOARCH=386 go build -ldflags '$(LDFLAGS)' -o $(BIN_NAME)-win.exe
-
-build-freebsd:
-	@echo "Building for freebsd ..."
-
-	@CGO_ENABLED=0 GOOS=freebsd GOARCH=amd64 go build -ldflags '$(LDFLAGS)' -o $(BIN_NAME)-freebsd
-
-build-linux:
-	@echo "Building for linux ..."
-
-	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags '$(LDFLAGS)' -o $(BIN_NAME)-linux
-
 build-clean: web-clean
 	@rm -rf $(BIN_NAME)-*
-
-pack:
-	@echo "Packing ..."
-
-	@rm -rf $(RELEASE_DIR)
-	@mkdir -p $(RELEASE_DIR)
-	@mv $(BIN_NAME)-* $(RELEASE_DIR)
-
-release: build pack
-
-clean: build-clean
-	@rm -rf storage/attachments/*
