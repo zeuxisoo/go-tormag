@@ -253,6 +253,16 @@ estree-walker@^2.0.2:
   resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-2.0.2.tgz#52f010178c2a4c117a7757cfe942adb7d2da4cac"
   integrity sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==
 
+filepond-plugin-file-validate-type@^1.2.8:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/filepond-plugin-file-validate-type/-/filepond-plugin-file-validate-type-1.2.8.tgz#58ab1815a3f505f2189e6943263ae3b6cb314bd1"
+  integrity sha512-UBTqIWbk5+5R0GBELI8svu01MHWjFSLfc9DfCMvFtHKXLdJMxY1p37ChC4YKQjhfODaTuvLnNVRsukMGMFZBBg==
+
+filepond@^4.30.4:
+  version "4.30.4"
+  resolved "https://registry.yarnpkg.com/filepond/-/filepond-4.30.4.tgz#036d87d9b0ab27d19fb5e302eae799df90e094e4"
+  integrity sha512-FCwsMvG9iiEs6uobdDrTaKsCgsqys0NuLgPPD8n37AYVYBiiDkrPkk9MSIU5rT2FahYcL1bScYI9huIPtlzqyA==
+
 fsevents@~2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.2.tgz#8a526f78b8fdf4623b709e0b975c52c24c02fd1a"
@@ -355,6 +365,11 @@ vite@^2.4.4:
     rollup "^2.59.0"
   optionalDependencies:
     fsevents "~2.3.2"
+
+vue-filepond@^7.0.3:
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/vue-filepond/-/vue-filepond-7.0.3.tgz#326cd309ef5b13538ed3233e4fff332cb2b41f8c"
+  integrity sha512-pYZ5TxGwFiiiVlRdzlJl0AyHE0/rEZiHm/0sYhIleFjV2VdGWTyxSqErN/AQwrwv32AeiNbui46vVB06Dl07ow==
 
 vue-router@^4.1.2:
   version "4.1.2"

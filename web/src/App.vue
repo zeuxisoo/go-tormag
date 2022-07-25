@@ -32,6 +32,7 @@
 
 <style>
 @import "~bootstrap/dist/css/bootstrap.css";
+@import "~filepond/dist/filepond.min.css";
 
 body {
     margin-top: 80px;
@@ -39,5 +40,12 @@ body {
 
 .bg-light-blue {
     background-color: #e3f2fd;
+}
+
+.filepond--panel-root {
+    background-color: rgb(227, 237, 243);
+}
+.filepond--drop-label {
+    color: rgb(169, 166, 206);
 }
 </style>
