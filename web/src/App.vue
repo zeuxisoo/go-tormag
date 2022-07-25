@@ -34,7 +34,7 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 
 body {
-    margin-top: 60px;
+    margin-top: 80px;
 }
 
 .bg-light-blue {
