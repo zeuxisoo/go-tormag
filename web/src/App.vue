@@ -32,7 +32,8 @@
 
 <style>
 @import "~bootstrap/dist/css/bootstrap.css";
-@import "~filepond/dist/filepond.min.css";
+@import "~filepond/dist/filepond.css";
+@import "~animate.css/animate.css";
 
 body {
     margin-top: 80px;

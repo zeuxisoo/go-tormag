@@ -14,6 +14,7 @@ export default defineConfig({
         alias: {
             "~bootstrap": path.resolve(__dirname, "node_modules/bootstrap"),
             "~filepond": path.resolve(__dirname, "node_modules/filepond"),
+            "~animate.css": path.resolve(__dirname, "node_modules/animate.css"),
         },
     },
 });

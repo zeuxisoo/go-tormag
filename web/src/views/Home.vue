@@ -41,7 +41,7 @@
             Please drop the files to the drop zone first
         </div>
         <div v-else key="converted-files-results">
-            <div v-if="isTargetResultMode('list') === true">
+            <transition-group enter-active-class="animate__animated animate__bounceInUp" leave-active-class="animate__animated animate__bounceOutDown" tag="div" v-if="isTargetResultMode('list')">
                 <div class="card text-bg-light mb-3" v-for="convertedFile in viewState.convertedFiles" v-bind:key="convertedFile.data.id">
                     <div class="card-header fw-bold">{{ convertedFile.data.file }}</div>
 
@@ -69,7 +69,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </transition-group>
 
             <textarea class="form-control" rows="20" v-if="isTargetResultMode('text') === true" v-bind:value="viewState.convertedText"></textarea>
         </div>

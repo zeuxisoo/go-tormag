@@ -7,6 +7,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "animate.css": "^4.1.1",
     "bootstrap": "^5.2.0",
     "deepmerge": "^4.2.2",
     "filepond": "^4.30.4",
