@@ -37,42 +37,44 @@
         </div>
         <hr />
 
-        <div class="alert alert-info text-center" role="alert" v-if="viewState.convertedFiles.length <= 0" key="converted-files-empty">
-            Please drop the files to the drop zone first
-        </div>
-        <div v-else key="converted-files-results">
-            <transition-group enter-active-class="animate__animated animate__bounceInUp" leave-active-class="animate__animated animate__bounceOutDown" tag="div" v-if="isTargetResultMode('list')">
-                <div class="card text-bg-light mb-3" v-for="convertedFile in viewState.convertedFiles" v-bind:key="convertedFile.data.id">
-                    <div class="card-header fw-bold">{{ convertedFile.data.file }}</div>
+        <transition enter-active-class="animate__animated animate__fadeInUp" leave-active-class="animate__animated animate__fadeOutUp" mode="out-in">
+            <div class="alert alert-info text-center" role="alert" v-if="viewState.convertedFiles.length <= 0" key="converted-files-empty">
+                Please drop the files to the drop zone first
+            </div>
+            <div v-else key="converted-files-results">
+                <transition-group enter-active-class="animate__animated animate__bounceInUp" leave-active-class="animate__animated animate__bounceOutDown" tag="div" v-if="isTargetResultMode('list')">
+                    <div class="card text-bg-light mb-3" v-for="convertedFile in viewState.convertedFiles" v-bind:key="convertedFile.data.id">
+                        <div class="card-header fw-bold">{{ convertedFile.data.file }}</div>
 
-                    <div class="card-body p-0" v-if="convertedFile.ok === true">
-                        <div class="row m-0">
-                            <div class="col-lg-2 p-1 mt-1 mb-1 fw-bold text-center bg-info text-white">ID</div>
-                            <div class="col-lg-10 p-1 mt-1 mb-1">{{ convertedFile.data.id }}</div>
+                        <div class="card-body p-0" v-if="convertedFile.ok === true">
+                            <div class="row m-0">
+                                <div class="col-lg-2 p-1 mt-1 mb-1 fw-bold text-center bg-info text-white">ID</div>
+                                <div class="col-lg-10 p-1 mt-1 mb-1">{{ convertedFile.data.id }}</div>
+                            </div>
+                            <div class="row m-0">
+                                <div class="col-lg-2 p-1 mb-1 fw-bold text-center bg-info text-white">MD5</div>
+                                <div class="col-lg-10 p-1 mb-1">{{ convertedFile.data.md5 }}</div>
+                            </div>
+                            <div class="row m-0">
+                                <div class="col-lg-2 p-1 mb-1 fw-bold text-center bg-info text-white">Magnet</div>
+                                <div class="col-lg-10 p-1 mb-1">
+                                    <textarea class="form-control" v-bind:value="convertedFile.data.magnet"></textarea>
+                                </div>
+                            </div>
                         </div>
-                        <div class="row m-0">
-                            <div class="col-lg-2 p-1 mb-1 fw-bold text-center bg-info text-white">MD5</div>
-                            <div class="col-lg-10 p-1 mb-1">{{ convertedFile.data.md5 }}</div>
-                        </div>
-                        <div class="row m-0">
-                            <div class="col-lg-2 p-1 mb-1 fw-bold text-center bg-info text-white">Magnet</div>
-                            <div class="col-lg-10 p-1 mb-1">
-                                <textarea class="form-control" v-bind:value="convertedFile.data.magnet"></textarea>
+
+                        <div class="card-body p-0" v-else>
+                            <div class="row m-0">
+                                <div class="col-lg-2 p-1 mt-1 mb-1 fw-bold text-center bg-danger text-white">Error</div>
+                                <div class="col-lg-10 p-1 mt-1 mb-1">{{ convertedFile.message }}</div>
                             </div>
                         </div>
                     </div>
+                </transition-group>
 
-                    <div class="card-body p-0" v-else>
-                        <div class="row m-0">
-                            <div class="col-lg-2 p-1 mt-1 mb-1 fw-bold text-center bg-danger text-white">Error</div>
-                            <div class="col-lg-10 p-1 mt-1 mb-1">{{ convertedFile.message }}</div>
-                        </div>
-                    </div>
-                </div>
-            </transition-group>
-
-            <textarea class="form-control" rows="20" v-if="isTargetResultMode('text') === true" v-bind:value="viewState.convertedText"></textarea>
-        </div>
+                <textarea class="form-control" rows="20" v-if="isTargetResultMode('text') === true" v-bind:value="viewState.convertedText"></textarea>
+            </div>
+        </transition>
     </div>
 </template>
 
