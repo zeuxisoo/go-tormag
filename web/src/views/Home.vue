@@ -97,7 +97,6 @@ const viewState = reactive({
     resultMode    : config.result_mode,
     convertedFiles: [],
     convertedText : "",
-
 });
 
 const filePondUploadZone = ref(null);
