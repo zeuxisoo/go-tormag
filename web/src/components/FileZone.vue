@@ -8,7 +8,7 @@
         accepted-file-types="application/x-bittorrent, application/octet-stream"
         :server="filePondConfig.server"
         :files="filePondConfig.files"
-        @processfile="props.onProcessFile" />
+        @processfile="(error, file) => emit('processFile', error, file)" />
 </template>
 
 <script setup>
@@ -22,10 +22,13 @@ const props = defineProps({
     entryUrl     : { type: String, required: true },
     fileList     : { type: Array, required: true },
     fileText     : { type: String, required: true },
-    onProcessFile: { type: Function, required: true },
+    // onProcessFile: { type: Function, required: true },
 });
 
-// Component
+// Emits
+const emit = defineEmits(["processFile"]);
+
+// Components
 const FilePond = VueFilePond(
     FilePondPluginFileValidateType
 );

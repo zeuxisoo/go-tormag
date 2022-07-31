@@ -8,7 +8,7 @@
             :entryUrl="config.api.entry_urls.bigger"
             :fileList="viewState.fileList"
             :fileText="viewState.fileText"
-            :onProcessFile="handleProcessFile" />
+            @processFile="handleProcessFile" />
     </div>
 </template>
 
