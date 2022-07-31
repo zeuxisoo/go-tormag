@@ -20,15 +20,15 @@ import { ref, reactive } from "vue";
 import config from "../config";
 import FileZone from "../components/FileZone.vue";
 
+// Data
 const fileZoneRef = ref(null);
 
 const viewState = reactive({
-    resultMode: config.result_mode,
-
     fileList: [],
     fileText: "",
 });
 
+// Methods
 const handleProcessFile = (error, file) => {
     if (error) {
         console.log("Oops", error);

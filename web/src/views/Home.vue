@@ -2,16 +2,13 @@
     <div id="home">
         <h4>Torrent file or Directory</h4>
         <hr />
-        <file-pond
-            name="file"
-            ref="filePondUploadZone"
-            class-name="upload-zone"
-            label-idle="Drop files here..."
-            allow-multiple="true"
-            accepted-file-types="application/x-bittorrent, application/octet-stream"
-            :server="filePondConfig.server"
-            :files="filePondConfig.files"
-            @processfile="handleProcessFile" />
+        <file-zone
+            ref="fileZoneRef"
+            :baseUrl="config.api.base_url"
+            :entryUrl="config.api.entry_urls.convert"
+            :fileList="viewState.fileList"
+            :fileText="viewState.fileText"
+            @processFile="handleProcessFile" />
 
         <h4>Converted Result</h4>
         <hr />
@@ -38,12 +35,12 @@
         <hr />
 
         <transition enter-active-class="animate__animated animate__fadeInUp" leave-active-class="animate__animated animate__fadeOutUp" mode="out-in">
-            <div class="alert alert-info text-center" role="alert" v-if="viewState.convertedFiles.length <= 0" key="converted-files-empty">
+            <div class="alert alert-info text-center" role="alert" v-if="viewState.fileList.length <= 0" key="converted-files-empty">
                 Please drop the files to the drop zone first
             </div>
             <div v-else key="converted-files-results">
                 <transition-group enter-active-class="animate__animated animate__bounceInUp" leave-active-class="animate__animated animate__bounceOutDown" tag="div" v-if="isTargetResultMode('list')">
-                    <div class="card text-bg-light mb-3" v-for="convertedFile in viewState.convertedFiles" v-bind:key="convertedFile.data.id">
+                    <div class="card text-bg-light mb-3" v-for="convertedFile in viewState.fileList" v-bind:key="convertedFile.data.id">
                         <div class="card-header fw-bold">{{ convertedFile.data.file }}</div>
 
                         <div class="card-body p-0" v-if="convertedFile.ok === true">
@@ -72,7 +69,7 @@
                     </div>
                 </transition-group>
 
-                <textarea class="form-control" rows="20" v-if="isTargetResultMode('text') === true" v-bind:value="viewState.convertedText"></textarea>
+                <textarea class="form-control" rows="20" v-if="isTargetResultMode('text') === true" v-bind:value="viewState.fileText"></textarea>
             </div>
         </transition>
     </div>
@@ -83,49 +80,27 @@
 
 <script setup>
 import { ref, reactive, computed } from "vue";
-import VueFilePond from "vue-filepond";
-import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import config from "../config";
-
-// Component
-const FilePond = VueFilePond(
-    FilePondPluginFileValidateType
-);
+import FileZone from "../components/FileZone.vue";
 
 // Data
+const fileZoneRef = ref(null);
+
 const viewState = reactive({
-    resultMode    : config.result_mode,
-    convertedFiles: [],
-    convertedText : "",
-});
-
-const filePondUploadZone = ref(null);
-
-const filePondConfig = reactive({
-    server: {
-        url    : config.api.base_url,
-        process: {
-            url            : config.api.entry_urls.convert,
-            method         : 'POST',
-            withCredentials: false,
-            headers        : {},
-            timeout        : 7000,
-            onload         : (response) => JSON.parse(response),
-            onerror        : null
-        }
-    },
-    files : [],
+    resultMode: config.result_mode,
+    fileList  : [],
+    fileText  : "",
 });
 
 // Computed
 const convertedCount = computed(() => {
-    const okCount = viewState.convertedFiles
+    const okCount = viewState.fileList
         .filter(file => file.ok === true)
         .length;
 
     return {
         ok   : okCount,
-        error: viewState.convertedFiles.length - okCount,
+        error: viewState.fileList.length - okCount,
     }
 });
 
@@ -134,17 +109,17 @@ const handleProcessFile = (error, file) => {
     if (error) {
         console.log("Oops", error);
     }else{
-        // Add the converted file to converted file list
-        viewState.convertedFiles.unshift(file.serverId);
+        // Add the file to file list
+        viewState.fileList.unshift(file.serverId);
 
-        // Transform the converted file to text
-        viewState.convertedText = viewState.convertedFiles
+        // Transform the file to text
+        viewState.fileText = viewState.fileList
                 .filter(file => file.ok === true)
                 .map(file => file.data.magnet)
                 .join("\n");
 
         // Remove the completed file from drop zone
-        filePondUploadZone.value.removeFile(file.id);
+        fileZoneRef.value.filePondRef.removeFile(file.id);
     }
 };
 
