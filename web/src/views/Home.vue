@@ -33,9 +33,9 @@
         <hr />
 
         <transition enter-active-class="animate__animated animate__fadeInUp" leave-active-class="animate__animated animate__fadeOutUp" mode="out-in">
-            <div class="alert alert-info text-center" role="alert" v-if="viewState.fileList.length <= 0" key="converted-files-empty">
+            <alert-block v-if="viewState.fileList.length <= 0" key="converted-files-empty">
                 Please drop the files to the drop zone first
-            </div>
+            </alert-block>
             <div v-else key="converted-files-results">
                 <transition-group enter-active-class="animate__animated animate__bounceInUp" leave-active-class="animate__animated animate__bounceOutDown" tag="div" v-if="isTargetResultMode('list')">
                     <div class="card text-bg-light mb-3" v-for="convertedFile in viewState.fileList" v-bind:key="convertedFile.data.id">
@@ -81,6 +81,7 @@ import { ref, reactive, computed } from "vue";
 import config from "../config";
 import SectionHeader from "../components/SectionHeader.vue";
 import FileZone from "../components/FileZone.vue";
+import AlertBlock from "../components/AlertBlock.vue";
 
 // Data
 const fileZoneRef = ref(null);
