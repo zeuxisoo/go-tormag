@@ -1,7 +1,6 @@
 <template>
     <div id="bigger">
-        <h4>Torrent file or Directory</h4>
-        <hr />
+        <section-header>Torrent file or Directory</section-header>
         <file-zone
             ref="fileZoneRef"
             :baseUrl="config.api.base_url"
@@ -18,6 +17,7 @@
 <script setup>
 import { ref, reactive } from "vue";
 import config from "../config";
+import SectionHeader from "../components/SectionHeader.vue";
 import FileZone from "../components/FileZone.vue";
 
 // Data

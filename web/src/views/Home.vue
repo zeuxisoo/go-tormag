@@ -1,7 +1,6 @@
 <template>
     <div id="home">
-        <h4>Torrent file or Directory</h4>
-        <hr />
+        <section-header>Torrent file or Directory</section-header>
         <file-zone
             ref="fileZoneRef"
             :baseUrl="config.api.base_url"
@@ -10,8 +9,7 @@
             :fileText="viewState.fileText"
             @processFile="handleProcessFile" />
 
-        <h4>Converted Result</h4>
-        <hr />
+        <section-header>Converted Result</section-header>
         <div class="row">
             <div class="col-lg-9">
                 <button type="button" v-bind:class="['btn', { 'btn-info': isTargetResultMode('list') }]" @click="changeResultMode('list')">
@@ -81,6 +79,7 @@
 <script setup>
 import { ref, reactive, computed } from "vue";
 import config from "../config";
+import SectionHeader from "../components/SectionHeader.vue";
 import FileZone from "../components/FileZone.vue";
 
 // Data
