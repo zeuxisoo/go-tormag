@@ -22,7 +22,6 @@ const props = defineProps({
     entryUrl     : { type: String, required: true },
     fileList     : { type: Array, required: true },
     fileText     : { type: String, required: true },
-    // onProcessFile: { type: Function, required: true },
 });
 
 // Emits

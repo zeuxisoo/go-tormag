@@ -11,8 +11,9 @@
 
         <section-header>Find Result</section-header>
         <result-info
-            v-model:resultMode="viewState.resultMode"
-            :fileList="viewState.fileList" />
+            :resultMode="viewState.resultMode"
+            :fileList="viewState.fileList"
+            @changeResultMode="handleChangeResultMode" />
     </div>
 </template>
 
@@ -53,4 +54,6 @@ const handleProcessFile = (error, file) => {
         fileZoneRef.value.filePondRef.removeFile(file.id);
     }
 }
+
+const handleChangeResultMode = mode => viewState.resultMode = mode;
 </script>

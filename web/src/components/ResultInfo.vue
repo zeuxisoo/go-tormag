@@ -29,18 +29,12 @@ import { computed } from "vue";
 
 // Properties
 const props = defineProps({
-    resultMode: {
-        type    : String,
-        required: true,
-    },
-    fileList: {
-        type    : Array,
-        required: true,
-    },
+    resultMode: { type: String, required: true },
+    fileList  : { type: Array, required: true },
 });
 
 // Emit
-const emit = defineEmits(['update:resultMode']);
+const emit = defineEmits(['changeResultMode']);
 
 // Computed
 const countState = computed(() => {
@@ -58,6 +52,6 @@ const countState = computed(() => {
 const isTargetResultMode = name => props.resultMode === name;
 
 const setResultMode = name => {
-    emit('update:resultMode', name.toLowerCase());
+    emit('changeResultMode', name.toLowerCase());
 };
 </script>
