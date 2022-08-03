@@ -9,6 +9,7 @@
   "dependencies": {
     "animate.css": "^4.1.1",
     "bootstrap": "^5.2.0",
+    "bootstrap-icons": "^1.9.1",
     "deepmerge": "^4.2.2",
     "filepond": "^4.30.4",
     "filepond-plugin-file-validate-type": "^1.2.8",

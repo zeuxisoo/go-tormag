@@ -13,6 +13,7 @@ export default defineConfig({
     resolve: {
         alias: {
             "~bootstrap": path.resolve(__dirname, "node_modules/bootstrap"),
+            "~bootstrap-icons": path.resolve(__dirname, "node_modules/bootstrap-icons"),
             "~filepond": path.resolve(__dirname, "node_modules/filepond"),
             "~animate.css": path.resolve(__dirname, "node_modules/animate.css"),
         },

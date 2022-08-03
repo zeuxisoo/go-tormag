@@ -42,7 +42,7 @@
                                         </div>
                                         <div class="col-lg-1 m-0 d-grid gap-2">
                                             <button class="btn btn-secondary" @click="copyMagnet(convertedFile.data.magnet)">
-                                                <img src="../assets/copy.svg" />
+                                                <i class="bi bi-clipboard" style="font-size: 18px"></i>
                                             </button>
                                         </div>
                                     </div>
