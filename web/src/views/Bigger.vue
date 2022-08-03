@@ -10,27 +10,9 @@
             @processFile="handleProcessFile" />
 
         <section-header>Find Result</section-header>
-        <div class="row">
-            <div class="col-lg-9">
-                <button type="button" v-bind:class="['btn', { 'btn-info': isTargetResultMode('list') }]" @click="changeResultMode('list')">
-                    <i class="fas fa-list-ul"></i> List
-                </button>
-                &nbsp;
-                <button type="button" v-bind:class="['btn', { 'btn-info': isTargetResultMode('text') }]" @click="changeResultMode('text')">
-                    <i class="fas fa-align-justify"></i> Text Only
-                </button>
-            </div>
-            <div class="col-lg-3 text-end d-none d-lg-block"> <!-- display on >= lg size only -->
-                <button type="button" class="btn btn-success">
-                    OK <span class="badge badge-light">{{ biggerCount.ok }}</span>
-                </button>
-                &nbsp;
-                <button type="button" class="btn btn-danger">
-                    Error <span class="badge badge-light">{{ biggerCount.error }}</span>
-                </button>
-            </div>
-        </div>
-        <hr />
+        <result-info
+            v-model:resultMode="viewState.resultMode"
+            :fileList="viewState.fileList" />
     </div>
 </template>
 
@@ -41,6 +23,7 @@
 import { ref, reactive, computed } from "vue";
 import config from "../config";
 import SectionHeader from "../components/SectionHeader.vue";
+import ResultInfo from "../components/ResultInfo.vue";
 import FileZone from "../components/FileZone.vue";
 
 // Data
@@ -50,18 +33,6 @@ const viewState = reactive({
     resultMode: config.result_mode,
     fileList  : [],
     fileText  : "",
-});
-
-// Computed
-const biggerCount = computed(() => {
-    const okCount = viewState.fileList
-        .filter(file => file.ok === true)
-        .length;
-
-    return {
-        ok   : okCount,
-        error: viewState.fileList.length - okCount,
-    }
 });
 
 // Methods
@@ -82,7 +53,4 @@ const handleProcessFile = (error, file) => {
         fileZoneRef.value.filePondRef.removeFile(file.id);
     }
 }
-
-const isTargetResultMode = (name) => viewState.resultMode === name;
-const changeResultMode = (name) => viewState.resultMode = name.toLowerCase();
 </script>
