@@ -62,6 +62,19 @@
                 <textarea class="form-control" rows="20" v-if="matchResultMode('text')" v-bind:value="viewState.fileText"></textarea>
             </div>
         </transition>
+
+        <div class="position-relative">
+            <div class="toast-container bottom-0 start-50 translate-middle-x">
+                <div class="toast align-items-center border-0">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            Magnet Copied
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -70,6 +83,7 @@
 
 <script setup>
 import { ref, reactive } from "vue";
+import { Toast } from "bootstrap";
 import config from "../config";
 import SectionHeader from "../components/SectionHeader.vue";
 import FileZone from "../components/FileZone.vue";
@@ -91,11 +105,14 @@ const matchResultMode = mode => viewState.resultMode === mode;
 const copyMagnet = magnet => {
     navigator.clipboard.writeText(magnet)
         .then(
-            () => {}, // nothing when success
+            () => {
+                new Toast(document.querySelector(".toast")).show();
+            },
             () => console.log('Copy failed'),
         );
 }
 
+// Method components binding
 const handleProcessFile = (error, file) => {
     if (error) {
         console.log("Oops", error);
