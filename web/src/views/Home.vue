@@ -10,38 +10,21 @@
             @processFile="handleProcessFile" />
 
         <section-header>Converted Result</section-header>
-        <div class="row">
-            <div class="col-lg-9">
-                <button type="button" v-bind:class="['btn', { 'btn-info': isTargetResultMode('list') }]" @click="changeResultMode('list')">
-                    <i class="fas fa-list-ul"></i> List
-                </button>
-                &nbsp;
-                <button type="button" v-bind:class="['btn', { 'btn-info': isTargetResultMode('text') }]" @click="changeResultMode('text')">
-                    <i class="fas fa-align-justify"></i> Text Only
-                </button>
-            </div>
-            <div class="col-lg-3 text-end d-none d-lg-block"> <!-- display on >= lg size only -->
-                <button type="button" class="btn btn-success">
-                    OK <span class="badge badge-light">{{ convertedCount.ok }}</span>
-                </button>
-                &nbsp;
-                <button type="button" class="btn btn-danger">
-                    Error <span class="badge badge-light">{{ convertedCount.error }}</span>
-                </button>
-            </div>
-        </div>
-        <hr />
+        <result-info
+            :resultMode="viewState.resultMode"
+            :fileList="viewState.fileList"
+            @changeResultMode="handleChangeResultMode" />
 
         <transition enter-active-class="animate__animated animate__fadeInUp" leave-active-class="animate__animated animate__fadeOutUp" mode="out-in">
             <alert-block v-if="viewState.fileList.length <= 0" key="converted-files-empty">
                 Please drop the files to the drop zone first
             </alert-block>
             <div v-else key="converted-files-results">
-                <transition-group enter-active-class="animate__animated animate__bounceInUp" leave-active-class="animate__animated animate__bounceOutDown" tag="div" v-if="isTargetResultMode('list')">
+                <transition-group enter-active-class="animate__animated animate__bounceInUp" leave-active-class="animate__animated animate__bounceOutDown" tag="div" v-if="matchResultMode('list')">
                     <div class="card text-bg-light mb-3" v-for="convertedFile in viewState.fileList" v-bind:key="convertedFile.data.id">
                         <div class="card-header fw-bold">{{ convertedFile.data.file }}</div>
 
-                        <div class="card-body p-0" v-if="convertedFile.ok === true">
+                        <div class="card-body p-0" v-if="convertedFile.ok">
                             <div class="row m-0">
                                 <div class="col-lg-2 p-1 mt-1 mb-1 fw-bold text-center bg-info text-white">ID</div>
                                 <div class="col-lg-10 p-1 mt-1 mb-1">{{ convertedFile.data.id }}</div>
@@ -67,7 +50,7 @@
                     </div>
                 </transition-group>
 
-                <textarea class="form-control" rows="20" v-if="isTargetResultMode('text') === true" v-bind:value="viewState.fileText"></textarea>
+                <textarea class="form-control" rows="20" v-if="matchResultMode('text')" v-bind:value="viewState.fileText"></textarea>
             </div>
         </transition>
     </div>
@@ -77,10 +60,11 @@
 </style>
 
 <script setup>
-import { ref, reactive, computed } from "vue";
+import { ref, reactive } from "vue";
 import config from "../config";
 import SectionHeader from "../components/SectionHeader.vue";
 import FileZone from "../components/FileZone.vue";
+import ResultInfo from "../components/ResultInfo.vue";
 import AlertBlock from "../components/AlertBlock.vue";
 
 // Data
@@ -92,19 +76,9 @@ const viewState = reactive({
     fileText  : "",
 });
 
-// Computed
-const convertedCount = computed(() => {
-    const okCount = viewState.fileList
-        .filter(file => file.ok === true)
-        .length;
-
-    return {
-        ok   : okCount,
-        error: viewState.fileList.length - okCount,
-    }
-});
-
 // Methods
+const matchResultMode = mode => viewState.resultMode === mode;
+
 const handleProcessFile = (error, file) => {
     if (error) {
         console.log("Oops", error);
@@ -123,6 +97,5 @@ const handleProcessFile = (error, file) => {
     }
 };
 
-const isTargetResultMode = (name) => viewState.resultMode === name;
-const changeResultMode = (name) => viewState.resultMode = name.toLowerCase();
+const handleChangeResultMode = mode => viewState.resultMode = mode;
 </script>

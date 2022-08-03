@@ -21,7 +21,7 @@
 </style>
 
 <script setup>
-import { ref, reactive, computed } from "vue";
+import { ref, reactive } from "vue";
 import config from "../config";
 import SectionHeader from "../components/SectionHeader.vue";
 import ResultInfo from "../components/ResultInfo.vue";
