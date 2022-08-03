@@ -36,7 +36,16 @@
                             <div class="row m-0">
                                 <div class="col-lg-2 p-1 mb-1 fw-bold text-center bg-info text-white">Magnet</div>
                                 <div class="col-lg-10 p-1 mb-1">
-                                    <textarea class="form-control" v-bind:value="convertedFile.data.magnet"></textarea>
+                                    <div class="row">
+                                        <div class="col-lg-11 m-0">
+                                            <textarea class="form-control" v-bind:value="convertedFile.data.magnet"></textarea>
+                                        </div>
+                                        <div class="col-lg-1 m-0 d-grid gap-2">
+                                            <button class="btn btn-secondary" @click="copyMagnet(convertedFile.data.magnet)">
+                                                <img src="../assets/copy.svg" />
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -78,6 +87,14 @@ const viewState = reactive({
 
 // Methods
 const matchResultMode = mode => viewState.resultMode === mode;
+
+const copyMagnet = magnet => {
+    navigator.clipboard.writeText(magnet)
+        .then(
+            () => {}, // nothing when success
+            () => console.log('Copy failed'),
+        );
+}
 
 const handleProcessFile = (error, file) => {
     if (error) {
