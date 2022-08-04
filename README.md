@@ -2,6 +2,16 @@
 
 A command line application to convert magnet and find large file from the torrent directory or file
 
+## Develop
+
+Run the web development server
+
+    make web-dev
+
+Run the backend server
+
+    make run-web
+
 ## Usage
 
 Download the modules
