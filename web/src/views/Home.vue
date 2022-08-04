@@ -21,7 +21,7 @@
             </alert-block>
             <div v-else key="converted-files-results">
                 <transition-group enter-active-class="animate__animated animate__bounceInUp" leave-active-class="animate__animated animate__bounceOutDown" tag="div" v-if="matchResultMode('list')">
-                    <div class="card text-bg-light mb-3" v-for="convertedFile in viewState.fileList" v-bind:key="convertedFile.data.id">
+                    <div class="card text-bg-light mb-3" v-for="convertedFile in viewState.fileList" :key="convertedFile.data.id">
                         <div class="card-header fw-bold">{{ convertedFile.data.file }}</div>
 
                         <div class="card-body p-0" v-if="convertedFile.ok">
@@ -38,7 +38,7 @@
                                 <div class="col-lg-10 p-1 mb-1">
                                     <div class="row">
                                         <div class="col-lg-11 m-0">
-                                            <textarea class="form-control" v-bind:value="convertedFile.data.magnet"></textarea>
+                                            <textarea class="form-control" :value="convertedFile.data.magnet"></textarea>
                                         </div>
                                         <div class="col-lg-1 m-0 d-grid gap-2">
                                             <button class="btn btn-secondary" @click="copyMagnet(convertedFile.data.magnet)">
@@ -59,7 +59,7 @@
                     </div>
                 </transition-group>
 
-                <textarea class="form-control" rows="20" v-if="matchResultMode('text')" v-bind:value="viewState.fileText"></textarea>
+                <textarea class="form-control" rows="20" v-if="matchResultMode('text')" :value="viewState.fileText"></textarea>
             </div>
         </transition>
 
@@ -112,7 +112,7 @@ const copyMagnet = magnet => {
         );
 }
 
-// Method components binding
+// Methods components binding
 const handleProcessFile = (error, file) => {
     if (error) {
         console.log("Oops", error);
