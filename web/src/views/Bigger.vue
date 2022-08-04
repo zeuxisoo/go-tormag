@@ -60,10 +60,12 @@
 <script setup>
 import { ref, reactive } from "vue";
 import config from "../config";
-import SectionHeader from "../components/SectionHeader.vue";
-import ResultInfo from "../components/ResultInfo.vue";
-import FileZone from "../components/FileZone.vue";
-import AlertBlock from "../components/AlertBlock.vue";
+import {
+    SectionHeader,
+    ResultInfo,
+    FileZone,
+    AlertBlock,
+} from "../components";
 
 // Data
 const fileZoneRef = ref(null);
