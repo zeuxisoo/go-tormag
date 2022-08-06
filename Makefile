@@ -83,19 +83,12 @@ web-copy:
 	@cp -Rf web/dist/* public/static
 
 web-replace:
-	@perl -p -i -e 's@/(js|css|img)@/static/$$1@g' public/static/index.html
+	@perl -p -i -e 's@/assets@/static/assets@g' public/static/index.html
+	@perl -p -i -e 's@/assets@/static/assets@g' public/static/assets/index.*.css
 	@perl -p -i -e 's@/(img)@/static/$$1@g' public/static/manifest.json
-	@perl -p -i -e 's@/(fonts|robots|js|img|css)@/static/$$1@g' public/static/precache-manifest.*.js
-	@perl -p -i -e 's@/(precache\-manifest)@/static/$$1@g' public/static/service-worker.js
-	@perl -p -i -e 's@"(js)/"@"static/$$1/"@g' public/static/js/app.*.js
-	@perl -p -i -e 's@\("".concat@\("static".concat@' public/static/js/app.*.js
 
 web-integrate:
 	@mv public/static/index.html views/home/index.html
-
-# Add workbox config to specific line
-# like => @perl -l -p -i -e 'print "workbox.setConfig({ debug: false });" if $. == 20' static/service-worker.js
-	@ex -s -c '20i|workbox.setConfig({ debug: false });' -c x public/static/service-worker.js
 
 web-clean:
 # Remove all without .gitignore:
