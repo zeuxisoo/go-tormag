@@ -67,7 +67,7 @@ import {
     AlertBlock,
 } from "../components";
 
-// Data
+// State
 const fileZoneRef = ref(null);
 
 const viewState = reactive({
