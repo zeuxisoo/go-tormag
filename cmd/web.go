@@ -67,6 +67,13 @@ func runWeb(c *cli.Context) {
     engine := gin.Default()
     engine.MaxMultipartMemory = setting.AttachmentMaxSize << 20 // Set a lower memory limit for multipart (default: 4MB, app.ini: 8MB)
 
+    engine.Use(func(c *gin.Context) {
+        // Define service worker scope to support /static/sw.js
+        if c.Request.URL.Path == "/static/sw.js" {
+            c.Header("Service-Worker-Allowed", "/")
+        }
+    })
+
     engine.Use(ginStatic.Serve("/static", public.NewFileSystem("static")))
 
     if setting.CrossOriginEnable == true {
@@ -140,13 +147,6 @@ func registerRoutes(engine *gin.Engine) {
     engine.GET("/robots.txt", func(c *gin.Context) {
         data, _ := public.Files.ReadFile("static/robots.txt")
 
-        c.String(200, string(data))
-    })
-
-    engine.GET("/manifest.json", func(c *gin.Context) {
-        data, _ := public.Files.ReadFile("static/manifest.json")
-
-        c.Header("Content-Type", "application/json")
         c.String(200, string(data))
     })
 

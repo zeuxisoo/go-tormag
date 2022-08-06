@@ -83,9 +83,10 @@ web-copy:
 	@cp -Rf web/dist/* public/static
 
 web-replace:
-	@perl -p -i -e 's@/assets@/static/assets@g' public/static/index.html
+	@perl -p -i -e 's@/(assets|manifest.webmanifest|registerSW.js)@/static/$$1@g' public/static/index.html
 	@perl -p -i -e 's@/assets@/static/assets@g' public/static/assets/index.*.css
-	@perl -p -i -e 's@/(img)@/static/$$1@g' public/static/manifest.json
+	@perl -p -i -e 's@assets/@static/assets/@g' public/static/sw.js
+	@perl -p -i -e 's@/sw.js@/static/sw.js@g' public/static/registerSW.js
 
 web-integrate:
 	@mv public/static/index.html views/home/index.html
